@@ -16,8 +16,8 @@ public class NavigationController {
             return "login";
         }
 
-        //@RequestMapping("/registration")
-        //public String showRegister() {
-           // return "registration";
-        //}
+        @RequestMapping("/registration")
+        public String showRegister() {
+            return "registration";
+        }
 }
