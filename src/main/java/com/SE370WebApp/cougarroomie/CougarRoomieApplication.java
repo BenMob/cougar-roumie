@@ -13,6 +13,7 @@ import java.io.IOException;
 @SpringBootApplication
 public class CougarRoomieApplication {
 
+	// It would be nice to put some comments when writing code.
 	public static void main(String[] args) {
 		SpringApplication.run(CougarRoomieApplication.class, args);
 
@@ -35,6 +36,4 @@ public class CougarRoomieApplication {
 
 		FirebaseApp.initializeApp(options);
 	}
-
-
 }
