@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Script Fragments</title>
+</head>
+<body>
+<div th:fragment="scripts">
+    <script th:src="@{assets/js/jquery.min.js}"></script>
+    <script th:src="@{assets/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+    <script th:src="@{assets/js/smoothproducts.min.js}"></script>
+    <script th:src="@{assets/js/theme.js}"></script>
+</div>
+</body>
+</html>
