@@ -13,8 +13,9 @@
              id="navcol-1">
             <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item" role="presentation"><a class="nav-link active" th:href="@{/}">Home</a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{login}">Login</a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{registration}">Register</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{login}" id="login-link-nav">Login</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{registration}" id="register-link-nav">Register</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" onclick="logout()" th:href="@{/}" id="logout-link-nav">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -28,8 +29,9 @@
                  id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/}">Home</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" th:href="@{login}">Login</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{registration}">Register</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" th:href="@{login}" id="login-link-nav">Login</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{registration}" id="register-link-nav">Register</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" onclick="logout()" th:href="@{/}" id="logout-link-nav">Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -43,8 +45,9 @@
                  id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/}">Home</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{login}">Login</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" th:href="@{registration}">Register</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{login}" id="login-link-nav">Login</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" th:href="@{registration}" id="register-link-nav">Register</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" onclick="logout()" th:href="@{/}" id="logout-link-nav">Logout</a></li>
                 </ul>
             </div>
         </div>
