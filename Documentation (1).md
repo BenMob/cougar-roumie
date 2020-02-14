@@ -27,7 +27,7 @@
 ```
 + assessmentId (long)
 + numberOfQuestions (int) const
-+ questions [numberOfquestions] (Question) //array of methods 
++ questions [numberOfquestions] (Question) //array of Question objects 
 ```
 **Methods (2)**
 ```
