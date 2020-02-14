@@ -31,8 +31,8 @@
 ```
 **Methods (2)**
 ```
-+ getFullSummary () *returns the full question array []*
-+ getQuestionSummary (int) *returns a Question object from the question array []*
++ getFullSummary () //returns the full question array []
++ getQuestionSummary (int) //returns a Question object from the question array []
 ```
 ## 3. Question
 
