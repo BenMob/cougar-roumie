@@ -1,8 +1,8 @@
-**Cougar Roomie Web App - SE370 Team 3**
-========================================
+<h1 align="center">Cougar Roomie Web App - SE370 Team 3</h1>
+---
 
  *This is a Pre Production Branch*
- ----------------------------------
+ ---
 
  **Framework Used:** Spring Boot
 
