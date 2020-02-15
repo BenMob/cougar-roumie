@@ -10,6 +10,11 @@ public class NavigationController {
         public String showIndex() {
             return "index";
         }
+        
+        @RequestMapping("/profile")
+        public String showProfile() {
+             return "profile";
+        }
 
         @RequestMapping("/login")
         public String showLogin() {
