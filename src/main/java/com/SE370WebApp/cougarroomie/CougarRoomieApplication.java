@@ -9,5 +9,4 @@ public class CougarRoomieApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CougarRoomieApplication.class, args);
 	}
-
 }
