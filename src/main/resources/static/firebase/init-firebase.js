@@ -12,22 +12,16 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
 
-
     firebase.auth().onAuthStateChanged(function(user) { // this will be called every time the status changes logged in/logged out
         if (user) {
-            document.getElementById('login-link-nav').style.display = 'none';
-            document.getElementById('register-link-nav').style.display = 'none';
-            document.getElementById('logout-link-nav').style.display = 'block';
+          if (location.pathname === "/") {setupNav(user);}
         } else {
-            document.getElementById('login-link-nav').style.display = 'block';
-            document.getElementById('register-link-nav').style.display = 'block';
-            document.getElementById('logout-link-nav').style.display = 'none';
+          if (location.pathname === "/") {setupNav();}
         }
     });
 
     function logout() {
         firebase.auth().signOut().then(function() {
-            alert("signout success");
         }).catch(function(error) {
             alert("an error occurred");
         });

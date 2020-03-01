@@ -12,14 +12,16 @@
         <div class="collapse navbar-collapse"
              id="navcol-1">
             <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item" role="presentation"><a class="nav-link active" th:href="@{/}">Home</a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{login}" id="login-link-nav">Login</a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{registration}" id="register-link-nav">Register</a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link" onclick="logout()" th:href="@{/}" id="logout-link-nav">Logout</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Home</a></li>
+                <li class="nav-item logged-out" role="presentation" style="display: none"><a class="nav-link" th:href="@{login}">Login</a></li>
+                <li class="nav-item logged-out" role="presentation" style="display: none"><a class="nav-link" th:href="@{registration}">Register</a></li>
+                <li class="nav-item logged-in" role="presentation" style="display: none"><a class="nav-link" th:href="@{profile}">Profile</a></li>
+                <li class="nav-item logged-in" role="presentation" style="display: none"><a class="nav-link" onclick="logout()" th:href="@{/}">Logout</a></li>
             </ul>
         </div>
     </div>
 </nav>
+    <script th:src="@{firebase/NavLinkController.js}"></script>
 </div>
 
 <div th:fragment="navigation-login">
@@ -29,9 +31,8 @@
                  id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/}">Home</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" th:href="@{login}" id="login-link-nav">Login</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{registration}" id="register-link-nav">Register</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" onclick="logout()" th:href="@{/}" id="logout-link-nav">Logout</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" th:href="@{login}">Login</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{registration}">Register</a></li>
                 </ul>
             </div>
         </div>
@@ -45,9 +46,23 @@
                  id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/}">Home</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{login}" id="login-link-nav">Login</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" th:href="@{registration}" id="register-link-nav">Register</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" onclick="logout()" th:href="@{/}" id="logout-link-nav">Logout</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{login}">Login</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" th:href="@{register}">Register</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div th:fragment="navigation-profile">
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
+        <div class="container"><a class="navbar-brand logo" th:href="@{/}">Cougar Roomie</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse"
+                 id="navcol-1">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/}">Home</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" th:href="@{profile}">Profile</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" onclick="logout()" th:href="@{/}">Logout</a></li>
                 </ul>
             </div>
         </div>
