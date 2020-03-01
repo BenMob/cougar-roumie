@@ -16,7 +16,7 @@ loginForm.addEventListener('submit', (e) => {
     firebase.auth().signInWithEmailAndPassword(email, pass)
         .then(function (result) {
             alert('sign in success .... redirecting');
-            location.pathname = "/";
+            location.pathname = "/profile";
         })
         .catch(function(error) { // sign in user
         // Handle Errors here.
