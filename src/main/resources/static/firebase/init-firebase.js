@@ -12,16 +12,9 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
 
-    firebase.auth().onAuthStateChanged(function(user) { // this will be called every time the status changes logged in/logged out
-        if (user) {
-          if (location.pathname === "/") {setupNav(user);}
-        } else {
-          if (location.pathname === "/") {setupNav();}
-        }
-    });
-
     function logout() {
         firebase.auth().signOut().then(function() {
+            location.pathname = "/"; // redirect to home...
         }).catch(function(error) {
             alert("an error occurred");
         });

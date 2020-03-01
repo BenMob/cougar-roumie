@@ -17,7 +17,11 @@ registerForm.addEventListener('submit', (e) => {
         return;
     }
 
-    firebase.auth().createUserWithEmailAndPassword(email, pass).catch(function(error) {
+    firebase.auth().createUserWithEmailAndPassword(email, pass)
+        .then(function(result) {
+            location.pathname = "/"; // redirect to home
+        })
+        .catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;

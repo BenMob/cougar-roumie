@@ -13,16 +13,20 @@ loginForm.addEventListener('submit', (e) => {
     const email = loginForm['email'].value;
     const pass = loginForm['password'].value;
 
-    firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(error) { // sign in user
+    firebase.auth().signInWithEmailAndPassword(email, pass)
+        .then(function (result) {
+            alert('sign in success .... redirecting');
+            location.pathname = "/";
+        })
+        .catch(function(error) { // sign in user
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
         if (errorCode === 'auth/wrong-password') {
             alert('Wrong password.');
-            return;
         } else {
             alert(errorMessage);
-            return;
+
         }
     });
-})
+});
