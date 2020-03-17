@@ -1,4 +1,4 @@
-package com.SE370.Cougar.Roomie;
+package com.SE370.Cougar.Roomie.Controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
