@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeResource {
 
-
-
     // Templates need to be made, for now these are returning test html
     @GetMapping("/")
     public String home() {
