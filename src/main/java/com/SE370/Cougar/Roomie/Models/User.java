@@ -1,6 +1,5 @@
 package com.SE370.Cougar.Roomie.Models;
 
-
 import javax.persistence.*;
 
 @Entity
