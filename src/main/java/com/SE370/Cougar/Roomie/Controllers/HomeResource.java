@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeResource {
 
+
+
+    // Templates need to be made, for now these are returning test html
     @GetMapping("/")
     public String home() {
         return ("<h1>Welcome</h1>");
@@ -13,7 +16,7 @@ public class HomeResource {
 
     @GetMapping("/user")
     public String user() {
-        return ("<h1>Welcome User</h1>");
+        return ("<h1>Welcome User</h1> <a href='/logout'>Logout</a>");
     }
 
     @GetMapping("/admin")
