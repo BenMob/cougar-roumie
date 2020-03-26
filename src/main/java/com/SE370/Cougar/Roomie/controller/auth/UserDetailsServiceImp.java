@@ -1,8 +1,8 @@
-package com.SE370.Cougar.Roomie.Models;
+package com.SE370.Cougar.Roomie.controller.auth;
 
-import com.SE370.Cougar.Roomie.UserRepository;
+import com.SE370.Cougar.Roomie.model.user.User;
+import com.SE370.Cougar.Roomie.model.user.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -10,18 +10,18 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class MyUserDetailsService implements UserDetailsService {
+public class UserDetailsServiceImp implements UserDetailsService {
 
     @Autowired
-    UserRepository userRepository;
+    UserRepo userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+    public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByUserName(userName);
 
         user.orElseThrow(() -> new UsernameNotFoundException("Error Not Found: " + userName));
 
-        return user.map(MyUserDetails::new).get();
+        return user.map(UserDetails::new).get();
     }
 
 }
