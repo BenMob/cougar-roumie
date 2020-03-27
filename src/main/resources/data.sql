@@ -27,18 +27,18 @@ INSERT INTO public.conversations VALUES (4, 1, 4);
 
 -- Prefill public.message table
 -- COLUMN LAYOUT: public.message_id, conversation_id, public.message, origin_user_id, timestamp
-INSERT INTO public.message VALUES (10, 1, 'public.message between user1 and user2 sent from user1', 1, '2020-03-27 08:22:01');
-INSERT INTO public.message VALUES (11, 1, 'public.message between user1 and user2 sent from user2', 2, '2020-03-27 08:25:01');
-INSERT INTO public.message VALUES (12, 2, 'public.message between user2 and user3 sent from user2', 2, '2020-03-27 08:22:01');
-INSERT INTO public.message VALUES (13, 2, 'public.message between user2 and user3 sent from user3', 3, '2020-03-27 08:25:01');
-INSERT INTO public.message VALUES (14, 3, 'public.message between user3 and user4 sent from user3', 3, '2020-03-27 08:22:01');
-INSERT INTO public.message VALUES (15, 3, 'public.message between user3 and user4 sent from user4', 4, '2020-03-27 08:25:01');
-INSERT INTO public.message VALUES (16, 4, 'public.message between user1 and user4 sent from user1', 1, '2020-03-27 08:22:01');
-INSERT INTO public.message VALUES (17, 4, 'public.message between user1 and user4 sent from user4', 4, '2020-03-27 08:25:01');
+INSERT INTO public.message VALUES (10, 1, 'message between user1 and user2 sent from user1', 1, '2020-03-27 08:22:01');
+INSERT INTO public.message VALUES (11, 1, 'message between user1 and user2 sent from user2', 2, '2020-03-27 08:25:01');
+INSERT INTO public.message VALUES (12, 2, 'message between user2 and user3 sent from user2', 2, '2020-03-27 08:22:01');
+INSERT INTO public.message VALUES (13, 2, 'message between user2 and user3 sent from user3', 3, '2020-03-27 08:25:01');
+INSERT INTO public.message VALUES (14, 3, 'message between user3 and user4 sent from user3', 3, '2020-03-27 08:22:01');
+INSERT INTO public.message VALUES (15, 3, 'message between user3 and user4 sent from user4', 4, '2020-03-27 08:25:01');
+INSERT INTO public.message VALUES (16, 4, 'message between user1 and user4 sent from user1', 1, '2020-03-27 08:22:01');
+INSERT INTO public.message VALUES (17, 4, 'message between user1 and user4 sent from user4', 4, '2020-03-27 08:25:01');
 
 -- Prefill question table
 -- COLUMN LAYOUT: question_id, max_range, min_range, question_number, question_text
-INSERT INTO public.message VALUES (10, 10, 1, 1, 'Question 1');
-INSERT INTO public.message VALUES (11, 10, 1, 2, 'Question 2');
-INSERT INTO public.message VALUES (12, 10, 1, 3, 'Question 3');
-INSERT INTO public.message VALUES (13, 10, 1, 4, 'Question 4');
+INSERT INTO public.questions VALUES (10, 10, 1, 1, 'Question 1');
+INSERT INTO public.questions VALUES (11, 10, 1, 2, 'Question 2');
+INSERT INTO public.questions VALUES (12, 10, 1, 3, 'Question 3');
+INSERT INTO public.questions VALUES (13, 10, 1, 4, 'Question 4');

@@ -7,8 +7,8 @@ import javax.persistence.*;
 public class User {
     @Id // Primary Key
     @GeneratedValue(strategy = GenerationType.AUTO) // Tell spring to handle generation
-    private long id;
-    private long answerID; // connects to answer table
+    private int id;
+    private int answer_id; // connects to answer table
     private String firstName;
     private String lastName;
     private String userName;
@@ -19,20 +19,20 @@ public class User {
 
     public User() {}
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public long getAnswerID() {
-        return answerID;
+    public int getAnswer_id() {
+        return answer_id;
     }
 
-    public void setAnswerID(long answerID) {
-        this.answerID = answerID;
+    public void setAnswer_id(int answerID) {
+        this.answer_id = answerID;
     }
 
     public String getFirstName() {
