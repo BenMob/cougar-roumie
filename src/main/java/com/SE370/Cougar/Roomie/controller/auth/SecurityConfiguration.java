@@ -1,7 +1,8 @@
-package com.SE370.Cougar.Roomie;
+package com.SE370.Cougar.Roomie.controller.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -10,11 +11,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    UserDetailsService userDetailsService;
+    UserDetailsService userDetailsService; // We overrided in UserDetailsServiceImp
 
 
 
@@ -27,11 +29,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        http.cors().and().csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/user").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/getconversations").permitAll()
+                .antMatchers("/getquestions").permitAll()
+                .antMatchers("/getansbyuser").permitAll()
+                .antMatchers("/getusers").permitAll()
+                .antMatchers("/getmsgbyconversation").permitAll()
                 .antMatchers("/").permitAll()
-                .and().formLogin();
+                .and().formLogin().permitAll()
+                .and().logout();
     }
 
     @Bean
