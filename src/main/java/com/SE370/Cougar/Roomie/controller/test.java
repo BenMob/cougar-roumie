@@ -1,6 +1,6 @@
 package com.SE370.Cougar.Roomie.controller;
 
-public class test {
+public class  test {
     private int id;
 
     public test() {}
