@@ -1,8 +1,10 @@
 package com.SE370.Cougar.Roomie.controller.viewcontrollers;
 
-import com.SE370.Cougar.Roomie.controller.assessment.AssessmentService;
+import com.SE370.Cougar.Roomie.controller.services.AssessmentService;
+import com.SE370.Cougar.Roomie.model.CustomUserDetails;
 import com.SE370.Cougar.Roomie.view.AssessmentForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +17,7 @@ public class AssessmentController {
     @Autowired
     AssessmentService assessmentService;
 
-    @GetMapping("/assessment")
+    @GetMapping("/user/assessment")
     public String presentAssessment(WebRequest webRequest, Model model) {
         AssessmentForm assessmentForm = new AssessmentForm();
         assessmentService.prepareAssessment(assessmentForm);
@@ -23,8 +25,14 @@ public class AssessmentController {
         return "assessment";
     }
 
-    @PostMapping("/submitassessment")
+    @PostMapping("/user/assessment")
     public String submitAssessment(@ModelAttribute AssessmentForm assessmentForm) {
+        // Grab user id from logged in user object
+        int userId = (((CustomUserDetails)SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal())
+                .getUser_id());
+
+        assessmentService.submitAssessment(assessmentForm, userId);
         return "assessment";
     }
 }

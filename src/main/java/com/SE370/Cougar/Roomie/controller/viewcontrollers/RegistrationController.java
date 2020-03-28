@@ -1,6 +1,6 @@
 package com.SE370.Cougar.Roomie.controller.viewcontrollers;
 
-import com.SE370.Cougar.Roomie.controller.auth.CustomUserDetailsService;
+import com.SE370.Cougar.Roomie.controller.services.CustomUserDetailsService;
 import com.SE370.Cougar.Roomie.view.RegistrationForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
