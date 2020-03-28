@@ -6,8 +6,6 @@ import javax.persistence.*;
 @Table(name = "answers") // just to keep things looking uniform in the database
 public class Answer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int answer_id;
     private int userId;
     private int answer1;
     private int answer2;
@@ -25,15 +23,7 @@ public class Answer {
         this.answer4 = a4;
     }
 
-    public long getAnswer_id() {
-        return answer_id;
-    }
-
-    public void setAnswer_id(int answerId) {
-        this.answer_id = answerId;
-    }
-
-    public long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
