@@ -1,4 +1,4 @@
-package com.SE370.Cougar.Roomie.model.user;
+package com.SE370.Cougar.Roomie.model.entities;
 
 import javax.persistence.*;
 

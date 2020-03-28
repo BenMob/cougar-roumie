@@ -1,4 +1,4 @@
-package com.SE370.Cougar.Roomie.controller.auth;
+package com.SE370.Cougar.Roomie.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,15 +29,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.cors().and().csrf().disable();
+        http.cors().and().csrf().disable(); // this is the fix to let a REST program send post requests like the browser would
         http.authorizeRequests()
-                .antMatchers("/getconversations").permitAll()
-                .antMatchers("/getquestions").permitAll()
-                .antMatchers("/getansbyuser").permitAll()
-                .antMatchers("/getusers").permitAll()
-                .antMatchers("/getmsgbyconversation").permitAll()
-                .antMatchers("/").permitAll()
-                .and().formLogin().permitAll()
+                .antMatchers("/user/*").hasRole("USER")
+                .antMatchers("/*").permitAll()
+                .and().formLogin().loginPage("/login")
+                .successForwardUrl("/")
+                .failureForwardUrl("/login?error").permitAll()
                 .and().logout();
     }
 
