@@ -3,6 +3,7 @@ package com.SE370.Cougar.Roomie.controller.services;
 import com.SE370.Cougar.Roomie.model.CustomUserDetails;
 import com.SE370.Cougar.Roomie.model.entities.User;
 import com.SE370.Cougar.Roomie.model.repositories.UserRepo;
+import com.SE370.Cougar.Roomie.view.FirstTimeLoginForm;
 import com.SE370.Cougar.Roomie.view.RegistrationForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,6 +36,16 @@ public class CustomUserDetailsService implements UserDetailsService {
         user.setUserName(registrationForm.getUser_name());
         user.setPassword(registrationForm.getPassword());
         user.setActive(true);
+        return userRepository.save(user);
+    }
+
+    @Transactional
+    public User updateFirstTimeUser(FirstTimeLoginForm secondaryInfoForm, int id){
+        //Optional <User> user = userRepository.findById(id);
+        User user = new User();
+        user.setFirstName(secondaryInfoForm.getFirst_name());
+        user.setLastName(secondaryInfoForm.getLast_name());
+
         return userRepository.save(user);
     }
 
