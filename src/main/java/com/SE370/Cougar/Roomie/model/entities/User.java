@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "users") // just to keep things looking uniform in the database
-public class User {
+public class User{
     @Id // Primary Key
     @GeneratedValue(strategy = GenerationType.AUTO) // Tell spring to handle generation
     private int id;
