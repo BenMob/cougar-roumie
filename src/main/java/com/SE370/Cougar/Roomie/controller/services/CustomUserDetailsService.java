@@ -6,6 +6,7 @@ import com.SE370.Cougar.Roomie.model.repositories.UserRepo;
 import com.SE370.Cougar.Roomie.view.FirstTimeLoginForm;
 import com.SE370.Cougar.Roomie.view.RegistrationForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -40,9 +41,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Transactional
-    public User updateFirstTimeUser(FirstTimeLoginForm secondaryInfoForm, int id){
-        //Optional <User> user = userRepository.findById(id);
-        User user = new User();
+    public User updateFirstTimeUser(FirstTimeLoginForm secondaryInfoForm){
+        CustomUserDetails customUser =  (((CustomUserDetails) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal()));
+
+        User user = customUser.map(User::new).get();
         user.setFirstName(secondaryInfoForm.getFirst_name());
         user.setLastName(secondaryInfoForm.getLast_name());
 

@@ -10,6 +10,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class CustomUserDetails implements UserDetails {
+
+    private String firstName;
+    private String lastName;
+    private int gender;
     private int user_id;
     private String userName;
     private String password;
@@ -17,6 +21,9 @@ public class CustomUserDetails implements UserDetails {
     private List<GrantedAuthority> authorities;
 
     public CustomUserDetails(User user) {
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.gender = user.getGender();
         this.user_id = user.getId();
         this.userName = user.getUserName();
         this.password = user.getPassword();
@@ -30,6 +37,13 @@ public class CustomUserDetails implements UserDetails {
 
          */
     }
+
+
+    public String getFirstName() { return firstName; }
+
+    public String getLastName() { return lastName; }
+
+    public int getGender() { return gender; }
 
     public int getUser_id() {
         return user_id;
@@ -73,4 +87,5 @@ public class CustomUserDetails implements UserDetails {
     public boolean isEnabled() {
         return active;
     }
+
 }
