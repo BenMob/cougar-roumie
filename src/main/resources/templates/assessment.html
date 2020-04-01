@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<h1>Register</h1>
+<form action="/user/assessment" th:object="${assessmentForm}" method="POST" enctype="utf8">
+    <div>
+        <label th:text="${assessmentForm.question1}">Question 1</label>
+        <input type="number" min="1" max="10" th:field="*{answer1}"/>
+    </div>
+    <div>
+        <label th:text="${assessmentForm.question2}">Question 2</label>
+        <input type="number" min="1" max="10" th:field="*{answer2}"/>
+    </div>
+    <div>
+        <label th:text="${assessmentForm.question3}">Question 3</label>
+        <input type="number" min="1" max="10" th:field="*{answer3}"/>
+    </div>
+    <div>
+        <label th:text="${assessmentForm.question4}">Question 4</label>
+        <input type="number" min="1" max="10" th:field="*{answer4}"/>
+    </div>
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>

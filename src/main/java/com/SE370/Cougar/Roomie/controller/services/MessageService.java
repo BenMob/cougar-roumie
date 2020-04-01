@@ -1,4 +1,4 @@
-package com.SE370.Cougar.Roomie.controller.messaging;
+package com.SE370.Cougar.Roomie.controller.services;
 
 import com.SE370.Cougar.Roomie.model.entities.Conversation;
 import com.SE370.Cougar.Roomie.model.repositories.ConversationRepo;
