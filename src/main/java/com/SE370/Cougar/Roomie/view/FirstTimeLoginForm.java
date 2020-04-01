@@ -4,7 +4,7 @@ public class FirstTimeLoginForm {
 
     String first_name;
     String last_name;
-    String gender;
+    int gender;
 
     public String getLast_name() {
         return last_name;
@@ -18,8 +18,8 @@ public class FirstTimeLoginForm {
     public void setFirst_name(String first_name) {
         this.first_name = first_name;
     }
-    public String getGender() { return gender; }
-    public void setGender(String gender) {
+    public int getGender() { return gender; }
+    public void setGender(int gender) {
         this.gender = gender;
     }
 }

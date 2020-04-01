@@ -22,8 +22,8 @@
             <input placeholder="Last Name" th:field="*{last_name}"><br>
         </div>
         <div>
-            <input id="male" type="radio"><label for="male">Male</label><br>
-            <input id="female" type="radio"><label for="female">Female</label>
+            <input id="male" type="radio" value='1' th:field="*{gender}"><label for="male">Male</label><br>
+            <input id="female" type="radio" value='2' th:field="*{gender}"><label for="female">Female</label>
         </div>
         <button type="Submit">Submit</button>
     </form>

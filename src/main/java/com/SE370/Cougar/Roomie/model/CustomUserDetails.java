@@ -17,7 +17,15 @@ public class CustomUserDetails implements UserDetails {
     private int user_id;
     private String userName;
     private String password;
+    private String email;
+
+
+
     private boolean active;
+
+
+
+    private int answerId;
     private List<GrantedAuthority> authorities;
 
     public CustomUserDetails(User user) {
@@ -25,7 +33,9 @@ public class CustomUserDetails implements UserDetails {
         this.lastName = user.getLastName();
         this.gender = user.getGender();
         this.user_id = user.getId();
+        this.answerId = user.getAnswer_id();
         this.userName = user.getUserName();
+        this.email = user.getEmail();
         this.password = user.getPassword();
         this.active = user.isActive();
         this.authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")); // Hard Coded for now
@@ -53,6 +63,9 @@ public class CustomUserDetails implements UserDetails {
         this.user_id = user_id;
     }
 
+    public int getAnswerId() { return answerId; }
+
+    public String getEmail() { return email; }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;

@@ -42,16 +42,19 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Transactional
     public User updateFirstTimeUser(FirstTimeLoginForm secondaryInfoForm){
-        CustomUserDetails customUser =  (((CustomUserDetails) SecurityContextHolder
-                .getContext().getAuthentication().getPrincipal()));
+        /******************************************************************************
+         CustomUserDetails customUser =  (((CustomUserDetails) SecurityContextHolder
+               .getContext().getAuthentication().getPrincipal()));
 
-        User user = new User();
-        user.setId(customUser.getUser_id());
-        user.setActive(customUser.isEnabled());
-        user.setPassword(customUser.getPassword());
-        // SET ALL OF THEM
+         If the casting below is hard to understand, the customUser above is what is being
+         passed in as a parameter in the new User() object below.
+        *******************************************************************************/
+        User user = new User((((CustomUserDetails) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal())));
+
         user.setFirstName(secondaryInfoForm.getFirst_name());
         user.setLastName(secondaryInfoForm.getLast_name());
+        user.setGender(secondaryInfoForm.getGender());
 
         return userRepository.save(user);
     }

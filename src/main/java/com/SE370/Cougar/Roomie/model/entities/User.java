@@ -1,5 +1,7 @@
 package com.SE370.Cougar.Roomie.model.entities;
 
+import com.SE370.Cougar.Roomie.model.CustomUserDetails;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,6 +21,20 @@ public class User{
 
 
     public User() {}
+
+    // Task: Creates a User Entity
+    // Parameter: CustomUserDetails Object
+    public User(CustomUserDetails customUser){
+        setId(customUser.getUser_id());
+        setAnswer_id(customUser.getAnswerId());
+        setFirstName(customUser.getFirstName());
+        setLastName(customUser.getLastName());
+        setGender(customUser.getGender());
+        setUserName(customUser.getUsername());
+        setPassword(customUser.getPassword());
+        setEmail(customUser.getEmail());
+        setActive(customUser.isEnabled());
+    }
 
     public int getId() {
         return id;

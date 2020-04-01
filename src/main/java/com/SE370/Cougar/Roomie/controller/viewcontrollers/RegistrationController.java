@@ -39,24 +39,6 @@ public class RegistrationController {
     @PostMapping("/user/secondaryinfo")
     public String registerFirstLastGender(@ModelAttribute FirstTimeLoginForm secondaryInfoForm ) {
         userService.updateFirstTimeUser(secondaryInfoForm);
-        return "assessment";
+        return "registrationSuccess";
     }
-
-
-/*
-    // This will be the PUT request handler for the at secondaryinfo.html
-
-    @PutMapping(path = "/{userId}",
-            consumes={MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-            produces ={MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public String updateUserInfo(@PathVariable String userId, @RequestBody FirstTimeLoginForm userInfo){
-
-        int Id = (((CustomUserDetails) SecurityContextHolder
-                .getContext().getAuthentication().getPrincipal())
-                .getUser_id());
-
-        userService.updateFirstTimeUser(userInfo, Id);
-        return "assessment";
-    }
-*/
 }
