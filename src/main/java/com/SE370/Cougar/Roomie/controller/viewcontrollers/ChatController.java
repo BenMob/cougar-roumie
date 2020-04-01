@@ -1,10 +1,10 @@
 package com.SE370.Cougar.Roomie.controller.viewcontrollers;
 
-import com.SE370.Cougar.Roomie.model.Message;
+import com.SE370.Cougar.Roomie.controller.components.ChatComponent;
+import com.SE370.Cougar.Roomie.view.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -21,12 +21,17 @@ public class ChatController {
 
     @Autowired
     private SimpMessageSendingOperations messagingTemplate;
+    @Autowired
+    private ChatComponent chatComponent;
+
+    private int userId;
+
 
     @GetMapping("/chat")
     public String chat() {
+
         return "chat";
     }
-
 
     @MessageMapping("/chat.sendMessage")
     @SendTo("/topic/public")
@@ -36,8 +41,7 @@ public class ChatController {
 
     @MessageMapping("/chat.addUser")
     @SendTo("/topic/public")
-    public Message addUser(@Payload Message chatMessage,
-                               SimpMessageHeaderAccessor headerAccessor) {
+    public Message addUser(@Payload Message chatMessage, SimpMessageHeaderAccessor headerAccessor) {
         // Add username in web socket session
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
         return chatMessage;

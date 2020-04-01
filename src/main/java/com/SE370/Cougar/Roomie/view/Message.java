@@ -1,4 +1,4 @@
-package com.SE370.Cougar.Roomie.model;
+package com.SE370.Cougar.Roomie.view;
 
 public class Message {
     public enum MessageType {

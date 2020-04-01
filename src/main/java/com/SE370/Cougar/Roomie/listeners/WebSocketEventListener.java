@@ -1,6 +1,6 @@
 package com.SE370.Cougar.Roomie.listeners;
 
-import com.SE370.Cougar.Roomie.model.Message;
+import com.SE370.Cougar.Roomie.view.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
