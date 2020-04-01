@@ -45,7 +45,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         CustomUserDetails customUser =  (((CustomUserDetails) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal()));
 
-        User user = customUser.map(User::new).get();
+        User user = new User();
+        user.setId(customUser.getUser_id());
+        user.setActive(customUser.isEnabled());
+        user.setPassword(customUser.getPassword());
+        // SET ALL OF THEM
         user.setFirstName(secondaryInfoForm.getFirst_name());
         user.setLastName(secondaryInfoForm.getLast_name());
 
