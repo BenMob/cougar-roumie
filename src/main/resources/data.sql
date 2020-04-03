@@ -9,6 +9,7 @@
 
 INSERT INTO public.users VALUES (1, TRUE, 10, 'email@email.com', 'firstname', 1, 'lastname', 'password', 'user1');
 INSERT INTO public.users VALUES (2, TRUE, 11, 'email@email.com', 'firstname', 2, 'lastname', 'password', 'user2');
+
 /*
 INSERT INTO public.users VALUES (3, TRUE, 12, 'email@email.com', 'firstname', 3, 'lastname', 'password', 'test3');
 INSERT INTO public.users VALUES (4, TRUE, 13, 'email@email.com', 'firstname', 4, 'lastname', 'password', 'test4');

@@ -32,8 +32,14 @@
                                 <div class="form-group"><input class="form-control" type="text" name="firstName" placeholder="First Name" th:field="*{first_name}"></div>
                                 <div class="form-group"><input class="form-control" type="text" name="lastName" placeholder="Last Name" th:field="*{last_name}"></div>
                                 <div class="form-group text-left checkbox">
-                                    <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-1"><label class="form-check-label" for="formCheck-1" value='1' th:field="*{gender}">Male</label></div>
-                                    <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-1"><label class="form-check-label" for="formCheck-1" value='2' th:field="*{gender}">Female</label></div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="formCheck-1" value='1' th:field="*{gender}">
+                                        <label class="form-check-label" for="formCheck-1">Male</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="formCheck-2" value='2' th:field="*{gender}">
+                                        <label class="form-check-label" for="formCheck-2">Female</label>
+                                    </div>
                                 </div>
                                 <div class="modal-footer"><button class="btn btn-primary signin" type="submit">submit</button></div>
                             </form>
@@ -53,7 +59,7 @@
         </footer>
     </div>
     <script src="assets/js/jquery.min.js"></script>
-    <script src="ssets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/modal.js"></script>
 </body>
 
