@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/chat/*").hasRole("USER")
                 .antMatchers("/*").permitAll()
                 .and().formLogin().loginPage("/login")
-                .defaultSuccessUrl("/", true)
+                .defaultSuccessUrl("/profile", true)
                 .failureUrl("/login?error=true")
                 .and().logout();
     }

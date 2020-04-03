@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>dev</title>
+    <title>Cougar Roomie</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,600&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900">
@@ -21,7 +21,8 @@
     </div>
     <div id="header">
         <h1 class="catch">Just a swipe away</h1>
-        <p>Don't miss out on the easy alternative to finding a roommate. Match with potential roommates and get to know eachother!</p><button class="btn btn-primary register" id="modal" data-toggle="modal" data-target="#modal-reg" style="color: #fff;">Register</button>
+        <p>Don't miss out on the easy alternative to finding a roommate. Match with potential roommates and get to know eachother!</p>
+        <button class="btn btn-primary register" id="modal" data-toggle="modal" data-target="#modal-reg" style="color: #fff;">Register</button>
         <div
             class="modal fade" role="dialog" tabindex="-1" id="modal-reg">
             <div class="modal-dialog" role="document">
@@ -31,14 +32,14 @@
                     <div class="modal-body">
                         <div class="login-form">
                             <form action="/register" th:object="${registrationForm}" method="POST" enctype="utf8">
-                                <div class="form-group"><input class="form-control" type="username" name="username" placeholder="Username" th:field="*{user_name}"></div>
+                                <div class="form-group"><input class="form-control" type="text" name="username" placeholder="Username" th:field="*{user_name}"></div>
                                 <div class="form-group"><input class="form-control" type="email" name="email" placeholder="Email" th:field="*{email}"></div>
                                 <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password" th:field="*{password}"></div>
+                                <div class="modal-footer"><input class="btn btn-primary signin" type="submit"></div>
                                 <!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                             </form>
                         </div>
                     </div>
-                    <div class="modal-footer"><button class="btn btn-primary signin" type="submit">register</button></div>
                 </div>
             </div>
     </div>
@@ -46,8 +47,8 @@
     <div class="footer">
         <footer>
             <ul class="nav mx-auto">
-                <li class="nav-item"><a class="nav-link" href="/index">Home</a></li>
-                <li class="nav-item"><a class="nav-link active" href="/profile">Profile</a></li>
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" href="#">Profile</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Matches</a></li>
             </ul>
         </footer>
