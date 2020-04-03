@@ -3,7 +3,7 @@ package com.SE370.Cougar.Roomie.controller.services;
 import com.SE370.Cougar.Roomie.model.entities.Answer;
 import com.SE370.Cougar.Roomie.model.repositories.AnswerRepo;
 import com.SE370.Cougar.Roomie.model.repositories.QuestionRepo;
-import com.SE370.Cougar.Roomie.view.AssessmentForm;
+import com.SE370.Cougar.Roomie.model.DTO.AssessmentForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,18 +1,13 @@
-package com.SE370.Cougar.Roomie.controller.viewcontrollers;
+package com.SE370.Cougar.Roomie.controller.view;
 
-import com.SE370.Cougar.Roomie.controller.services.CustomUserDetailsService;
-import com.SE370.Cougar.Roomie.view.FirstTimeLoginForm;
-import com.SE370.Cougar.Roomie.view.RegistrationForm;
+import com.SE370.Cougar.Roomie.controller.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 
 @Controller
 public class RegistrationController {
     @Autowired
-    CustomUserDetailsService userService;
+    UserService userService;
 /*
     @GetMapping("/register")
     public String showRegistrationForm(WebRequest request, Model model) {

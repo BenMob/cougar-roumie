@@ -1,10 +1,11 @@
 package com.SE370.Cougar.Roomie.controller.services;
 
 import com.SE370.Cougar.Roomie.model.CustomUserDetails;
+import com.SE370.Cougar.Roomie.model.DTO.UserInfo;
 import com.SE370.Cougar.Roomie.model.entities.User;
 import com.SE370.Cougar.Roomie.model.repositories.UserRepo;
-import com.SE370.Cougar.Roomie.view.FirstTimeLoginForm;
-import com.SE370.Cougar.Roomie.view.RegistrationForm;
+import com.SE370.Cougar.Roomie.model.DTO.FirstTimeLoginForm;
+import com.SE370.Cougar.Roomie.model.DTO.RegistrationForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,21 +14,25 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     UserRepo userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        // Try to find user from db
         Optional<User> user = userRepository.findByUserName(userName);
 
-        user.orElseThrow(() -> new UsernameNotFoundException("Error Not Found: " + userName));
-
-        return user.map(CustomUserDetails::new).get();
+        // Below works as follows, convert user into a CustomUserDetails object, if user is null throw error
+        return user
+                .map(CustomUserDetails::new)
+                .orElseThrow(() -> new UsernameNotFoundException("Error Not Found: " + userName));
     }
 
     @Transactional
@@ -41,7 +46,21 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Transactional
+    public List<UserInfo> getAllUsers () {
+        return userRepository.findAll().stream()
+                .map(foundUser -> {
+                    UserInfo converted = new UserInfo();
+                    converted.setId(foundUser.getId());
+                    converted.setUserName(foundUser.getUserName());
+                    return converted;
+                }).collect(Collectors.toList());
+    }
+
+    @Transactional
     public User updateFirstTimeUser(FirstTimeLoginForm secondaryInfoForm){
+
+        // TODO: Clean this code up
+
         /******************************************************************************
          CustomUserDetails customUser =  (((CustomUserDetails) SecurityContextHolder
                .getContext().getAuthentication().getPrincipal()));

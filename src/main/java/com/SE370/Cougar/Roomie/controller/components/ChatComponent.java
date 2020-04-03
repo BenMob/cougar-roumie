@@ -1,10 +1,7 @@
 package com.SE370.Cougar.Roomie.controller.components;
 
 import com.SE370.Cougar.Roomie.controller.services.MessageService;
-import com.SE370.Cougar.Roomie.controller.viewcontrollers.ChatController;
-import com.SE370.Cougar.Roomie.view.Message;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.SE370.Cougar.Roomie.model.DTO.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;

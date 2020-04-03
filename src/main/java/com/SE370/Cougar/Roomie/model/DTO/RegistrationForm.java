@@ -1,4 +1,4 @@
-package com.SE370.Cougar.Roomie.view;
+package com.SE370.Cougar.Roomie.model.DTO;
 
 public class RegistrationForm {
     private String user_name;

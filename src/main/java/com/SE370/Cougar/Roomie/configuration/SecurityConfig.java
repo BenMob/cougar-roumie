@@ -1,6 +1,6 @@
 package com.SE370.Cougar.Roomie.configuration;
 
-import com.SE370.Cougar.Roomie.controller.services.CustomUserDetailsService;
+import com.SE370.Cougar.Roomie.controller.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    CustomUserDetailsService userDetailsService; // We overrided default
+    UserService userDetailsService; // We overrided default
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

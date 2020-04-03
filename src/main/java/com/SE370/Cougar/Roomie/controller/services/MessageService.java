@@ -5,7 +5,7 @@ import com.SE370.Cougar.Roomie.model.entities.User;
 import com.SE370.Cougar.Roomie.model.repositories.ConversationRepo;
 import com.SE370.Cougar.Roomie.model.repositories.MessageRepo;
 import com.SE370.Cougar.Roomie.model.repositories.UserRepo;
-import com.SE370.Cougar.Roomie.view.Message;
+import com.SE370.Cougar.Roomie.model.DTO.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +51,6 @@ public class MessageService {
         }
 
         return possibleConv.orElseGet(() -> newConversation(user1, user2));
-
     }
 
     public void saveMessage(Message msg, int convID) {
