@@ -59,22 +59,18 @@ body:before {
 }
 
 .user-table-head {
-    font-size: 20px;
-    color: black;
+    font-size: 18px;
+    color: #1d2124;
     border-bottom: 1px solid black;
 }
 
 .user-table-body > tr > td {
-    font-size: 16px;
+    font-size: 20px;
     padding: 10px;
     text-align: center;
 }
 .user-table-body > tr {
     border-bottom: 1px solid #c6c8ca;
-}
-.user-table-body > tr:hover, tr:hover > td {
-    font-weight: bold;
-    background-color: #c6c8ca;
 }
 
 input {

@@ -16,19 +16,16 @@ var colors = [
     '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
 ];
 
-function connect(event) {
-    username = document.querySelector('#name').value.trim();
+function connect(user) {
 
-    if(username) {
-        usernamePage.classList.add('hidden');
-        chatPage.classList.remove('hidden');
+    username = user.replace(/["]+/g, '');
+    usernamePage.classList.add('hidden');
+    chatPage.classList.remove('hidden');
 
-        var socket = new SockJS('/chat');
-        stompClient = Stomp.over(socket);
+    var socket = new SockJS('/chat');
+    stompClient = Stomp.over(socket);
 
-        stompClient.connect({}, onConnected, onError);
-    }
-    event.preventDefault();
+    stompClient.connect({}, onConnected, onError);
 }
 
 
@@ -105,5 +102,4 @@ function getAvatarColor(messageSender) {
     return colors[index];
 }
 
-usernameForm.addEventListener('submit', connect, true)
 messageForm.addEventListener('submit', sendMessage, true)

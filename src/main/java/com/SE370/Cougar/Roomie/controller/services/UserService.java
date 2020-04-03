@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,7 +48,10 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public List<UserInfo> getAllUsers () {
+        CustomUserDetails thisUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         return userRepository.findAll().stream()
+                .filter(user -> !user.getUserName().equals(thisUser.getUsername()))
                 .map(foundUser -> {
                     UserInfo converted = new UserInfo();
                     converted.setId(foundUser.getId());

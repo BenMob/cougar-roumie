@@ -12,12 +12,11 @@
 
 <div id="username-page">
     <div class="username-page-container">
-        <h1 class="title">Select user to start Chatting!</h1>
+        <h1 class="title">Start Chatting Now!</h1>
         <table class="user-table">
             <thead class="user-table-head">
                 <tr>
-                    <th>User ID</th>
-                    <th>User Name</th>
+                    <th colspan="2">Available Users</th>
                 </tr>
             </thead>
             <tbody class="user-table-body">
@@ -26,24 +25,14 @@
                 </tr>
                 <tr th:each="user : ${users}">
                     <td>
-                        <span th:text="${user.id}"></span>
+                        <span th:text="${user.userName}"></span>
                     </td>
                     <td>
-                        <span th:text="${user.userName}"></span>
+                        <button th:onclick="connect([[${user.userName}]])" class="accent">Message!</button>
                     </td>
                 </tr>
             </tbody>
         </table>
-
-        <form id="usernameForm" name="usernameForm">
-            <h3>Enter users name</h3>
-            <div class="form-group">
-                <input type="text" id="name" placeholder="username" autocomplete="off" class="form-control" />
-            </div>
-            <div class="form-group">
-                <button type="submit" class="accent username-submit">Message!</button>
-            </div>
-        </form>
     </div>
 </div>
 
