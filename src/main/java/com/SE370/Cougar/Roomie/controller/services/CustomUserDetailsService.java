@@ -3,8 +3,10 @@ package com.SE370.Cougar.Roomie.controller.services;
 import com.SE370.Cougar.Roomie.model.CustomUserDetails;
 import com.SE370.Cougar.Roomie.model.entities.User;
 import com.SE370.Cougar.Roomie.model.repositories.UserRepo;
+import com.SE370.Cougar.Roomie.view.FirstTimeLoginForm;
 import com.SE370.Cougar.Roomie.view.RegistrationForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -35,6 +37,25 @@ public class CustomUserDetailsService implements UserDetailsService {
         user.setUserName(registrationForm.getUser_name());
         user.setPassword(registrationForm.getPassword());
         user.setActive(true);
+        return userRepository.save(user);
+    }
+
+    @Transactional
+    public User updateFirstTimeUser(FirstTimeLoginForm secondaryInfoForm){
+        /******************************************************************************
+         CustomUserDetails customUser =  (((CustomUserDetails) SecurityContextHolder
+               .getContext().getAuthentication().getPrincipal()));
+
+         If the casting below is hard to understand, the customUser above is what is being
+         passed in as a parameter in the new User() object below.
+        *******************************************************************************/
+        User user = new User((((CustomUserDetails) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal())));
+
+        user.setFirstName(secondaryInfoForm.getFirst_name());
+        user.setLastName(secondaryInfoForm.getLast_name());
+        user.setGender(secondaryInfoForm.getGender());
+
         return userRepository.save(user);
     }
 

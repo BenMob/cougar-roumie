@@ -1,10 +1,12 @@
 package com.SE370.Cougar.Roomie.model.entities;
 
+import com.SE370.Cougar.Roomie.model.CustomUserDetails;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users") // just to keep things looking uniform in the database
-public class User {
+public class User{
     @Id // Primary Key
     @GeneratedValue(strategy = GenerationType.AUTO) // Tell spring to handle generation
     private int id;
@@ -17,7 +19,22 @@ public class User {
     private String email; // empty by default
     private boolean active; // account flag
 
+
     public User() {}
+
+    // Task: Creates a User Entity
+    // Parameter: CustomUserDetails Object
+    public User(CustomUserDetails customUser){
+        setId(customUser.getUser_id());
+        setAnswer_id(customUser.getAnswerId());
+        setFirstName(customUser.getFirstName());
+        setLastName(customUser.getLastName());
+        setGender(customUser.getGender());
+        setUserName(customUser.getUsername());
+        setPassword(customUser.getPassword());
+        setEmail(customUser.getEmail());
+        setActive(customUser.isEnabled());
+    }
 
     public int getId() {
         return id;
