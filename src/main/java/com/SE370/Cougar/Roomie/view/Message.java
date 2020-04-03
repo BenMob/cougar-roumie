@@ -4,12 +4,21 @@ public class Message {
     public enum MessageType {
         CHAT,
         JOIN,
-        LEAVE
+        LEAVE,
     }
 
     private MessageType type;
     private String content;
     private String sender;
+    private String reciever;
+
+    public String getReciever() {
+        return reciever;
+    }
+
+    public void setReciever(String reciever) {
+        this.reciever = reciever;
+    }
 
     public MessageType getType() {
         return type;

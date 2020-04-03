@@ -1,57 +1,75 @@
 package com.SE370.Cougar.Roomie.controller.components;
 
-
-import com.SE370.Cougar.Roomie.model.CustomUserDetails;
-import com.SE370.Cougar.Roomie.model.entities.Message;
-import com.SE370.Cougar.Roomie.model.repositories.MessageRepo;
+import com.SE370.Cougar.Roomie.controller.services.MessageService;
+import com.SE370.Cougar.Roomie.controller.viewcontrollers.ChatController;
+import com.SE370.Cougar.Roomie.view.Message;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Component
-@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
+@Scope(value = "websocket", proxyMode = ScopedProxyMode.TARGET_CLASS)
+// This class is 'websocket' scoped meaning that for every websocket session, a new version of this class will be created.
 public class ChatComponent {
+
     @Autowired
-    MessageRepo messageRepo;
+    MessageService messageService;
 
-    public String UserName;
-    public Optional<Integer> convID;
-    public Optional<Integer> userID;
+    private Optional<Integer> thisUserID;
+    private Optional<String> thisUserName;
+    private Optional<Integer> otherUserID;
+    private Optional<String> otherUserName;
+    private Optional<Integer> convID;
 
-    public List<com.SE370.Cougar.Roomie.view.Message> getOldMessages () throws RuntimeException {
-        convID.orElseThrow(() -> new RuntimeException("No Conversation ID supplied"));
-        userID.orElseGet(() -> fillData()); // if userID is empty
+    // This function should be the first method called by the controller, it will initialize everything accordingly
+     public List<Message> getOldMessages() {
+        thisUserID.ifPresent(thisUser -> {
+            otherUserName.ifPresent(otherUser -> {
+                this.otherUserID = messageService.getUserID(otherUser);
+                otherUserID.ifPresent(otherID -> {
+                    this.convID = Optional.of(messageService.getConversationID(thisUser, otherID));
+                });
+            });
+        });
 
-        List<Message> unconverted = messageRepo.findAllByConversationId(convID.get());
-
-        // mapping each entity message into client compatible message
-        return unconverted.stream()
-                .map(msg -> convertFromEntity(msg))
-                .collect(Collectors.toList());
+        // Final check just to make sure values got initialized correctly
+        if (convID.isPresent()) {
+            return messageService.getOldMessages(convID.get());
+        } else {
+            return Collections.emptyList();
+        }
     }
 
-    private int fillData() {
-        return (((CustomUserDetails)SecurityContextHolder
-                .getContext().getAuthentication().getPrincipal())
-                .getUser_id());
+    public void saveMessage(Message msg) {
+        convID.ifPresent(conversation -> {
+            thisUserName.ifPresent(senderName -> {
+                msg.setSender(senderName);
+                messageService.saveMessage(msg, conversation);
+            });
+        });
     }
 
-    // To convert Entities from the DB into our client compatible messages
-    private com.SE370.Cougar.Roomie.view.Message convertFromEntity(Message msg) {
-        com.SE370.Cougar.Roomie.view.Message converted = new com.SE370.Cougar.Roomie.view.Message();
-        converted.setType(com.SE370.Cougar.Roomie.view.Message.MessageType.CHAT);
-        converted.setContent(msg.getMessage());
-        converted.setSender(msg.getSenderName());
-        return converted;
+    public void setThisUserID(Optional<Integer> thisUserID) {
+        this.thisUserID = thisUserID;
     }
 
-    public void setConvID(int convID) {
-        this.convID = Optional.of(convID); // need to wrap in an optional
+    public Optional<String> getThisUserName() {
+        return thisUserName;
+    }
+
+    public void setThisUserName(Optional<String> thisUserName) {
+        this.thisUserName = thisUserName;
+    }
+
+    public Optional<String> getOtherUserName() {
+        return otherUserName;
+    }
+
+    public void setOtherUserName(Optional<String> otherUserName) {
+        this.otherUserName = otherUserName;
     }
 }

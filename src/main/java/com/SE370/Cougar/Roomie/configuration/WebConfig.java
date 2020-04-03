@@ -12,4 +12,5 @@ public class WebConfig implements WebMvcConfigurer {
         // So we dont have to write an entire controller, we make spring do it
         registry.addViewController("/login").setViewName("login");
     }
+
 }
