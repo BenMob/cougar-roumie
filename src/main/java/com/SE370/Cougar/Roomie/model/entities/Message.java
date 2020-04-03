@@ -11,7 +11,7 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int messageId;
     private int conversationId;
-    private int originUserId;
+    private String senderName;
     private String message;
 
     @Column(nullable = false, updatable = false)
@@ -35,12 +35,10 @@ public class Message {
         this.conversationId = conversationId;
     }
 
-    public long getOriginUserId() {
-        return originUserId;
-    }
+    public String getSenderName() { return senderName; }
 
-    public void setOriginUserId(int originUserId) {
-        this.originUserId = originUserId;
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
     }
 
     public String getMessage() {
