@@ -1,6 +1,8 @@
 package com.SE370.Cougar.Roomie.model.entities;
 
 import com.SE370.Cougar.Roomie.model.CustomUserDetails;
+import com.SE370.Cougar.Roomie.model.DTO.FirstTimeLoginForm;
+import com.SE370.Cougar.Roomie.model.DTO.RegistrationForm;
 
 import javax.persistence.*;
 
@@ -25,15 +27,45 @@ public class User{
     // Task: Creates a User Entity
     // Parameter: CustomUserDetails Object
     public User(CustomUserDetails customUser){
-        setId(customUser.getUser_id());
-        setAnswer_id(customUser.getAnswerId());
-        setFirstName(customUser.getFirstName());
-        setLastName(customUser.getLastName());
-        setGender(customUser.getGender());
-        setUserName(customUser.getUsername());
-        setPassword(customUser.getPassword());
-        setEmail(customUser.getEmail());
-        setActive(customUser.isEnabled());
+        try {
+            setId(customUser.getUser_id());
+            setAnswer_id(customUser.getAnswerId());
+            setFirstName(customUser.getFirstName());
+            setLastName(customUser.getLastName());
+            setGender(customUser.getGender());
+            setUserName(customUser.getUsername());
+            setPassword(customUser.getPassword());
+            setEmail(customUser.getEmail());
+            setActive(customUser.isEnabled());
+        }catch(Exception e){
+            // TODO Define explicit Error message
+            throw e;
+        }
+    }
+
+    // Task: Copy constructor that registers user for the first time
+    // Parameter: RegistrationForm object
+    public User(RegistrationForm form){
+        try {
+            setUserName(form.getUser_name());
+            setEmail(form.getEmail());
+            setPassword(form.getPassword());
+            setActive(true);
+        }catch (Exception e){
+            // TODO Define explicit Error message
+            throw e;
+        }
+    }
+
+    public void registerFormSecondary(FirstTimeLoginForm form){
+        try {
+            setFirstName(form.getFirst_name());
+            setLastName(form.getLast_name());
+            setGender(form.getGender());
+        }catch (Exception e) {
+            // TODO Define explicit Error message
+            throw e;
+        }
     }
 
     public int getId() {
