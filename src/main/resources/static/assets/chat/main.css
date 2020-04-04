@@ -53,6 +53,26 @@ body:before {
     margin-bottom: 15px;
 }
 
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-table-head {
+    font-size: 18px;
+    color: #1d2124;
+    border-bottom: 1px solid black;
+}
+
+.user-table-body > tr > td {
+    font-size: 20px;
+    padding: 10px;
+    text-align: center;
+}
+.user-table-body > tr {
+    border-bottom: 1px solid #c6c8ca;
+}
+
 input {
     padding-left: 10px;
     outline: none;

@@ -1,10 +1,10 @@
-package com.SE370.Cougar.Roomie.controller.viewcontrollers;
+package com.SE370.Cougar.Roomie.controller.view;
 
 import com.SE370.Cougar.Roomie.controller.components.ChatComponent;
+import com.SE370.Cougar.Roomie.controller.services.UserService;
 import com.SE370.Cougar.Roomie.model.CustomUserDetails;
-import com.SE370.Cougar.Roomie.view.Message;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.SE370.Cougar.Roomie.model.DTO.Message;
+import com.SE370.Cougar.Roomie.model.DTO.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -13,6 +13,7 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import java.util.Optional;
 
@@ -23,9 +24,12 @@ public class ChatController {
     private ChatComponent chatComponent;
     @Autowired
     SimpMessageSendingOperations messsageOperations;
+    @Autowired
+    UserService userService;
 
     @GetMapping("/user/chat")
-    public String chat() {
+    public String chat(Model model) {
+        model.addAttribute("users", userService.getAllUsers());
         return "chat";
     }
 

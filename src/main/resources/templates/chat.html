@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>Chat</title>
@@ -12,15 +12,27 @@
 
 <div id="username-page">
     <div class="username-page-container">
-        <h1 class="title">Type the other user's name</h1>
-        <form id="usernameForm" name="usernameForm">
-            <div class="form-group">
-                <input type="text" id="name" placeholder="'user1'..'user2'" autocomplete="off" class="form-control" />
-            </div>
-            <div class="form-group">
-                <button type="submit" class="accent username-submit">Start Chatting</button>
-            </div>
-        </form>
+        <h1 class="title">Start Chatting Now!</h1>
+        <table class="user-table">
+            <thead class="user-table-head">
+                <tr>
+                    <th colspan="2">Available Users</th>
+                </tr>
+            </thead>
+            <tbody class="user-table-body">
+                <tr th:if="${users.empty}">
+                    <td colspan="2">No Users Found In Database</td>
+                </tr>
+                <tr th:each="user : ${users}">
+                    <td>
+                        <span th:text="${user.userName}"></span>
+                    </td>
+                    <td>
+                        <button th:onclick="connect([[${user.userName}]])" class="accent">Message!</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 

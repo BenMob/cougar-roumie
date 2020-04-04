@@ -18,9 +18,6 @@ public class CustomUserDetails implements UserDetails {
     private String userName;
     private String password;
     private String email;
-
-
-
     private boolean active;
 
 
