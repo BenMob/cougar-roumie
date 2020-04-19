@@ -16,17 +16,22 @@
 <body class="gradient overlay">
 <div id="navbar">
         <nav class="navbar navbar-light navbar-expand" id="navbar">
-            <div class="container"><a class="navbar-brand" href="/"><img id="logo" src="assets/img/logo.png"></a><span><a class="btn btn-primary signin" role="button" href="/login">Sign in</a></span></div>
+            <div class="container"><a class="navbar-brand" href="index.html"><img id="logo" src="assets/img/logo.png"></a>
+                <span>
+                    <a class="btn btn-primary signin" role="button" href="/login" sec:authorize="isAnonymous()">Sign in</a>
+                    <a class="btn btn-primary signin" role="button" href="/logout" sec:authorize="isAuthenticated()">Logout</a>
+                </span>
+            </div>
         </nav>
     </div>
     <div th:action="@{/login}" id="sign-in-form" class="login-form">
         <form method="POST">
             <h2 class="signin-header">Sign in</h2>
-            <div th:if="${param.error}">
-                Invalid username and password.
+            <div class="form-group"><input class="form-control" th:classappend="${param.error} ? is-invalid : ''" type="text" name="username" placeholder="Username" required></div>
+            <div class="form-group"><input class="form-control" th:classappend="${param.error} ? is-invalid : ''" type="password" name="password" placeholder="Password" required>
+                <h4 th:if="${param.error}" class="invalid-feedback" style="color: white">Invalid username or password.</h4>
             </div>
-            <div class="form-group"><input class="form-control" type="text" name="username" placeholder="Username"></div>
-            <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password"></div>
+
             <div class="form-group"><button class="btn btn-primary btn-block form-control" type="submit">Log In</button></div>
             <a class="forgot" href="#">Forgot your password?</a>
             <!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
@@ -42,7 +47,7 @@
         </footer>
     </div>
     <script src="assets/js/jquery.min.js"></script>
-    <script src="ssets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/modal.js"></script>
 </body>
 

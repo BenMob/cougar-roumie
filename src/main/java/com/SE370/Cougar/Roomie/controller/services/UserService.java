@@ -82,6 +82,7 @@ public class UserService implements UserDetailsService {
     public User updateFirstTimeUser(Profile profileInfoForm){
         User user = new User((((CustomUserDetails) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal())));
+                
         user.registerProfileInfo(profileInfoForm);
 
         return userRepository.save(user);
