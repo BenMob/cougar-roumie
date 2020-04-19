@@ -58,8 +58,12 @@ public class ProfileController {
     }
 */
     @PostMapping("/profile")
-    public String registerFirstLastGender(@ModelAttribute Profile profileInfoForm ) {
+    public String registerFirstLastGender(@ModelAttribute Profile profileInfoForm, Model model) {
         userService.updateFirstTimeUser(profileInfoForm);
-        return "redirect:/profile";
+
+        String hide = "true";
+        model.addAttribute("hide", hide);
+        model.addAttribute("profileInfoForm", profileInfoForm);
+        return "profile";
     }
 }
