@@ -1,7 +1,7 @@
 package com.SE370.Cougar.Roomie.model.entities;
 
 import com.SE370.Cougar.Roomie.model.CustomUserDetails;
-import com.SE370.Cougar.Roomie.model.DTO.FirstTimeLoginForm;
+import com.SE370.Cougar.Roomie.model.DTO.Profile;
 import com.SE370.Cougar.Roomie.model.DTO.RegistrationForm;
 
 import javax.persistence.*;
@@ -20,6 +20,7 @@ public class User{
     private int gender; // 0 is default (unknown), 1 for Male, 2 for Female
     private String email; // empty by default
     private boolean active; // account flag
+    //private long visits; // number of times a user has logged in
 
 
     public User() {}
@@ -57,7 +58,7 @@ public class User{
         }
     }
 
-    public void registerFormSecondary(FirstTimeLoginForm form){
+    public void registerProfileInfo(Profile form){
         try {
             setFirstName(form.getFirst_name());
             setLastName(form.getLast_name());
@@ -139,4 +140,5 @@ public class User{
     public void setActive(boolean active) {
         this.active = active;
     }
+
 }

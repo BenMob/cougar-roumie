@@ -1,10 +1,10 @@
 package com.SE370.Cougar.Roomie.controller.services;
 
 import com.SE370.Cougar.Roomie.model.CustomUserDetails;
+import com.SE370.Cougar.Roomie.model.DTO.Profile;
 import com.SE370.Cougar.Roomie.model.DTO.UserInfo;
 import com.SE370.Cougar.Roomie.model.entities.User;
 import com.SE370.Cougar.Roomie.model.repositories.UserRepo;
-import com.SE370.Cougar.Roomie.model.DTO.FirstTimeLoginForm;
 import com.SE370.Cougar.Roomie.model.DTO.RegistrationForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Principal;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,6 +38,19 @@ public class UserService implements UserDetailsService {
         return user
                 .map(CustomUserDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("Error Not Found: " + userName));
+    }
+
+    /*
+    Role: Grab user information from the DB for profile set up.
+    Parameter: Profile DTO
+     */
+    public Profile prepareProfile(CustomUserDetails user){
+        Profile profileInformation = new Profile();
+        profileInformation.setFirst_name(user.getFirstName());
+        profileInformation.setLast_name(user.getLastName());
+        profileInformation.setGender(user.getGender());
+
+        return profileInformation;
     }
 
     @Transactional
@@ -66,10 +79,10 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public User updateFirstTimeUser(FirstTimeLoginForm secondaryInfoForm){
+    public User updateFirstTimeUser(Profile profileInfoForm){
         User user = new User((((CustomUserDetails) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal())));
-        user.registerFormSecondary(secondaryInfoForm);
+        user.registerProfileInfo(profileInfoForm);
 
         return userRepository.save(user);
     }

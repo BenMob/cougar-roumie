@@ -19,7 +19,13 @@
             <div class="container"><a class="navbar-brand" href="index.html"><img id="logo" src="assets/img/logo.png"></a><span><a class="btn btn-primary signin" role="button" href="/login">Sign in</a></span></div>
         </nav>
     </div>
-    <div id="header"><button class="btn btn-primary register" id="modal" data-toggle="modal" data-target="#modal-reg" style="color: #fff;">profile popup test</button>
+        <div class="container">
+            <h3 th:text="*{first_name}">First Name  </h3>
+            <h3 th:text="*{last_name}">Last Name</h3><br>
+            <h4 th:text="*{gender}">Gender</h4><br>
+        </div>
+
+    <div id="header"><button class="btn btn-primary register" id="modal" data-toggle="modal" data-target="#modal-reg" style="color: #fff;">Setup Profile</button>
         <div class="modal fade" role="dialog" tabindex="-1" id="modal-reg">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -28,7 +34,7 @@
                     <div class="modal-body">
                         <p class="text-center">Please fill in some information about yourself</p>
                         <div class="login-form">
-                            <form action="/welcome" th:object="${secondaryInfoForm}" method="POST" enctype="utf8">
+                            <form action="/profile" th:object="${profileInfoForm}" method="POST" enctype="utf8">
                                 <div class="form-group"><input class="form-control" type="text" name="firstName" placeholder="First Name" th:field="*{first_name}"></div>
                                 <div class="form-group"><input class="form-control" type="text" name="lastName" placeholder="Last Name" th:field="*{last_name}"></div>
                                 <div class="form-group text-left checkbox">
