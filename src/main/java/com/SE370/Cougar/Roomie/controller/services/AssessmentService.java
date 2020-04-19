@@ -15,6 +15,8 @@ public class AssessmentService {
     @Autowired
     QuestionRepo questionRepo;
 
+
+    // TODO: Change this to handle a list...
     public AssessmentForm prepareAssessment(AssessmentForm assessmentForm) {
         // Fill form with questions in the database
         assessmentForm.setQuestion1(questionRepo.
@@ -40,6 +42,8 @@ public class AssessmentService {
         return answerRepo.save(createAnswer(assessmentForm, user_id));
     }
 
+
+    // TODO: Change this to handle a list...
     public Answer createAnswer(AssessmentForm assessmentForm, int user_id) {
         return new Answer(user_id,
                 assessmentForm.getAnswer1(),
