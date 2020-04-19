@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     UserRepo userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
@@ -41,8 +45,9 @@ public class UserService implements UserDetailsService {
         User user = new User();
         user.setEmail(registrationForm.getEmail());
         user.setUserName(registrationForm.getUser_name());
-        user.setPassword(registrationForm.getPassword());
+        user.setPassword(passwordEncoder.encode(registrationForm.getPassword()));
         user.setActive(true);
+
         return userRepository.save(user);
     }
 
@@ -62,22 +67,9 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public User updateFirstTimeUser(FirstTimeLoginForm secondaryInfoForm){
-
-        // TODO: Clean this code up
-
-        /******************************************************************************
-         CustomUserDetails customUser =  (((CustomUserDetails) SecurityContextHolder
-               .getContext().getAuthentication().getPrincipal()));
-
-         If the casting below is hard to understand, the customUser above is what is being
-         passed in as a parameter in the new User() object below.
-        *******************************************************************************/
         User user = new User((((CustomUserDetails) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal())));
-
-        user.setFirstName(secondaryInfoForm.getFirst_name());
-        user.setLastName(secondaryInfoForm.getLast_name());
-        user.setGender(secondaryInfoForm.getGender());
+        user.registerFormSecondary(secondaryInfoForm);
 
         return userRepository.save(user);
     }
