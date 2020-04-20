@@ -1,66 +1,53 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>dev</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,600&amp;display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900">
-    <link rel="stylesheet" href="assets/css/footer.css">
-    <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
-</head>
+<div th:insert="~{fragments/mainFrag :: header}"></div>
 
 <body class="gradient overlay">
-<div id="navbar">
-        <nav class="navbar navbar-light navbar-expand" id="navbar">
-            <div class="container"><a class="navbar-brand" href="index.html"><img id="logo" src="assets/img/logo.png"></a><span><a class="btn btn-primary signin" role="button" href="/login">Sign in</a></span></div>
-        </nav>
-    </div>
-    <div id="header"><button class="btn btn-primary register" id="modal" data-toggle="modal" data-target="#modal-reg" style="color: #fff;">profile popup test</button>
-        <div class="modal fade" role="dialog" tabindex="-1" id="modal-reg">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Welcome!</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                    <div class="modal-body">
-                        <p class="text-center">Please fill in some information about yourself</p>
-                        <div class="login-form">
-                            <form action="/welcome" th:object="${secondaryInfoForm}" method="POST" enctype="utf8">
-                                <div class="form-group"><input class="form-control" type="text" name="firstName" placeholder="First Name" th:field="*{first_name}"></div>
-                                <div class="form-group"><input class="form-control" type="text" name="lastName" placeholder="Last Name" th:field="*{last_name}"></div>
-                                <div class="form-group text-left checkbox">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="formCheck-1" value='1' th:field="*{gender}">
-                                        <label class="form-check-label" for="formCheck-1">Male</label>
+<div th:insert="~{fragments/mainFrag :: navbar}"></div>
+
+        <div class="container" th:if="${hide == 'true'}">
+            <h3 th:text="*{profileInfoForm.first_name}">First Name</h3>
+            <h3 th:text="*{profileInfoForm.last_name}">Last Name</h3><br>
+            <h4 th:text="*{profileInfoForm.gender}">Gender</h4><br>
+        </div>
+
+    <div id="header">
+        <div th:unless="${hide == 'true'}">
+            <button class="btn btn-primary register" id="modal" data-toggle="modal" data-target="#modal-reg" style="color: #fff;">Setup Profile</button>
+            <div class="modal fade" role="dialog" tabindex="-1" id="modal-reg">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Welcome!</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                        <div class="modal-body">
+                            <p class="text-center">Please fill in some information about yourself</p>
+                            <div class="login-form">
+                                <form th:action="@{/user/profile}" th:object="${profileInfoForm}" method="POST" enctype="utf8">
+                                    <div class="form-group"><input class="form-control" type="text" name="firstName" placeholder="First Name" th:field="*{first_name}"></div>
+                                    <div class="form-group"><input class="form-control" type="text" name="lastName" placeholder="Last Name" th:field="*{last_name}"></div>
+                                    <div class="form-group text-left checkbox">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" id="formCheck-1" value='1' th:field="*{gender}">
+                                            <label class="form-check-label" for="formCheck-1">Male</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" id="formCheck-2" value='2' th:field="*{gender}">
+                                            <label class="form-check-label" for="formCheck-2">Female</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="formCheck-2" value='2' th:field="*{gender}">
-                                        <label class="form-check-label" for="formCheck-2">Female</label>
-                                    </div>
-                                </div>
-                                <div class="modal-footer"><button class="btn btn-primary signin" type="submit">submit</button></div>
-                            </form>
+                                    <div class="modal-footer"><button class="btn btn-primary signin" type="submit">submit</button></div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="footer">
-        <footer>
-            <ul class="nav mx-auto">
-                <li class="nav-item"><a class="nav-link" href="/index">Home</a></li>
-                <li class="nav-item"><a class="nav-link active" href="/profile">Profile</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Matches</a></li>
-            </ul>
-        </footer>
-    </div>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/modal.js"></script>
+
+
+<div th:insert="~{fragments/mainFrag :: footer}"></div>
 </body>
 
 </html>

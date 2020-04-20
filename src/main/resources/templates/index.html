@@ -1,25 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Cougar Roomie</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,600&amp;display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900">
-    <link rel="stylesheet" href="assets/css/footer.css">
-    <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
-</head>
+<div th:insert="~{fragments/mainFrag :: header}"></div>
 
 <body class="gradient overlay">
-    <div id="navbar">
-        <nav class="navbar navbar-light navbar-expand" id="navbar">
-            <div class="container"><a class="navbar-brand" href="index.html"><img id="logo" src="assets/img/logo.png"></a><span><a class="btn btn-primary signin" role="button" href="/login">Sign in</a></span></div>
-        </nav>
-    </div>
-    <div id="header">
+<div th:insert="~{fragments/mainFrag :: navbar}"></div>
+
+    <div id="header" sec:authorize="isAnonymous()">
         <h1 class="catch">Just a swipe away</h1>
         <p>Don't miss out on the easy alternative to finding a roommate. Match with potential roommates and get to know eachother!</p>
         <button type="button" class="btn btn-primary register" id="modal" data-toggle="modal" data-target="#modal-reg" style="color: #fff;">Register</button>
@@ -28,11 +15,15 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Register for cougar roomie</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                        <h4 class="modal-title">Register for cougar roomie</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
                     <div class="modal-body">
                         <div class="login-form">
                             <form action="/register" th:object="${registrationForm}" method="POST" enctype="utf8">
-                                <div class="form-group"><input class="form-control" type="text" name="username" placeholder="Username" th:field="*{user_name}"></div>
+                                <div class="form-group">
+                                    <input class="form-control" th:classappend="${regError} ? is-invalid : ''" type="text" name="username" placeholder="Username" th:field="*{user_name}">
+                                    <h4 th:if="${regError}" class="invalid-feedback" th:text="${regError}"></h4>
+                                </div>
                                 <div class="form-group"><input class="form-control" type="email" name="email" placeholder="Email" th:field="*{email}"></div>
                                 <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password" th:field="*{password}"></div>
                                 <div class="modal-footer"><input class="btn btn-primary signin" type="submit"></div>
@@ -44,18 +35,7 @@
             </div>
     </div>
     </div>
-    <div class="footer">
-        <footer>
-            <ul class="nav mx-auto">
-                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link active" href="#">Profile</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Matches</a></li>
-            </ul>
-        </footer>
-    </div>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/modal.js"></script>
+<div th:insert="~{fragments/mainFrag :: footer}"></div>
 </body>
 
 </html>
