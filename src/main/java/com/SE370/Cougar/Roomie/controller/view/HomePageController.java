@@ -23,8 +23,14 @@ public class HomePageController {
     }
 
     @PostMapping("/register")
-    public String registerSubmit(@ModelAttribute RegistrationForm registrationForm) {
-        userService.createNewUser(registrationForm);
-        return "index";
+    public String registerSubmit(@ModelAttribute RegistrationForm registrationForm, Model model) {
+        try {
+            userService.createNewUser(registrationForm);
+            return "login"; // User created successfully... go to login
+        } catch (RuntimeException e) {
+            model.addAttribute("regError", e.getMessage()); // Trigger invalid text inside modal
+            model.addAttribute("registrationForm", registrationForm); // return the info entered so Modal is already filled
+            return "index";
+        }
     }
 }

@@ -54,14 +54,18 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public User createNewUser(RegistrationForm registrationForm) { // Very basic implementation -- ADD validation
-        User user = new User();
-        user.setEmail(registrationForm.getEmail());
-        user.setUserName(registrationForm.getUser_name());
-        user.setPassword(passwordEncoder.encode(registrationForm.getPassword()));
-        user.setActive(true);
+    public User createNewUser(RegistrationForm registrationForm) throws RuntimeException {
 
-        return userRepository.save(user);
+        if (!userRepository.existsByUserName(registrationForm.getUser_name())) { // check if username exists
+            User user = new User();
+            user.setEmail(registrationForm.getEmail());
+            user.setUserName(registrationForm.getUser_name());
+            user.setPassword(passwordEncoder.encode(registrationForm.getPassword()));
+            user.setActive(true);
+            return userRepository.save(user);
+        } else {
+            throw new RuntimeException("Sorry, that username is not available");
+        }
     }
 
     @Transactional
