@@ -33,6 +33,7 @@ public class AssessmentController {
                 .getUser_id());
 
         assessmentService.submitAssessment(assessmentForm, userId);
+
         return "assessment";
     }
 }

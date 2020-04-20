@@ -20,7 +20,7 @@ public class ProfileController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/profile")
+    @GetMapping("user/profile")
     public String showProfileInfoForm(WebRequest request, Model model){
 
         // This is what your code should look like...
@@ -57,7 +57,7 @@ public class ProfileController {
         return "profile";
     }
 */
-    @PostMapping("/profile")
+    @PostMapping("user/profile")
     public String registerFirstLastGender(@ModelAttribute Profile profileInfoForm, Model model) {
         userService.updateFirstTimeUser(profileInfoForm);
 
