@@ -18,10 +18,9 @@ public class CustomUserDetails implements UserDetails {
     private String userName;
     private String password;
     private String email;
+    private String major;
+    private String headline;
     private boolean active;
-
-
-
     private int answerId;
     private List<GrantedAuthority> authorities;
 
@@ -32,6 +31,8 @@ public class CustomUserDetails implements UserDetails {
         this.user_id = user.getId();
         this.answerId = user.getAnswer_id();
         this.userName = user.getUserName();
+        this.major = user.getMajor();
+        this.headline = user.getHeadline();
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.active = user.isActive();
@@ -61,6 +62,14 @@ public class CustomUserDetails implements UserDetails {
     }
 
     public int getAnswerId() { return answerId; }
+
+    public String getMajor() { return major; }
+
+    public void setMajor(String major) { this.major = major; }
+
+    public String getHeadline() { return headline; }
+
+    public void setHeadline(String headline) { this.headline = headline; }
 
     public String getEmail() { return email; }
     @Override

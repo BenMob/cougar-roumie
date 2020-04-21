@@ -45,12 +45,14 @@ public class UserService implements UserDetailsService {
     Parameter: Profile DTO
      */
     public Profile prepareProfile(CustomUserDetails user){
-        Profile profileInformation = new Profile();
-        profileInformation.setFirst_name(user.getFirstName());
-        profileInformation.setLast_name(user.getLastName());
-        profileInformation.setGender(user.getGender());
-
-        return profileInformation;
+        if(user.getFirstName() == null || user.getLastName() == null || user.getGender() == 0)
+            return new Profile(); // empty Profile DTO
+        else return new Profile(
+                user.getFirstName(),
+                user.getLastName(),
+                user.getGender(),
+                user.getMajor(),
+                user.getHeadline());  // filled Profile DTO
     }
 
     @Transactional

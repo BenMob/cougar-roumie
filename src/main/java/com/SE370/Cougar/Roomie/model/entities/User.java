@@ -17,6 +17,8 @@ public class User{
     private String lastName;
     private String userName;
     private String password;
+    private String major;
+    private String headline;
     private int gender; // 0 is default (unknown), 1 for Male, 2 for Female
     private String email; // empty by default
     private boolean active; // account flag
@@ -28,7 +30,6 @@ public class User{
     // Task: Creates a User Entity
     // Parameter: CustomUserDetails Object
     public User(CustomUserDetails customUser){
-        try {
             setId(customUser.getUser_id());
             setAnswer_id(customUser.getAnswerId());
             setFirstName(customUser.getFirstName());
@@ -36,37 +37,29 @@ public class User{
             setGender(customUser.getGender());
             setUserName(customUser.getUsername());
             setPassword(customUser.getPassword());
+            setHeadline(customUser.getHeadline());
+            setMajor(customUser.getMajor());
             setEmail(customUser.getEmail());
             setActive(customUser.isEnabled());
-        }catch(Exception e){
-            // TODO Define explicit Error message
-            throw e;
-        }
+
     }
 
     // Task: Copy constructor that registers user for the first time
     // Parameter: RegistrationForm object
     public User(RegistrationForm form){
-        try {
             setUserName(form.getUser_name());
             setEmail(form.getEmail());
             setPassword(form.getPassword());
             setActive(true);
-        }catch (Exception e){
-            // TODO Define explicit Error message
-            throw e;
-        }
     }
 
+    // Task: registers profile information
     public void registerProfileInfo(Profile form){
-        try {
             setFirstName(form.getFirst_name());
             setLastName(form.getLast_name());
             setGender(form.getGender());
-        }catch (Exception e) {
-            // TODO Define explicit Error message
-            throw e;
-        }
+            setMajor(form.getMajor());
+            setHeadline(form.getHeadline());
     }
 
     public int getId() {
@@ -139,6 +132,22 @@ public class User{
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getHeadline() {
+        return headline;
+    }
+
+    public void setHeadline(String headline) {
+        this.headline = headline;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
     }
 
 }
