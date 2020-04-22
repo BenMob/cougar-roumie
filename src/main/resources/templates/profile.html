@@ -4,17 +4,22 @@
 <div th:insert="~{fragments/mainFrag :: header}"></div>
 
 <body class="gradient overlay">
+
 <div th:insert="~{fragments/mainFrag :: navbar}"></div>
 
-        <div class="container" th:if="${hide == 'true'}">
-            <h3 th:text="*{profileInfoForm.first_name}">First Name</h3>
-            <h3 th:text="*{profileInfoForm.last_name}">Last Name</h3><br>
-            <h4 th:text="*{profileInfoForm.gender}">Gender</h4><br>
+<!-- TODO: Hey James or Ria, please position these containers where you want them. They contain the user information for the profile so far  - Ben -->
+        <div class="container" th:unless="${#strings.isEmpty(profileInfoForm.first_name)} or ${#strings.isEmpty(profileInfoForm.last_name)} or ${profileInfoForm.gender == 0}">
+            <h2 th:text="${'Hi, ' + profileInfoForm.first_name + ' ' + profileInfoForm.last_name}">Greeting</h2>
+        </div>
+        <div class="container" th:unless="${#strings.isEmpty(profileInfoForm.major)} or ${#strings.isEmpty(profileInfoForm.headline)}">
+            <h3 th:text="${profileInfoForm.major}">Major</h3>
+            <h6 th:text="${profileInfoForm.headline}">Headline</h6>
         </div>
 
+<!-- TODO: Hey James or Ria, also if you can make the pop up appear on page load rather than being trigger by a button, that would be great - Ben -->
     <div id="header">
-        <div th:unless="${hide == 'true'}">
-            <button class="btn btn-primary register" id="modal" data-toggle="modal" data-target="#modal-reg" style="color: #fff;">Setup Profile</button>
+        <div th:if="${#strings.isEmpty(profileInfoForm.first_name)} or ${#strings.isEmpty(profileInfoForm.last_name)} or ${profileInfoForm.gender == 0}">
+        <button class="btn btn-primary register" id="modal" data-toggle="modal" data-target="#modal-reg" style="color: #fff;">Setup Profile</button>
             <div class="modal fade" role="dialog" tabindex="-1" id="modal-reg">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -26,6 +31,9 @@
                                 <form th:action="@{/user/profile}" th:object="${profileInfoForm}" method="POST" enctype="utf8">
                                     <div class="form-group"><input class="form-control" type="text" name="firstName" placeholder="First Name" th:field="*{first_name}"></div>
                                     <div class="form-group"><input class="form-control" type="text" name="lastName" placeholder="Last Name" th:field="*{last_name}"></div>
+                                    <div class="form-group"><input class="form-control" type="text" name="major" placeholder="Major" th:field="*{major}"></div>
+                                    <!-- TODO:  Please add a student year select here: Freshman, Sophomore etc ... - Ben -->
+                                    <!-- TODO: Let me know once it is done and I will add a field for it in the DB  Thanks. Starting to wonder if you can just make this our actual profile-->
                                     <div class="form-group text-left checkbox">
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" id="formCheck-1" value='1' th:field="*{gender}">
@@ -36,6 +44,7 @@
                                             <label class="form-check-label" for="formCheck-2">Female</label>
                                         </div>
                                     </div>
+                                    <div class="form-group"><textarea class="form-control" type="text" name="headline" placeholder="Headline ... " th:field="*{headline}"></textarea></div>
                                     <div class="modal-footer"><button class="btn btn-primary signin" type="submit">submit</button></div>
                                 </form>
                             </div>
