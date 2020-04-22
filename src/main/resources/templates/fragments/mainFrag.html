@@ -22,7 +22,7 @@
 <div th:fragment="navbar">
     <div id="navbar">
         <nav class="navbar navbar-light navbar-expand" id="navbar">
-            <div class="container"><a class="navbar-brand" href="index.html"><img id="logo" th:src="@{/assets/img/logo.png}"></a>
+            <div class="container"><a class="navbar-brand" href="/"><img id="logo" th:src="@{/assets/img/logo.png}"></a>
                 <span>
                     <a class="btn btn-primary signin" role="button" href="/login" sec:authorize="isAnonymous()">Sign in</a>
                     <a class="btn btn-primary signin" role="button" href="/logout" sec:authorize="isAuthenticated()">Logout</a>
