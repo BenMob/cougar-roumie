@@ -26,7 +26,7 @@ public class HomePageController {
     public String registerSubmit(@ModelAttribute RegistrationForm registrationForm, Model model) {
         try {
             userService.createNewUser(registrationForm);
-            return "login"; // User created successfully... go to login
+            return "redirect:login"; // User created successfully... go to login
         } catch (RuntimeException e) {
             model.addAttribute("regError", e.getMessage()); // Trigger invalid text inside modal
             model.addAttribute("registrationForm", registrationForm); // return the info entered so Modal is already filled
