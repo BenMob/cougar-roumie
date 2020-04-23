@@ -32,7 +32,7 @@ public class ProfileController {
     }
 
     @PostMapping("user/profile")
-    public String registerFirstLastGender(@ModelAttribute Profile profileInfoForm, Model model) {
+    public String registerProfileInfoForm(@ModelAttribute Profile profileInfoForm, Model model) {
         userService.updateFirstTimeUser(profileInfoForm);
 
         model.addAttribute("profileInfoForm", profileInfoForm);

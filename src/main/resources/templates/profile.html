@@ -5,11 +5,8 @@
 
 <body class="gradient overlay">
 
-<div id="navbar">
-        <nav class="navbar navbar-light navbar-expand" id="navbar">
-            <div class="container"><a class="navbar-brand" href="index.html"><img id="logo" src="assets/img/logo.png"></a><span><a class="btn btn-primary signin" role="button" href="/login">Sign in</a></span></div>
-        </nav>
-    </div>
+<div th:insert="~{fragments/mainFrag :: navbar}"></div>
+
 <!-- TODO: Hey James or Ria, please position these containers where you want them. They contain the user information for the profile so far  - Ben -->
         <div class="container" th:unless="${#strings.isEmpty(profileInfoForm.first_name)} or ${#strings.isEmpty(profileInfoForm.last_name)} or ${profileInfoForm.gender == 0}">
             <h2 th:text="${'Hi, ' + profileInfoForm.first_name + ' ' + profileInfoForm.last_name}">Greeting</h2>
@@ -22,7 +19,7 @@
 
 <!-- TODO: Hey James or Ria, also if you can make the pop up appear on page load rather than being trigger by a button, that would be great - Ben -->
     <div id="header">
-        <div th:if="${#strings.isEmpty(profileInfoForm.first_name)} or ${#strings.isEmpty(profileInfoForm.last_name)} or ${profileInfoForm.last_name == 0}">
+        <div th:if="${#strings.isEmpty(profileInfoForm.first_name)} or ${#strings.isEmpty(profileInfoForm.last_name)} or ${profileInfoForm.gender == 0}">
         <button class="btn btn-primary register" id="modal" data-toggle="modal" data-target="#modal-reg" style="color: #fff;">Setup Profile</button>
             <div class="modal fade" role="dialog" tabindex="-1" id="modal-reg">
                 <div class="modal-dialog" role="document">
