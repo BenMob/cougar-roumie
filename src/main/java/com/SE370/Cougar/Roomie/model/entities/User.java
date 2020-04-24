@@ -13,6 +13,7 @@ public class User{
     @GeneratedValue(strategy = GenerationType.AUTO) // Tell spring to handle generation
     private int id;
     private int answer_id; // connects to answer table
+    private int profile_image_id;  // Connects to image table
     private String firstName;
     private String lastName;
     private String userName;
@@ -22,7 +23,6 @@ public class User{
     private int gender; // 0 is default (unknown), 1 for Male, 2 for Female
     private String email; // empty by default
     private boolean active; // account flag
-    //private long visits; // number of times a user has logged in
 
 
     public User() {}
@@ -54,12 +54,13 @@ public class User{
     }
 
     // Task: registers profile information
-    public void registerProfileInfo(Profile form){
+    public void registerProfileInfo(Profile form, int profile_image_id){
             setFirstName(form.getFirst_name());
             setLastName(form.getLast_name());
             setGender(form.getGender());
             setMajor(form.getMajor());
             setHeadline(form.getHeadline());
+            setProfile_image_id(profile_image_id);
     }
 
     public int getId() {
@@ -148,6 +149,14 @@ public class User{
 
     public void setMajor(String major) {
         this.major = major;
+    }
+
+    public int getProfile_image_id() {
+        return profile_image_id;
+    }
+
+    public void setProfile_image_id(int profile_image_id) {
+        this.profile_image_id = profile_image_id;
     }
 
 }

@@ -4,12 +4,15 @@ package com.SE370.Cougar.Roomie.model.DTO;
 This class will serve as a DTO for populating the profile page.
  */
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Profile {
 
     String first_name;
     String last_name;
     String major;
     String headline;
+    MultipartFile profileImage; // MultipartFile type is the DS containing all the image information (bytes, name, etc ...)
     int gender;
 
     public Profile(){this.first_name = null; this.last_name = null; this.gender = 0; this.major = null; this.headline = null;}
@@ -20,6 +23,7 @@ public class Profile {
         this.setMajor(major);
         this.setHeadline(headline);
     }
+
     public String getLast_name() { return last_name; }
     public void setLast_name(String last_name) { this.last_name = last_name; }
     public String getFirst_name() { return first_name; }
@@ -30,4 +34,6 @@ public class Profile {
     public void setHeadline(String headline) { this.headline = headline; }
     public String getMajor() { return major; }
     public void setMajor(String major) { this.major = major; }
+    public MultipartFile getProfileImage() { return profileImage; }
+    public void setProfileImage(MultipartFile profileImage) { this.profileImage = profileImage; }
 }

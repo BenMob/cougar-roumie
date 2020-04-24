@@ -6,13 +6,14 @@ import com.SE370.Cougar.Roomie.model.DTO.Profile;
 import com.SE370.Cougar.Roomie.model.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
+
+import java.io.IOException;
 
 @Controller
 public class ProfileController {
@@ -32,7 +33,7 @@ public class ProfileController {
     }
 
     @PostMapping("user/profile")
-    public String registerProfileInfoForm(@ModelAttribute Profile profileInfoForm, Model model) {
+    public String registerProfileInfoForm(@ModelAttribute Profile profileInfoForm, Model model) throws IOException {
         userService.updateFirstTimeUser(profileInfoForm);
 
         model.addAttribute("profileInfoForm", profileInfoForm);

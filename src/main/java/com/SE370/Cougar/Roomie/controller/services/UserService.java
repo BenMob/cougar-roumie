@@ -3,7 +3,9 @@ package com.SE370.Cougar.Roomie.controller.services;
 import com.SE370.Cougar.Roomie.model.CustomUserDetails;
 import com.SE370.Cougar.Roomie.model.DTO.Profile;
 import com.SE370.Cougar.Roomie.model.DTO.UserInfo;
+import com.SE370.Cougar.Roomie.model.entities.Image;
 import com.SE370.Cougar.Roomie.model.entities.User;
+import com.SE370.Cougar.Roomie.model.repositories.FileRepo;
 import com.SE370.Cougar.Roomie.model.repositories.UserRepo;
 import com.SE370.Cougar.Roomie.model.DTO.RegistrationForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +16,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,6 +31,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     UserRepo userRepository;
+
+    @Autowired
+    FileRepo fileRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -45,14 +54,31 @@ public class UserService implements UserDetailsService {
     Parameter: Profile DTO
      */
     public Profile prepareProfile(CustomUserDetails user){
-        if(user.getFirstName() == null || user.getLastName() == null || user.getGender() == 0)
+        if(profileInfoNotComplete(user))
             return new Profile(); // empty Profile DTO
-        else return new Profile(
-                user.getFirstName(),
-                user.getLastName(),
-                user.getGender(),
-                user.getMajor(),
-                user.getHeadline());  // filled Profile DTO
+        else {
+            Profile profile = new Profile(
+                    user.getFirstName(),
+                    user.getLastName(),
+                    user.getGender(),
+                    user.getMajor(),
+                    user.getHeadline());  // filled Profile DTO
+
+            return profile;
+        }
+
+    }
+
+    // Task: Helper function to check if all required info are present for the current user
+    private Boolean profileInfoNotComplete(CustomUserDetails thisUser){
+        return (thisUser.getFirstName() == null ||
+                thisUser.getLastName() == null ||
+                thisUser.getGender() == 0);
+    }
+
+    // Helper function that creates a new image entity
+    private Image createProfileImage(int user_Id, MultipartFile fileInfo) throws IOException {
+        return new Image(user_Id, fileInfo);
     }
 
     @Transactional
@@ -85,13 +111,13 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public User updateFirstTimeUser(Profile profileInfoForm){
+    public User updateFirstTimeUser(Profile profileInfoForm) throws IOException {
         User user = new User((((CustomUserDetails) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal())));
-                
-        user.registerProfileInfo(profileInfoForm);
+
+        Image profileImage = createProfileImage(user.getId(), profileInfoForm.getProfileImage());
+        fileRepository.save(profileImage); // Saves the profile image
 
         return userRepository.save(user);
     }
-
 }
