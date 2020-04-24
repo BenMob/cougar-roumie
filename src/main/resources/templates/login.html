@@ -4,7 +4,7 @@
 <div th:insert="~{fragments/mainFrag :: header}"></div>
 
 <body class="gradient overlay">
-<div th:insert="~{fragments/mainFrag :: navbar}"></div>
+<div th:insert="~{fragments/mainFrag :: signinnavbar}"></div>
 
     <div th:action="@{/login}" id="sign-in-form" class="login-form" sec:authorize="isAnonymous()">
         <form method="POST">
@@ -16,7 +16,6 @@
 
             <div class="form-group"><button class="btn btn-primary btn-block form-control" type="submit">Log In</button></div>
             <a class="forgot" href="#">Forgot your password?</a>
-            <!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
         </form>
     </div>
 <div th:insert="~{fragments/mainFrag :: footer}"></div>
