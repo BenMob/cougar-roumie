@@ -3,9 +3,6 @@ body {
   font-weight: 400;
 }
 
-body, html {
-  height: 100%;
-}
 
 .parallax{
   url('1920_p3.2.jpg');
@@ -148,13 +145,7 @@ p {
   color: #fff;
 }
 
-h9 {
-  text-shadow: 2px 2px 5px whitesmoke;
-  font-size: 150%;
-  text-align: center;
-  color: #fff;
-  background-color: cadetblue;
-}
+
 #myParallax{
    height:300px;background-color:lightsteelblue;font-size:25px
 }

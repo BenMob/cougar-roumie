@@ -9,7 +9,7 @@
 <div th:insert="~{fragments/mainFrag :: navbar}"></div>
 
         <div class="container" th:unless="${#strings.isEmpty(profileInfoForm.first_name)} or ${#strings.isEmpty(profileInfoForm.last_name)} or ${profileInfoForm.gender == 0}">
-            <h9 th:text="${'Hi, I am ' + profileInfoForm.first_name + ' ' + profileInfoForm.last_name}">Greeting</h9>
+            <h3 th:text="${'Hi, I am ' + profileInfoForm.first_name + ' ' + profileInfoForm.last_name}">Greeting</h3>
 
         </div>
         <div class="container" th:unless="${#strings.isEmpty(profileInfoForm.major)} or ${#strings.isEmpty(profileInfoForm.headline)}">
@@ -37,12 +37,12 @@
                             <div class="modal-body">
                                 <p class="text-center">Please fill in some information about yourself</p>
                                 <div class="login-form">
-                                    <form th:action="@{/user/profile}" th:object="${profileInfoForm}" method="POST" enctype="utf8">
+                                    <div th:action="@{/user/profile}" th:object="${profileInfoForm}" method="POST" enctype="utf8">
                                         <div class="form-group"><input class="form-control" type="text" name="firstName" placeholder="First Name" th:field="*{first_name}"></div>
                                         <div class="form-group"><input class="form-control" type="text" name="lastName" placeholder="Last Name" th:field="*{last_name}"></div>
                                         <div class="form-group"><input class="form-control" type="text" name="major" placeholder="Major" th:field="*{major}"></div>
 
-                                        <form class="form-inline">
+                                        <div class="form-inline">
                                                 <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
                                                 <option selected>Choose your college year...</option>
                                                 <option value="2">Freshman</option>
@@ -50,7 +50,7 @@
                                                 <option value="4">Junior</option>
                                                 <option value="5">Senior</option>
                                             </select>
-                                        </form>
+                                        </div>
 
                                         <div class="form-group text-left checkbox">
                                             <div class="form-check">
