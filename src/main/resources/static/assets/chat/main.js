@@ -2,7 +2,7 @@
 
 var usernamePage = document.querySelector('#username-page');
 var chatPage = document.querySelector('#chat-page');
-var usernameForm = document.querySelector('#usernameForm');
+var chatHeader = document.querySelector('#chatHeaderH2');
 var messageForm = document.querySelector('#messageForm');
 var messageInput = document.querySelector('#message');
 var messageArea = document.querySelector('#messageArea');
@@ -21,6 +21,7 @@ function connect(user) {
     username = user.replace(/["]+/g, '');
     usernamePage.classList.add('hidden');
     chatPage.classList.remove('hidden');
+    chatHeader.innerHTML = "Chat with " + user;
 
     var socket = new SockJS('/chat');
     stompClient = Stomp.over(socket);
