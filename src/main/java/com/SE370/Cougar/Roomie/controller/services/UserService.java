@@ -1,17 +1,22 @@
 package com.SE370.Cougar.Roomie.controller.services;
 
+import com.SE370.Cougar.Roomie.controller.view.MatchController;
 import com.SE370.Cougar.Roomie.model.CustomUserDetails;
-import com.SE370.Cougar.Roomie.model.DTO.Profile;
-import com.SE370.Cougar.Roomie.model.DTO.UserInfo;
+import com.SE370.Cougar.Roomie.model.DTO.*;
 import com.SE370.Cougar.Roomie.model.entities.User;
 import com.SE370.Cougar.Roomie.model.repositories.UserRepo;
-import com.SE370.Cougar.Roomie.model.DTO.RegistrationForm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +27,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     UserRepo userRepository;
+    @Autowired
+    AssessmentService assessmentService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -73,6 +81,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public List<UserInfo> getAllUsers () {
         CustomUserDetails thisUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SecurityContextHolder.setContext((SecurityContext) thisUser);
 
         return userRepository.findAll().stream()
                 .filter(user -> !user.getUserName().equals(thisUser.getUsername()))
@@ -80,9 +89,43 @@ public class UserService implements UserDetailsService {
                     UserInfo converted = new UserInfo();
                     converted.setId(foundUser.getId());
                     converted.setUserName(foundUser.getUserName());
+                    converted.setMatchScore(foundUser.getMatchScore());
                     return converted;
                 }).collect(Collectors.toList());
     }
+
+    public List<UserInfo> getMatches() throws RuntimeException {
+        CustomUserDetails thisUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (Integer.valueOf(thisUser.getMatchScore()) != null) {
+            return userRepository.findAllByMatchScoreBetween(thisUser.getMatchScore()-1, thisUser.getMatchScore()+1).stream()
+                    .filter(match -> !match.getUserName().equals(thisUser.getUsername()))
+                    .map(foundMatch -> {
+                        UserInfo conv = new UserInfo();
+                        conv.setUserName(foundMatch.getUserName());
+                        conv.setId(foundMatch.getId());
+                        conv.setMatchScore(foundMatch.getMatchScore());
+                        return conv;
+                    })
+                    .collect(Collectors.toList());
+        } else {
+            throw new RuntimeException("Assessment never filled out");
+        }
+
+    }
+    @Transactional
+    public User submitAssessment(AssessmentForm assessmentForm) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails custom = (CustomUserDetails) auth.getPrincipal();
+
+
+        custom.setMatchScore(assessmentService.submitAssessment(assessmentForm, custom.getUser_id()));
+
+        Authentication newAuth = new UsernamePasswordAuthenticationToken(custom, auth.getCredentials(), auth.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(newAuth);
+        return userRepository.save(new User(custom));
+    }
+
+
 
     @Transactional
     public User updateFirstTimeUser(Profile profileInfoForm){

@@ -13,6 +13,7 @@ public class User{
     @GeneratedValue(strategy = GenerationType.AUTO) // Tell spring to handle generation
     private int id;
     private int answer_id; // connects to answer table
+    private int matchScore;
     private String firstName;
     private String lastName;
     private String userName;
@@ -33,6 +34,7 @@ public class User{
             setId(customUser.getUser_id());
             setAnswer_id(customUser.getAnswerId());
             setFirstName(customUser.getFirstName());
+            setMatchScore(customUser.getMatchScore());
             setLastName(customUser.getLastName());
             setGender(customUser.getGender());
             setUserName(customUser.getUsername());
@@ -76,6 +78,14 @@ public class User{
 
     public void setAnswer_id(int answerID) {
         this.answer_id = answerID;
+    }
+
+    public int getMatchScore() {
+        return matchScore;
+    }
+
+    public void setMatchScore(int matchScore) {
+        this.matchScore = matchScore;
     }
 
     public String getFirstName() {
