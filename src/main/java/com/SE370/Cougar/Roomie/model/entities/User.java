@@ -41,7 +41,6 @@ public class User{
             setMajor(customUser.getMajor());
             setEmail(customUser.getEmail());
             setActive(customUser.isEnabled());
-
     }
 
     // Task: Copy constructor that registers user for the first time
@@ -54,13 +53,12 @@ public class User{
     }
 
     // Task: registers profile information
-    public void registerProfileInfo(Profile form, int profile_image_id){
+    public void registerProfileInfo(Profile form){
             setFirstName(form.getFirst_name());
             setLastName(form.getLast_name());
             setGender(form.getGender());
             setMajor(form.getMajor());
             setHeadline(form.getHeadline());
-            setProfile_image_id(profile_image_id);
     }
 
     public int getId() {

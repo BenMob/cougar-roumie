@@ -4,7 +4,7 @@ import com.SE370.Cougar.Roomie.model.entities.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import java.util.Collection;
 import java.util.Collections;
@@ -16,7 +16,7 @@ public class CustomUserDetails implements UserDetails {
     private String lastName;
     private int gender;
     private int user_id;
-    private int profile_Image_Id;
+    private int profile_image_id;
     private String userName;
     private String password;
     private String email;
@@ -31,7 +31,7 @@ public class CustomUserDetails implements UserDetails {
         this.lastName = user.getLastName();
         this.gender = user.getGender();
         this.user_id = user.getId();
-        this.profile_Image_Id = user.getProfile_image_id();
+        this.profile_image_id = user.getProfile_image_id();
         this.answerId = user.getAnswer_id();
         this.userName = user.getUserName();
         this.major = user.getMajor();
@@ -75,11 +75,11 @@ public class CustomUserDetails implements UserDetails {
     public void setHeadline(String headline) { this.headline = headline; }
 
     public int getProfile_Image_Id() {
-        return profile_Image_Id;
+        return profile_image_id;
     }
 
     public void setProfile_Image_Id(int profile_Image_Id) {
-        this.profile_Image_Id = profile_Image_Id;
+        this.profile_image_id = profile_image_id;
     }
 
     public String getEmail() { return email; }

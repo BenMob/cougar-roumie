@@ -1,6 +1,7 @@
 package com.SE370.Cougar.Roomie.controller.services;
 
 import com.SE370.Cougar.Roomie.model.CustomUserDetails;
+import com.SE370.Cougar.Roomie.model.DTO.FileTypeData;
 import com.SE370.Cougar.Roomie.model.DTO.Profile;
 import com.SE370.Cougar.Roomie.model.DTO.UserInfo;
 import com.SE370.Cougar.Roomie.model.entities.Image;
@@ -9,6 +10,7 @@ import com.SE370.Cougar.Roomie.model.repositories.FileRepo;
 import com.SE370.Cougar.Roomie.model.repositories.UserRepo;
 import com.SE370.Cougar.Roomie.model.DTO.RegistrationForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,9 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 
-import java.io.File;
+
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -49,36 +50,42 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Error Not Found: " + userName));
     }
 
-    /*
-    Role: Grab user information from the DB for profile set up.
-    Parameter: Profile DTO
-     */
-    public Profile prepareProfile(CustomUserDetails user){
-        if(profileInfoNotComplete(user))
+
+    public Image queryImageById(int id) throws DataRetrievalFailureException {
+        Optional<Image> image = fileRepository.findByUserId(id);
+
+        return image
+                .map(Image::new)
+                .orElseThrow(() -> new DataRetrievalFailureException("Failure to retrieve Image for " + id));
+    }
+
+    public Profile prepareProfile(CustomUserDetails thisUser){
+        if(profileInfoNotComplete(thisUser))
             return new Profile(); // empty Profile DTO
         else {
-            Profile profile = new Profile(
-                    user.getFirstName(),
-                    user.getLastName(),
-                    user.getGender(),
-                    user.getMajor(),
-                    user.getHeadline());  // filled Profile DTO
-
-            return profile;
+            return new Profile(
+                    thisUser.getFirstName(),
+                    thisUser.getLastName(),
+                    thisUser.getGender(),
+                    thisUser.getMajor(),
+                    thisUser.getHeadline());  // filled Profile DTO
         }
 
     }
+    // TODO Figure out how t check for image independently
+    public FileTypeData getProfileImage(CustomUserDetails thisUser){
+        if(profileInfoNotComplete(thisUser))
+            return new FileTypeData();
+        else {
+            Image profileImage = queryImageById(thisUser.getUser_id());
+            return new FileTypeData(profileImage);
+        }
+    }
 
-    // Task: Helper function to check if all required info are present for the current user
     private Boolean profileInfoNotComplete(CustomUserDetails thisUser){
         return (thisUser.getFirstName() == null ||
                 thisUser.getLastName() == null ||
                 thisUser.getGender() == 0);
-    }
-
-    // Helper function that creates a new image entity
-    private Image createProfileImage(int user_Id, MultipartFile fileInfo) throws IOException {
-        return new Image(user_Id, fileInfo);
     }
 
     @Transactional
@@ -111,12 +118,16 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public User updateFirstTimeUser(Profile profileInfoForm) throws IOException {
+    public User updateFirstTimeUser(Profile profileInfoForm, FileTypeData profileImage) throws IOException {
         User user = new User((((CustomUserDetails) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal())));
 
-        Image profileImage = createProfileImage(user.getId(), profileInfoForm.getProfileImage());
-        fileRepository.save(profileImage); // Saves the profile image
+        user.registerProfileInfo(profileInfoForm);
+        fileRepository.save(
+                new Image(user.getId(),
+                profileImage.getFileInfo().getOriginalFilename(),
+                profileImage.getFileInfo().getContentType(),
+                profileImage.getFileInfo().getBytes()));
 
         return userRepository.save(user);
     }
