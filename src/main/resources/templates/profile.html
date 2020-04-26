@@ -20,7 +20,6 @@
         </div>
 
 
-
 <!-- TODO: Hey James or Ria, also if you can make the pop up appear on page load rather than being trigger by a button, that would be great - Ben -->
     <div id="header">
         <div th:if="${#strings.isEmpty(profileInfoForm.first_name)} or ${#strings.isEmpty(profileInfoForm.last_name)} or ${profileInfoForm.gender == 0}">
@@ -33,7 +32,7 @@
                         <div class="modal-body">
                             <p class="text-center">Please fill in some information about yourself</p>
                             <div class="login-form">
-                                <form th:action="@{/user/profile}" th:object="${profileInfoForm}" method="POST" enctype="multipart/form-data"><!--Without this entype, the image won't be uploaded properly-->
+                                <form th:action="@{/user/profile}" th:object="${profileInfoForm}"  method="POST" enctype="multipart/form-data"><!--Without this entype, the image won't be uploaded properly-->
                                     <div class="form-group"><input class="form-control" type="text" name="firstName" placeholder="First Name" th:field="*{first_name}"></div>
                                     <div class="form-group"><input class="form-control" type="text" name="lastName" placeholder="Last Name" th:field="*{last_name}"></div>
                                     <div class="form-group"><input class="form-control" type="text" name="major" placeholder="Major" th:field="*{major}"></div>
@@ -50,9 +49,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group"><textarea class="form-control" type="text" name="headline" placeholder="Headline ... " th:field="*{headline}"></textarea></div>
-                                    <div class="form-group">
-                                        <label for="profile_img" class="text-center">Profile Image</label>
-                                        <input type="file" class="form-control" id="profile_img" th:field="${profileImage.fileInfo}">
+                                    <div class="form-group" th:object="${profileImage}">
+                                        <label for="profile_img" class="form-check-label">Profile Image</label>
+                                        <input type="file" class="form-control" id="profile_img" th:field="*{fileInfo}">
                                     </div>
                                     <div class="modal-footer"><button class="btn btn-primary signin" type="submit">submit</button></div>
                                 </form>

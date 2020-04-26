@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+// TODO take the image logic out and move it in its own service class
+
 @Service
 public class UserService implements UserDetailsService {
 
@@ -70,9 +72,8 @@ public class UserService implements UserDetailsService {
                     thisUser.getMajor(),
                     thisUser.getHeadline());  // filled Profile DTO
         }
-
     }
-    // TODO Figure out how t check for image independently
+    // TODO Figure out how t check for image independently from other fields
     public FileTypeData getProfileImage(CustomUserDetails thisUser){
         if(profileInfoNotComplete(thisUser))
             return new FileTypeData();

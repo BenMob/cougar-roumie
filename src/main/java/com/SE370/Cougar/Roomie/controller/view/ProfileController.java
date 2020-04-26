@@ -35,8 +35,8 @@ public class ProfileController {
         FileTypeData profileImage = userService
                 .getProfileImage(thisUser);
 
-        model.addAttribute("profileImage", profileImage);
         model.addAttribute("profileInfoForm", profileInfoForm);
+        model.addAttribute("profileImage", profileImage);
         return "profile";
     }
 
