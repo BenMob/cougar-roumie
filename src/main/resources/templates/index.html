@@ -11,8 +11,7 @@
         <p>Don't miss out on the easy alternative to finding a roommate. Match with potential roommates and get to know eachother!</p>
         <div sec:authorize="isAnonymous()">
             <button type="button" class="btn btn-primary register" id="modal" data-toggle="modal" data-target="#modal-reg" style="color: #fff;">Register</button>
-            <div
-                    class="modal fade"  role="dialog" tabindex="-1" id="modal-reg">
+            <div class="modal fade"  role="dialog" tabindex="-1" id="modal-reg">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -36,7 +35,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 <div th:insert="~{fragments/mainFrag :: footer}"></div>
 </body>

@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<body>
+
+<div th:insert="~{fragments/mainFrag :: header}"></div>
+
+<body class="gradient overlay">
+<div th:insert="~{fragments/mainFrag :: navbar}"></div>
+
 <h1>Register</h1>
 <form action="/user/assessment" th:object="${assessmentForm}" method="POST" enctype="utf8">
     <div>
@@ -21,5 +26,7 @@
     </div>
     <button type="submit">Submit</button>
 </form>
+
+<div th:insert="~{fragments/mainFrag :: footer}"></div>
 </body>
 </html>
