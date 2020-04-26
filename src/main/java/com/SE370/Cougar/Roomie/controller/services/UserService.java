@@ -81,7 +81,6 @@ public class UserService implements UserDetailsService {
     @Transactional
     public List<UserInfo> getAllUsers () {
         CustomUserDetails thisUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        SecurityContextHolder.setContext((SecurityContext) thisUser);
 
         return userRepository.findAll().stream()
                 .filter(user -> !user.getUserName().equals(thisUser.getUsername()))
