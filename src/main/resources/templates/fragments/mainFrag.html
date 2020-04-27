@@ -14,6 +14,7 @@
         <link rel="stylesheet" th:href="@{/assets/css/footer.css}">
         <link rel="stylesheet" th:href="@{/assets/css/Login-Form-Clean.css}">
         <link rel="stylesheet" th:href="@{/assets/css/styles.css}">
+        <link rel="stylesheet" th:href="@{/assets/css/slider.css}">
     </head>
 </div>
 
@@ -27,6 +28,16 @@
                     <a class="btn btn-primary signin" role="button" href="/login" sec:authorize="isAnonymous()">Sign in</a>
                     <a class="btn btn-primary signin" role="button" href="/logout" sec:authorize="isAuthenticated()">Logout</a>
                 </span>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<!-- SIGN IN NAVIGATION -->
+<div th:fragment="signinnavbar">
+    <div id="navbar">
+        <nav class="navbar navbar-light navbar-expand" id="navbar">
+            <div class="container"><a class="navbar-brand" href="/"><img id="logo" th:src="@{/assets/img/logo.png}"></a>
             </div>
         </nav>
     </div>
@@ -47,5 +58,6 @@
         <script th:src="@{/assets/js/jquery.min.js}"></script>
         <script th:src="@{/assets/bootstrap/js/bootstrap.min.js}"></script>
         <script th:src="@{/assets/js/modal.js}"></script>
+        <script th:src="@{/assets/js/slider.js}"></script>
     </div>
 </html>

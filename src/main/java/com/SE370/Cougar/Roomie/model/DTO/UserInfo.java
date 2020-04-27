@@ -4,6 +4,7 @@ package com.SE370.Cougar.Roomie.model.DTO;
 public class UserInfo {
     private String userName;
     private int id;
+    private int matchScore;
 
     public String getUserName() {
         return userName;
@@ -19,5 +20,13 @@ public class UserInfo {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getMatchScore() {
+        return matchScore;
+    }
+
+    public void setMatchScore(int matchScore) {
+        this.matchScore = matchScore;
     }
 }

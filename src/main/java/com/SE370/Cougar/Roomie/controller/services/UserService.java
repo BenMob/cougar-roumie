@@ -1,21 +1,24 @@
 package com.SE370.Cougar.Roomie.controller.services;
 
+import com.SE370.Cougar.Roomie.controller.view.MatchController;
 import com.SE370.Cougar.Roomie.model.CustomUserDetails;
-import com.SE370.Cougar.Roomie.model.DTO.FileTypeData;
-import com.SE370.Cougar.Roomie.model.DTO.Profile;
-import com.SE370.Cougar.Roomie.model.DTO.UserInfo;
-import com.SE370.Cougar.Roomie.model.entities.Image;
+import com.SE370.Cougar.Roomie.model.DTO.*;
 import com.SE370.Cougar.Roomie.model.entities.User;
 import com.SE370.Cougar.Roomie.model.repositories.FileRepo;
 import com.SE370.Cougar.Roomie.model.repositories.UserRepo;
-import com.SE370.Cougar.Roomie.model.DTO.RegistrationForm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,9 +34,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     UserRepo userRepository;
+    @Autowired
+    AssessmentService assessmentService;
 
     @Autowired
     FileRepo fileRepository;
@@ -114,9 +120,38 @@ public class UserService implements UserDetailsService {
                     UserInfo converted = new UserInfo();
                     converted.setId(foundUser.getId());
                     converted.setUserName(foundUser.getUserName());
+                    converted.setMatchScore(foundUser.getMatchScore());
                     return converted;
                 }).collect(Collectors.toList());
     }
+
+    public List<UserInfo> getMatches(String userName, int matchScore) {
+        logger.info("looking for matches with score of: " + matchScore);
+        return userRepository.findAllByMatchScoreBetween(matchScore-1, matchScore+1).stream()
+                .filter(match -> !match.getUserName().equals(userName))
+                .map(foundMatch -> {
+                    UserInfo conv = new UserInfo();
+                    conv.setUserName(foundMatch.getUserName());
+                    conv.setId(foundMatch.getId());
+                    conv.setMatchScore(foundMatch.getMatchScore());
+                    return conv;
+                })
+                .collect(Collectors.toList());
+    }
+    @Transactional
+    public User submitAssessment(AssessmentForm assessmentForm) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails custom = (CustomUserDetails) auth.getPrincipal();
+
+
+        custom.setMatchScore(assessmentService.submitAssessment(assessmentForm, custom.getUser_id()));
+
+        Authentication newAuth = new UsernamePasswordAuthenticationToken(custom, auth.getCredentials(), auth.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(newAuth);
+        return userRepository.save(new User(custom));
+    }
+
+
 
     @Transactional
     public User updateFirstTimeUser(Profile profileInfoForm, FileTypeData profileImage) throws IOException {

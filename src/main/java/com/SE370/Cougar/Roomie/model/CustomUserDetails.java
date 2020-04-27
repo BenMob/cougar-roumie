@@ -14,6 +14,7 @@ public class CustomUserDetails implements UserDetails {
 
     private String firstName;
     private String lastName;
+    private int matchScore;
     private int gender;
     private int user_id;
     private int profile_image_id;
@@ -29,6 +30,7 @@ public class CustomUserDetails implements UserDetails {
     public CustomUserDetails(User user) {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
+        this.matchScore = user.getMatchScore();
         this.gender = user.getGender();
         this.user_id = user.getId();
         this.profile_image_id = user.getProfile_image_id();
@@ -53,6 +55,14 @@ public class CustomUserDetails implements UserDetails {
     public String getFirstName() { return firstName; }
 
     public String getLastName() { return lastName; }
+
+    public int getMatchScore() {
+        return matchScore;
+    }
+
+    public void setMatchScore(int matchScore) {
+        this.matchScore = matchScore;
+    }
 
     public int getGender() { return gender; }
 

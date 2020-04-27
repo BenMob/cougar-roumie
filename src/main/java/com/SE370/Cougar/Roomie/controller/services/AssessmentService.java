@@ -16,6 +16,7 @@ public class AssessmentService {
     QuestionRepo questionRepo;
 
 
+
     // TODO: Change this to handle a list...
     public AssessmentForm prepareAssessment(AssessmentForm assessmentForm) {
         // Fill form with questions in the database
@@ -38,13 +39,19 @@ public class AssessmentService {
         return assessmentForm; // filled form
     }
 
-    public Answer submitAssessment (AssessmentForm assessmentForm, int user_id) {
-        return answerRepo.save(createAnswer(assessmentForm, user_id));
+    public int submitAssessment (AssessmentForm assessmentForm, int user_id) {
+        return calculateScore(
+                answerRepo.save(
+                        createAnswer(assessmentForm, user_id)));
+    }
+
+    private int calculateScore(Answer ans) {
+        return (ans.getAnswer1() + ans.getAnswer2() + ans.getAnswer3() + ans.getAnswer4()) / 4;
     }
 
 
     // TODO: Change this to handle a list...
-    public Answer createAnswer(AssessmentForm assessmentForm, int user_id) {
+    private Answer createAnswer(AssessmentForm assessmentForm, int user_id) {
         return new Answer(user_id,
                 assessmentForm.getAnswer1(),
                 assessmentForm.getAnswer2(),

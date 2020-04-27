@@ -3,16 +3,21 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>Chat</title>
-    <link rel="stylesheet" th:href="@{/assets/chat/main.css}"/>
+    <link rel="stylesheet" th:href="@{/static/assets/css/chat.css}"/>
+    <div th:insert="~{fragments/mainFrag :: header}"></div>
 </head>
-<body>
+<body class="gradient overlay">
+<div th:insert="~{fragments/mainFrag :: navbar}"></div>
 <noscript>
     <h2>Sorry! Your browser doesn't support Javascript</h2>
 </noscript>
 
 <div id="username-page">
-    <div class="username-page-container">
-        <h1 class="title">Start Chatting Now!</h1>
+    <!-- James I added some inline css... fix whenever you want-->
+    <div class="username-page-container" style="height: 500px; overflow-y: auto;">
+
+        <!-- feel free to change this or style it how you please-->
+        <h3 th:text="'Hey, ' + ${#authentication.name}" style="color:black; font-size: 2em; padding-bottom: 20px"></h3>
         <table class="user-table">
             <thead class="user-table-head">
                 <tr>
@@ -39,7 +44,7 @@
 <div id="chat-page" class="hidden">
     <div class="chat-container">
         <div class="chat-header">
-            <h2>User Messaging Form</h2>
+            <h2 id="chatHeaderH2" style="color:black;"></h2>
         </div>
         <div class="connecting">
             Connecting...
@@ -57,9 +62,10 @@
         </form>
     </div>
 </div>
+<div th:insert="~{fragments/mainFrag :: footer}"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-<script th:src="@{/assets/chat/main.js}"></script>
+<script th:src="@{/static/assets/js/chat.js}"></script>
 </body>
 </html>
