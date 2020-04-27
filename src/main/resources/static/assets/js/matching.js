@@ -28,14 +28,14 @@ function onMessageReceived(payload) {
 
         // Initialize message, loading circle
         var infoContainer = document.createElement("div");
-        var initMsg = document.createElement("h4");
-        initMsg.setAttribute("id", "initialize");
-        initMsg.innerHTML = "Initialized Successfully!";
-        infoContainer.appendChild(initMsg);
         var loaderCircle = document.createElement("div");
         loaderCircle.setAttribute("id", "loadCircle");
         loaderCircle.classList.add("loader");
         infoContainer.appendChild(loaderCircle);
+        var initMsg = document.createElement("h4");
+        initMsg.setAttribute("id", "initialize");
+        initMsg.innerHTML = "Websocket Initialized! Loading Matches Now";
+        infoContainer.appendChild(initMsg);
         matchContainer.appendChild(infoContainer);
 
         window.setTimeout(
@@ -54,7 +54,7 @@ function onMessageReceived(payload) {
         // hide match controls
         matchArea.classList.add("hidden");
 
-        // Error message and loader circle that does nothing lol ;)
+        // Error message and loader circle that does nothing lol - Just thought it was cool...
         var errorMessage = document.createElement("h4");
         errorMessage.innerHTML = "Well that sucks, " + msg.userName + "\n\nTaking you home in 5 seconds..";
         var infoContainer = document.createElement("div");
