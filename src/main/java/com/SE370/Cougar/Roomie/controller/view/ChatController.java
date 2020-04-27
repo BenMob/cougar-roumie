@@ -28,7 +28,7 @@ public class ChatController {
     UserService userService;
 
     @GetMapping("/user/chat")
-    public String chat(Model model) {
+    public String chat(Model model, Authentication auth) {
         model.addAttribute("users", userService.getAllUsers());
         return "chat";
     }

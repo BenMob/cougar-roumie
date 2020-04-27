@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<div th:insert="~{fragments/mainFrag :: header}"></div>
+
+<body class="gradient overlay" onload="initConnect()">
+
+<div th:insert="~{fragments/mainFrag :: navbar}"></div>
+
+<style>
+    #matchContainer {
+        height: 400px;
+        position: absolute;
+        top:30%;
+        left: 30%;
+        right: 30%;
+        padding-top: 50px;
+        background-color: black;
+    }
+
+    #matchArea {
+        text-align: center;
+        width: 100%;
+        color: white;
+    }
+    .hidden {
+        display: none;
+    }
+    /* Entirely just for shits and giggles - its on a timer*/
+    .loader {
+        margin:auto;
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite; /* Safari */
+        animation: spin 2s linear infinite;
+    }
+
+    /* Safari */
+    @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    button {
+        width: 20%;
+    }
+</style>
+
+
+<div id="matchContainer">
+    <div id="matchArea" class="hidden">
+        <h4 id="userName"></h4>
+        <button id="Yes" class="btn btn-success">Yes</button>
+        <button id="No" class="btn btn-danger">No</button>
+    </div>
+
+</div>
+
+
+<div th:insert="~{fragments/mainFrag :: footer}"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script th:src="@{/assets/js/matching.js}"></script>
+</body>
+
+</html>

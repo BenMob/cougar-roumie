@@ -6,28 +6,30 @@
 <body class="gradient overlay">
 <div th:insert="~{fragments/mainFrag :: navbar}"></div>
 
-    <div id="header" sec:authorize="isAnonymous()">
+    <div id="header" >
         <h1 class="catch">Just a swipe away</h1>
         <p>Don't miss out on the easy alternative to finding a roommate. Match with potential roommates and get to know eachother!</p>
-        <button type="button" class="btn btn-primary register" id="modal" data-toggle="modal" data-target="#modal-reg" style="color: #fff;">Register</button>
-        <div class="modal fade"  role="dialog" tabindex="-1" id="modal-reg">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Register for cougar roomie</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                    <div class="modal-body">
-                        <div class="login-form">
-                            <form action="/register" th:object="${registrationForm}" method="POST" enctype="utf8">
-                                <div class="form-group">
-                                    <input class="form-control" th:classappend="${regError} ? is-invalid : ''" type="text" name="username" placeholder="Username" th:field="*{user_name}">
-                                    <h4 th:if="${regError}" class="invalid-feedback" th:text="${regError}"></h4>
-                                </div>
-                                <div class="form-group"><input class="form-control" type="email" name="email" placeholder="Email" th:field="*{email}"></div>
-                                <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password" th:field="*{password}"></div>
-                                <div class="modal-footer"><input class="btn btn-primary signin" type="submit"></div>
-                                <!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-                            </form>
+        <div sec:authorize="isAnonymous()">
+            <button type="button" class="btn btn-primary register" id="modal" data-toggle="modal" data-target="#modal-reg" style="color: #fff;">Register</button>
+            <div class="modal fade"  role="dialog" tabindex="-1" id="modal-reg">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Register for cougar roomie</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                        <div class="modal-body">
+                            <div class="login-form">
+                                <form action="/register" th:object="${registrationForm}" method="POST" enctype="utf8">
+                                    <div class="form-group">
+                                        <input class="form-control" th:classappend="${regError} ? is-invalid : ''" type="text" name="username" placeholder="Username" th:field="*{user_name}">
+                                        <h4 th:if="${regError}" class="invalid-feedback" th:text="${regError}"></h4>
+                                    </div>
+                                    <div class="form-group"><input class="form-control" type="email" name="email" placeholder="Email" th:field="*{email}"></div>
+                                    <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password" th:field="*{password}"></div>
+                                    <div class="modal-footer"><input class="btn btn-primary signin" type="submit"></div>
+                                    <!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
