@@ -113,14 +113,14 @@ function submitNo() {
             dislikeMsg.setAttribute("id", "disliked");
             dislikeMsg.innerHTML = "Disliked: " + matchUserName;
             matchContainer.appendChild(dislikeMsg);
-        }, 100);
+        }, 200);
 
     window.setTimeout(
         function() {
             document.getElementById("disliked").remove();
             matchArea.classList.remove("hidden");
             stompClient.send("/app/matchmaking.getMatch", {}, JSON.stringify({type: 'DISLIKE', userName: matchUserName}));
-        }, 700);
+        }, 800);
 
 
 }
