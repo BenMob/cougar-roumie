@@ -7,9 +7,57 @@
 
 <div th:insert="~{fragments/mainFrag :: navbar}"></div>
 
-<div id="matchArea" style="height: 400px; position: absolute; top:30%; left: 30%; right: 30%; background-color: black">
-    <h2 id="userName" style="color:white; text-align: center;"></h2>
-    <div style="text-align: center; width: 100%;">
+<style>
+    #matchContainer {
+        height: 400px;
+        position: absolute;
+        top:30%;
+        left: 30%;
+        right: 30%;
+        padding-top: 50px;
+        background-color: black;
+    }
+
+    #matchArea {
+        text-align: center;
+        width: 100%;
+        color: white;
+    }
+    .hidden {
+        display: none;
+    }
+    /* Entirely just for shits and giggles - its on a timer*/
+    .loader {
+        margin:auto;
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite; /* Safari */
+        animation: spin 2s linear infinite;
+    }
+
+    /* Safari */
+    @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    button {
+        width: 20%;
+    }
+</style>
+
+
+<div id="matchContainer">
+    <div id="matchArea" class="hidden">
+        <h4 id="userName"></h4>
         <button id="Yes" class="btn btn-success">Yes</button>
         <button id="No" class="btn btn-danger">No</button>
     </div>

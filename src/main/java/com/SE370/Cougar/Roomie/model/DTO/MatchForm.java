@@ -8,7 +8,6 @@ public class MatchForm {
         NEWMATCH,
         DISLIKE,
         LIKE,
-        NOMATCH,
         ERROR
     }
     private String userName;
