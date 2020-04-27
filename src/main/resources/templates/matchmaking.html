@@ -3,32 +3,25 @@
 
 <div th:insert="~{fragments/mainFrag :: header}"></div>
 
-<body class="gradient overlay">
+<body class="gradient overlay" onload="initConnect()">
 
 <div th:insert="~{fragments/mainFrag :: navbar}"></div>
 
-<div>
-    <table class="table table-bordered table-dark" th:each="user : ${users}">
-        <tbody>
-            <form method="post" action="/user/submitmatch">
-                    <th scope="row" colspan="2" th:text="${user.userName}"></th>
-                    <input type="hidden" th:value="${user.userName}" name="userName"/>
-                </tr>
-                <tr>
-                    <td>
-                        <input class="form-control btn btn-success" type="submit" name="like" value="Yes?" style="padding-left:40px; padding-right: 40px;">
-                    </td>
-                    <td>
-                        <input class="form-control btn btn-danger" type="submit" name="dislike" value="No?"style="padding-left:40px; padding-right: 40px;">
-                    </td>
-                </tr>
-            </form>
-        </tbody>
-    </table>
+<div id="matchArea" style="height: 400px; position: absolute; top:30%; left: 30%; right: 30%; background-color: black">
+    <h2 id="userName" style="color:white; text-align: center;"></h2>
+    <div style="text-align: center; width: 100%;">
+        <button id="Yes" class="btn btn-success">Yes</button>
+        <button id="No" class="btn btn-danger">No</button>
+    </div>
 
 </div>
 
+
 <div th:insert="~{fragments/mainFrag :: footer}"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script th:src="@{/assets/js/matching.js}"></script>
 </body>
 
 </html>

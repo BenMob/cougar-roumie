@@ -1,4 +1,4 @@
-package com.SE370.Cougar.Roomie.controller.listeners;
+package com.SE370.Cougar.Roomie.listeners;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

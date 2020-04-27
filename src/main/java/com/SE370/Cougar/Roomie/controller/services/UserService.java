@@ -93,23 +93,18 @@ public class UserService implements UserDetailsService {
                 }).collect(Collectors.toList());
     }
 
-    public List<UserInfo> getMatches() throws RuntimeException {
-        CustomUserDetails thisUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (Integer.valueOf(thisUser.getMatchScore()) != null) {
-            return userRepository.findAllByMatchScoreBetween(thisUser.getMatchScore()-1, thisUser.getMatchScore()+1).stream()
-                    .filter(match -> !match.getUserName().equals(thisUser.getUsername()))
-                    .map(foundMatch -> {
-                        UserInfo conv = new UserInfo();
-                        conv.setUserName(foundMatch.getUserName());
-                        conv.setId(foundMatch.getId());
-                        conv.setMatchScore(foundMatch.getMatchScore());
-                        return conv;
-                    })
-                    .collect(Collectors.toList());
-        } else {
-            throw new RuntimeException("Assessment never filled out");
-        }
-
+    public List<UserInfo> getMatches(String userName, int matchScore) {
+        logger.info("looking for matches with score of: " + matchScore);
+        return userRepository.findAllByMatchScoreBetween(matchScore-1, matchScore+1).stream()
+                .filter(match -> !match.getUserName().equals(userName))
+                .map(foundMatch -> {
+                    UserInfo conv = new UserInfo();
+                    conv.setUserName(foundMatch.getUserName());
+                    conv.setId(foundMatch.getId());
+                    conv.setMatchScore(foundMatch.getMatchScore());
+                    return conv;
+                })
+                .collect(Collectors.toList());
     }
     @Transactional
     public User submitAssessment(AssessmentForm assessmentForm) {
