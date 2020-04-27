@@ -4,10 +4,12 @@ import com.SE370.Cougar.Roomie.controller.view.MatchController;
 import com.SE370.Cougar.Roomie.model.CustomUserDetails;
 import com.SE370.Cougar.Roomie.model.DTO.*;
 import com.SE370.Cougar.Roomie.model.entities.User;
+import com.SE370.Cougar.Roomie.model.repositories.FileRepo;
 import com.SE370.Cougar.Roomie.model.repositories.UserRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -19,11 +21,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 
+
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+// TODO take the image logic out and move it in its own service class
 
 @Service
 public class UserService implements UserDetailsService {
@@ -33,6 +40,9 @@ public class UserService implements UserDetailsService {
     UserRepo userRepository;
     @Autowired
     AssessmentService assessmentService;
+
+    @Autowired
+    FileRepo fileRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -48,19 +58,41 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Error Not Found: " + userName));
     }
 
-    /*
-    Role: Grab user information from the DB for profile set up.
-    Parameter: Profile DTO
-     */
-    public Profile prepareProfile(CustomUserDetails user){
-        if(user.getFirstName() == null || user.getLastName() == null || user.getGender() == 0)
+
+    public Image queryImageById(int id) throws DataRetrievalFailureException {
+        Optional<Image> image = fileRepository.findByUserId(id);
+
+        return image
+                .map(Image::new)
+                .orElseThrow(() -> new DataRetrievalFailureException("Failure to retrieve Image for " + id));
+    }
+
+    public Profile prepareProfile(CustomUserDetails thisUser){
+        if(profileInfoNotComplete(thisUser))
             return new Profile(); // empty Profile DTO
-        else return new Profile(
-                user.getFirstName(),
-                user.getLastName(),
-                user.getGender(),
-                user.getMajor(),
-                user.getHeadline());  // filled Profile DTO
+        else {
+            return new Profile(
+                    thisUser.getFirstName(),
+                    thisUser.getLastName(),
+                    thisUser.getGender(),
+                    thisUser.getMajor(),
+                    thisUser.getHeadline());  // filled Profile DTO
+        }
+    }
+    // TODO Figure out how t check for image independently from other fields
+    public FileTypeData getProfileImage(CustomUserDetails thisUser){
+        if(profileInfoNotComplete(thisUser))
+            return new FileTypeData();
+        else {
+            Image profileImage = queryImageById(thisUser.getUser_id());
+            return new FileTypeData(profileImage);
+        }
+    }
+
+    private Boolean profileInfoNotComplete(CustomUserDetails thisUser){
+        return (thisUser.getFirstName() == null ||
+                thisUser.getLastName() == null ||
+                thisUser.getGender() == 0);
     }
 
     @Transactional
@@ -122,13 +154,17 @@ public class UserService implements UserDetailsService {
 
 
     @Transactional
-    public User updateFirstTimeUser(Profile profileInfoForm){
+    public User updateFirstTimeUser(Profile profileInfoForm, FileTypeData profileImage) throws IOException {
         User user = new User((((CustomUserDetails) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal())));
-                
+
         user.registerProfileInfo(profileInfoForm);
+        fileRepository.save(
+                new Image(user.getId(),
+                profileImage.getFileInfo().getOriginalFilename(),
+                profileImage.getFileInfo().getContentType(),
+                profileImage.getFileInfo().getBytes()));
 
         return userRepository.save(user);
     }
-
 }
