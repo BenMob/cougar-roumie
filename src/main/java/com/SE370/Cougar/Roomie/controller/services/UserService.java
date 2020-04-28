@@ -3,6 +3,7 @@ package com.SE370.Cougar.Roomie.controller.services;
 import com.SE370.Cougar.Roomie.controller.view.MatchController;
 import com.SE370.Cougar.Roomie.model.CustomUserDetails;
 import com.SE370.Cougar.Roomie.model.DTO.*;
+import com.SE370.Cougar.Roomie.model.entities.Image;
 import com.SE370.Cougar.Roomie.model.entities.User;
 import com.SE370.Cougar.Roomie.model.repositories.FileRepo;
 import com.SE370.Cougar.Roomie.model.repositories.UserRepo;
@@ -22,9 +23,6 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
-
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -150,7 +148,6 @@ public class UserService implements UserDetailsService {
         SecurityContextHolder.getContext().setAuthentication(newAuth);
         return userRepository.save(new User(custom));
     }
-
 
 
     @Transactional
