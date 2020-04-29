@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      lang="en">
 
 
 <!-- HEADER FRAGMENT -->
@@ -24,6 +25,9 @@
     <div id="navbar">
         <nav class="navbar navbar-light navbar-expand" id="navbar">
             <div class="container"><a class="navbar-brand" href="/"><img id="logo" th:src="@{/assets/img/logo.png}"></a>
+                <span>
+                    <a class="btn btn-primary register" role="button" th:href="@{/user/assessment}" sec:authorize="isAuthenticated()">Assessment</a>
+                </span>
                 <span>
                     <a class="btn btn-primary signin" role="button" href="/login" sec:authorize="isAnonymous()">Sign in</a>
                     <a class="btn btn-primary signin" role="button" href="/logout" sec:authorize="isAuthenticated()">Logout</a>
@@ -50,7 +54,7 @@
                 <ul class="nav mx-auto">
                     <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                     <li class="nav-item"><a class="nav-link active" th:href="@{/user/profile}" sec:authorize="isAuthenticated()">Profile</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#" sec:authorize="isAuthenticated()">Matches</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/" sec:authorize="isAuthenticated()">Matches</a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/user/chat}" sec:authorize="isAuthenticated()">Chat</a></li>
                 </ul>
             </footer>

@@ -158,9 +158,9 @@ public class UserService implements UserDetailsService {
         user.registerProfileInfo(profileInfoForm);
         fileRepository.save(
                 new Image(user.getId(),
-                profileImage.getFileInfo().getOriginalFilename(),
-                profileImage.getFileInfo().getContentType(),
-                profileImage.getFileInfo().getBytes()));
+                        profileImage.getFileName(),
+                        profileImage.getFileType(),
+                        profileImage.getData()));
 
         return userRepository.save(user);
     }

@@ -16,10 +16,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Base64;
 
 @Controller
 public class ProfileController {
@@ -44,7 +45,8 @@ public class ProfileController {
     }
 
     @PostMapping("user/profile")
-    public String registerProfileInfoForm(@ModelAttribute Profile profileInfoForm, FileTypeData profileImage, Model model) throws IOException {
+    public String registerProfileInfoForm(@ModelAttribute Profile profileInfoForm, @RequestParam("file") MultipartFile file, Model model) throws IOException {
+        FileTypeData profileImage = new FileTypeData(file);
         userService.updateFirstTimeUser(profileInfoForm, profileImage);
 
         model.addAttribute("profileInfoForm", profileInfoForm);

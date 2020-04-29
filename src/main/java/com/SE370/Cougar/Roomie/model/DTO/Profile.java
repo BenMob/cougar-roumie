@@ -15,10 +15,6 @@ public class Profile {
     private String last_name;
     private String major;
     private String headline;
-    private String image_src;
-  //  private String fileName;
-  //  private String fileType;
-  //  private byte[] fileData;
     int gender;
     MultipartFile profileImage; // MultipartFile type is the DS containing all the image information (bytes, name, etc ...)
 
@@ -32,29 +28,6 @@ public class Profile {
         this.setHeadline(headline);
     }
 
-    public Image mapImageToUser(int id) throws IOException {
-        return new Image(
-                id,
-                profileImage.getOriginalFilename(),
-                profileImage.getContentType(),
-                profileImage.getBytes());
-    }
-/*
-    public void setProfileImageData(String fileName, String fileType, String filePath, byte[] fileData) {
-        this.fileName = fileName;
-        this.fileType = fileType;
-        this.filePath = filePath;
-        this.fileData = fileData;
-    }
-*/
-/*
-    public void prepareProfileImage() throws IOException {
-        this.fileName = profileImage.getOriginalFilename();
-        this.fileType = profileImage.getContentType();
-        this.filePath = StringUtils.cleanPath(profileImage.getOriginalFilename());
-        this.fileData = profileImage.getBytes();
-    }
-*/
     public String getLast_name() { return last_name; }
     public void setLast_name(String last_name) { this.last_name = last_name; }
     public String getFirst_name() { return first_name; }
@@ -67,6 +40,4 @@ public class Profile {
     public void setMajor(String major) { this.major = major; }
     public MultipartFile getProfileImage() { return profileImage; }
     public void setProfileImage(MultipartFile profileImage) { this.profileImage = profileImage; }
-    public String getImage_src() { return image_src; }
-    public void setImage_src(String image_src) { this.image_src = image_src; }
 }
