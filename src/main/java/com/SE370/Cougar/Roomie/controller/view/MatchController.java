@@ -42,6 +42,8 @@ public class MatchController {
         return "matchmaking";
     }
 
+
+    // This SHOULD be the first message from the client, if its not MatchMakerComponent will throw an error
     @MessageMapping("/matchmaking.initialize")
     public void initialConnect(Authentication auth, @Payload MatchForm submitResult) {
         logger.info("trying to init matchmaking");
@@ -54,7 +56,7 @@ public class MatchController {
 
     @MessageMapping("/matchmaking.getMatch")
     public void getMatch(Authentication authentication, @Payload MatchForm submitResult) {
-
+        // TODO: Right now all we are doing is logging what the front end does, logic needs to be developed for like/dislike
         switch(submitResult.getType()) {
             case DISLIKE:
                 logger.info("Disliked: " + submitResult.getUserName());
@@ -66,6 +68,8 @@ public class MatchController {
                 logger.info("Request Match");
                 break;
         }
+
+        // Get match or send error to client...
         try {
             UserInfo found = match.getMatch();
             MatchForm msg = new MatchForm();

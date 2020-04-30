@@ -7,6 +7,9 @@
 
 <div th:insert="~{fragments/mainFrag :: navbar}"></div>
 
+
+<!-- I placed this directly in this file so you can see what I used to achieve the result, James, Ria you will need
+     to move this to a css file and modify it to fit your liking.. Pls do not leave this here... -->
 <style>
     #matchContainer {
         height: 400px;
@@ -26,7 +29,8 @@
     .hidden {
         display: none;
     }
-    /* Entirely just for shits and giggles - its on a timer*/
+
+    /* Entirely just for shits and giggles - its on a timer */
     .loader {
         margin:auto;
         border: 16px solid #f3f3f3;
@@ -48,13 +52,14 @@
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
+    /* End loading spinner */
 
     button {
         width: 20%;
     }
 </style>
 
-
+<!-- Such a simple idea, yet so complicated.... -->
 <div id="matchContainer">
     <div id="matchArea" class="hidden">
         <h4 id="userName"></h4>
