@@ -1,88 +1,68 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+     lang="en">
 
 <div th:insert="~{fragments/mainFrag :: header}"></div>
 
 <body class="gradient overlay">
 
-
 <div th:insert="~{fragments/mainFrag :: navbar}"></div>
 
-        <div class="container" th:unless="${#strings.isEmpty(profileInfoForm.first_name)} or ${#strings.isEmpty(profileInfoForm.last_name)} or ${profileInfoForm.gender == 0}">
-            <h3 th:text="${'Hi, I am ' + profileInfoForm.first_name + ' ' + profileInfoForm.last_name}">Greeting</h3>
 
+<!-- TODO: Hey James or Ria, please position these containers where you want them. Just be a very careful with the th  - Ben -->
+    <div sec:authorize="isAuthenticated()">
+        <div class="container">
+            <div th:unless="${#strings.isEmpty(profileImage.src)}">
+                <img th:src="@{'data:' + ${profileImage.fileType} + ';base64,' + ${profileImage.src}}" class="rounded-circle" alt="Profile Image" height="100" width="100">
+            </div>
+            <div th:if="${#strings.isEmpty(profileImage.src)}">
+                <img th:src="@{/assets/img/avatar.jpg}"class="rounded-circle" alt="Profile Image" height="100" width="100">
+            </div>
+        </div>
+        <div class="container" th:unless="${#strings.isEmpty(profileInfoForm.first_name)} or ${#strings.isEmpty(profileInfoForm.last_name)} or ${profileInfoForm.gender == 0}">
+            <h2 th:text="${profileInfoForm.first_name + ' ' + profileInfoForm.last_name}">Greeting</h2>
         </div>
         <div class="container" th:unless="${#strings.isEmpty(profileInfoForm.major)} or ${#strings.isEmpty(profileInfoForm.headline)}">
-            <h3 th:text="${'I am Majoring in ' + profileInfoForm.major}">Major</h3>
+            <h3 th:text="${profileInfoForm.major}">Major</h3>
             <h6 th:text="${profileInfoForm.headline}">Headline</h6>
         </div>
-<div class="text-center">
-    <img src=" " class="rounded" alt=" ">
-</div>
+    </div>
+
 <!-- TODO: Hey James or Ria, also if you can make the pop up appear on page load rather than being trigger by a button, that would be great - Ben -->
     <div id="header">
-
-        <div th:if="${#strings.isEmpty(profileInfoForm.first_name)} or ${#strings.isEmpty(profileInfoForm.last_name)} or ${profileInfoForm.gender == 0}">
-            <!--<div class="parallax"></div>
-            <div id="myParallax">
-                <h9>Welcome to the Cougar Roomie! We hope that your search of finding an ideal roommate ends here. Click on the Setup Profile link to create your Cougar roomie account.<</h9>
-                    <h3></h3>
-                    <h3></h3>-->
-            <button class="btn btn-primary register" id="modal" data-toggle="modal" data-target="#modal-reg" style="color: #fff;">Setup Profile</button>
-                <div class="modal fade" role="dialog" tabindex="-1" id="modal-reg">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Welcome!</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                            <div class="modal-body">
-                                <p class="text-center">Please fill in some information about yourself</p>
-                                <div class="login-form">
-                                    <div th:action="@{/user/profile}" th:object="${profileInfoForm}" method="POST" enctype="utf8">
-                                        <div class="form-group"><input class="form-control" type="text" name="firstName" placeholder="First Name" th:field="*{first_name}"></div>
-                                        <div class="form-group"><input class="form-control" type="text" name="lastName" placeholder="Last Name" th:field="*{last_name}"></div>
-                                        <div class="form-group"><input class="form-control" type="text" name="major" placeholder="Major" th:field="*{major}"></div>
-
-                                        <div class="form-inline">
-                                                <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                                                <option selected>Choose your college year...</option>
-                                                <option value="2">Freshman</option>
-                                                <option value="3">Sophomore</option>
-                                                <option value="4">Junior</option>
-                                                <option value="5">Senior</option>
-                                            </select>
+      <div th:if="${#strings.isEmpty(profileInfoForm.first_name)} or ${#strings.isEmpty(profileInfoForm.last_name)} or ${profileInfoForm.gender == 0} or ${#strings.isEmpty(profileInfoForm.headline)} or ${#strings.isEmpty(profileImage.src)}">
+           <button class="btn btn-primary register" id="modal" data-toggle="modal" data-target="#modal-reg" style="color: #fff;">Setup Profile</button> -->
+            <div class="modal fade" role="dialog" tabindex="-1" id="modal-reg" >
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Welcome!</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                        <div class="modal-body">
+                            <p class="text-center">Please fill in some information about yourself</p>
+                            <div class="login-form" >
+                                <form th:action="@{/user/profile}" th:object="${profileInfoForm}"  method="POST" enctype="multipart/form-data"><!--Without this entype, the image won't be uploaded properly-->
+                                    <div th:if="${#strings.isEmpty(profileInfoForm.first_name)}" class="form-group"><input class="form-control" type="text" name="firstName" placeholder="First Name" th:required="required" th:field="*{first_name}" th:re></div>
+                                    <div th:if="${#strings.isEmpty(profileInfoForm.last_name)}" class="form-group"><input class="form-control" type="text" name="lastName" placeholder="Last Name" th:required="required" th:field="*{last_name}"></div>
+                                    <div th:if="${#strings.isEmpty(profileInfoForm.major)}" class="form-group"><input class="form-control" type="text" name="major" placeholder="Major" th:required="required" th:field="*{major}"></div>
+                                    <!-- TODO:  Please add a student year select here: Freshman, Sophomore etc ... - Ben -->
+                                    <!-- TODO: Let me know once it is done and I will add a field for it in the DB  Thanks. -->
+                                    <div class="form-group text-left checkbox" th:if="${profileInfoForm.gender == 0}">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" id="formCheck-1" value='1' th:field="*{gender}">
+                                            <label class="form-check-label" for="formCheck-1">Male</label>
                                         </div>
-
-                                        <div class="form-group text-left checkbox">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" id="formCheck-1" value='1' th:field="*{gender}">
-                                                <label class="form-check-label" for="formCheck-1">Male</label>
-                                            </div>
-                                           <div class="form-check">
-                                                <input class="form-check-input" type="radio" id="formCheck-1" value='1' th:field="*{gender}">
-                                                <label class="form-check-label" for="formCheck-1">Female</label>
-                                           </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" id="formCheck-1" value='1' th:field="*{gender}">
-                                                <label class="form-check-label" for="formCheck-1">Other</label>
-                                            </div>
-                                         </div>
-
-
-
-                                        <div class="form-group"><textarea class="form-control" type="text" name="headline" placeholder="Headline ... " th:field="*{headline}"></textarea></div>
-
-                                        <div class="form-group">
-                                            <label for="file-input">Upload a picture of your's</label>
-                                            <input type="file" class="form-control-file" id="file-input">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" id="formCheck-2" value='2' th:field="*{gender}">
+                                            <label class="form-check-label" for="formCheck-2">Female</label>
                                         </div>
-
-
-
-
-                                        <div class="modal-footer"><button class="btn btn-primary signin" type="submit">submit</button></div>
-                                        </form>
-                                   <!-- <div class="parallax"></div>-->
-                                </div>
+                                    </div>
+                                    <div th:if="${#strings.isEmpty(profileInfoForm.headline)}" class="form-group"><textarea class="form-control" type="text" name="headline" placeholder="Headline ... " th:required="required" th:field="*{headline}"></textarea></div>
+                                    <div class="form-group" >
+                                        <label for="profile_img" class="form-check-label">Profile Image</label>
+                                        <input th:required="required" type="file" name="file" class="form-control" id="profile_img" >
+                                    </div>
+                                    <div class="modal-footer"><button class="btn btn-primary signin" type="submit">submit</button></div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -90,7 +70,6 @@
             </div>
         </div>
     </div>
-
 <div th:insert="~{fragments/mainFrag :: footer}"></div>
 </body>
 

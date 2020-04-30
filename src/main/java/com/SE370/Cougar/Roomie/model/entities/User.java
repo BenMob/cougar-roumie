@@ -13,6 +13,7 @@ public class User{
     @GeneratedValue(strategy = GenerationType.AUTO) // Tell spring to handle generation
     private int id;
     private int answer_id; // connects to answer table
+    private int profile_image_id;  // Connects to image table
     private int matchScore;
     private String firstName;
     private String lastName;
@@ -23,7 +24,6 @@ public class User{
     private int gender; // 0 is default (unknown), 1 for Male, 2 for Female
     private String email; // empty by default
     private boolean active; // account flag
-    //private long visits; // number of times a user has logged in
 
 
     public User() {}
@@ -43,7 +43,6 @@ public class User{
             setMajor(customUser.getMajor());
             setEmail(customUser.getEmail());
             setActive(customUser.isEnabled());
-
     }
 
     // Task: Copy constructor that registers user for the first time
@@ -158,6 +157,14 @@ public class User{
 
     public void setMajor(String major) {
         this.major = major;
+    }
+
+    public int getProfile_image_id() {
+        return profile_image_id;
+    }
+
+    public void setProfile_image_id(int profile_image_id) {
+        this.profile_image_id = profile_image_id;
     }
 
 }

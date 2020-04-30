@@ -2,20 +2,25 @@ package com.SE370.Cougar.Roomie.controller.view;
 
 import com.SE370.Cougar.Roomie.controller.services.UserService;
 import com.SE370.Cougar.Roomie.model.CustomUserDetails;
+import com.SE370.Cougar.Roomie.model.DTO.FileTypeData;
 import com.SE370.Cougar.Roomie.model.DTO.Profile;
+import com.SE370.Cougar.Roomie.model.entities.Image;
 import com.SE370.Cougar.Roomie.model.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Controller
 public class ProfileController {
@@ -25,20 +30,27 @@ public class ProfileController {
 
     @GetMapping("user/profile")
     public String showProfileInfoForm(WebRequest request, Model model){
+        CustomUserDetails thisUser = (CustomUserDetails) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
 
         Profile profileInfoForm = userService
-                .prepareProfile((CustomUserDetails) SecurityContextHolder
-                    .getContext().getAuthentication().getPrincipal());
+                .prepareProfile(thisUser);
+
+        FileTypeData profileImage = userService
+                .getProfileImage(thisUser);
 
         model.addAttribute("profileInfoForm", profileInfoForm);
+        model.addAttribute("profileImage", profileImage);
         return "profile";
     }
 
     @PostMapping("user/profile")
-    public String registerProfileInfoForm(@ModelAttribute Profile profileInfoForm, Model model) {
-        userService.updateFirstTimeUser(profileInfoForm);
+    public String registerProfileInfoForm(@ModelAttribute Profile profileInfoForm, @RequestParam("file") MultipartFile file, Model model) throws IOException {
+        FileTypeData profileImage = new FileTypeData(file);
+        userService.updateFirstTimeUser(profileInfoForm, profileImage);
 
         model.addAttribute("profileInfoForm", profileInfoForm);
+        model.addAttribute("profileImage", profileImage);
         return "profile";
     }
 }
