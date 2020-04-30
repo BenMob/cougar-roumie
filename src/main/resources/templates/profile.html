@@ -7,7 +7,7 @@
 <body class="gradient overlay">
 
 <div th:insert="~{fragments/mainFrag :: navbar}"></div>
-
+<a class="btn btn-primary register" role="button" th:href="@{/user/assessment}">Assessment</a>
 
 <!-- TODO: Hey James or Ria, please position these containers where you want them. Just be a very careful with the th  - Ben -->
     <div sec:authorize="isAuthenticated()">

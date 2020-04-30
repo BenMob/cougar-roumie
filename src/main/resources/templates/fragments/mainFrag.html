@@ -26,9 +26,6 @@
         <nav class="navbar navbar-light navbar-expand" id="navbar">
             <div class="container"><a class="navbar-brand" href="/"><img id="logo" th:src="@{/assets/img/logo.png}"></a>
                 <span>
-                    <a class="btn btn-primary register" role="button" th:href="@{/user/assessment}" sec:authorize="isAuthenticated()">Assessment</a>
-                </span>
-                <span>
                     <a class="btn btn-primary signin" role="button" href="/login" sec:authorize="isAnonymous()">Sign in</a>
                     <a class="btn btn-primary signin" role="button" href="/logout" sec:authorize="isAuthenticated()">Logout</a>
                 </span>
