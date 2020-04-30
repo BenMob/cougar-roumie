@@ -6,25 +6,38 @@
 <body class="gradient overlay">
 <div th:insert="~{fragments/mainFrag :: navbar}"></div>
 
-<h1>Register</h1>
 <form action="/user/assessment" th:object="${assessmentForm}" method="POST" enctype="utf8">
-    <div>
+    <div class="center-div">
         <label th:text="${assessmentForm.question1}">Question 1</label>
-        <input type="number" min="1" max="10" th:field="*{answer1}"/>
+        <div>
+            <input class="slider" type="range" min="0" max="10" oninput="updateRangeInput(this)" value="0" th:field="*{answer1}">
+            <output class="output" name="output" for="range">0</output>
+        </div>
     </div>
-    <div>
+    <div class="center-div">
         <label th:text="${assessmentForm.question2}">Question 2</label>
-        <input type="number" min="1" max="10" th:field="*{answer2}"/>
+        <div>
+            <input class="slider" type="range" min="0" max="10" oninput="updateRangeInput(this)" value="0" th:field="*{answer2}">
+            <output class="output" name="output" for="range">0</output>
+        </div>
     </div>
-    <div>
+    <div class="center-div">
         <label th:text="${assessmentForm.question3}">Question 3</label>
-        <input type="number" min="1" max="10" th:field="*{answer3}"/>
+        <div>
+            <input class="slider" type="range" min="0" max="10" oninput="updateRangeInput(this)" value="0" th:field="*{answer3}">
+            <output class="output" name="output" for="range">0</output>
+        </div>
     </div>
-    <div>
+    <div class="center-div">
         <label th:text="${assessmentForm.question4}">Question 4</label>
-        <input type="number" min="1" max="10" th:field="*{answer4}"/>
+        <div>
+            <input class="slider" type="range" min="0" max="10" oninput="updateRangeInput(this)" value="0" th:field="*{answer4}">
+            <output class="output" name="output" for="range">0</output>
+        </div>
     </div>
-    <button type="submit">Submit</button>
+    <div class="center-div">
+        <button class="btn-primary" type="submit">Submit</button>
+    </div>
 </form>
 
 <div th:insert="~{fragments/mainFrag :: footer}"></div>
