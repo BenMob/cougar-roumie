@@ -80,6 +80,10 @@ body {
   background: linear-gradient(90deg, #00a3dd 33%, #0072c6 70%);
 }
 
+.btn-primary {
+  color: #ffffff;
+}
+
 .btn.btn-primary.signin {
   border-radius: 25px;
   background: rgba(0, 0, 0, 0.75);
@@ -90,9 +94,15 @@ body {
   display: flex;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h4, h5, h6 {
   text-align: center;
   color: #fff;
+}
+
+h3 {
+  text-align: center;
+  color: #abdaee;
+  text-decoration: underline;
 }
 
 .signin-header {
@@ -142,4 +152,12 @@ p {
 
 label {
   color: #fff;
+}
+
+.black-text {
+  color: #000;
+}
+
+.pad-bot {
+  padding-bottom: 6px;
 }

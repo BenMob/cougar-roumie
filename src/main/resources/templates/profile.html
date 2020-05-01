@@ -38,7 +38,7 @@
                         <div class="modal-header">
                             <h4 class="modal-title">Welcome!</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
                         <div class="modal-body">
-                            <p class="text-center">Please fill in some information about yourself</p>
+                            <p class="text-center black-text">Please fill in some information about yourself</p>
                             <div class="login-form" >
                                 <form th:action="@{/user/profile}" th:object="${profileInfoForm}"  method="POST" enctype="multipart/form-data"><!--Without this entype, the image won't be uploaded properly-->
                                     <div th:if="${#strings.isEmpty(profileInfoForm.first_name)}" class="form-group"><input class="form-control" type="text" name="firstName" placeholder="First Name" th:required="required" th:field="*{first_name}" th:re></div>
@@ -49,11 +49,11 @@
                                     <div class="form-group text-left checkbox" th:if="${profileInfoForm.gender == 0}">
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" id="formCheck-1" value='1' th:field="*{gender}">
-                                            <label class="form-check-label" for="formCheck-1">Male</label>
+                                            <label class="form-check-label black-text" for="formCheck-1">Male</label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" id="formCheck-2" value='2' th:field="*{gender}">
-                                            <label class="form-check-label" for="formCheck-2">Female</label>
+                                            <label class="form-check-label black-text" for="formCheck-2">Female</label>
                                         </div>
                                     </div>
                                     <div th:if="${#strings.isEmpty(profileInfoForm.headline)}" class="form-group"><textarea class="form-control" type="text" name="headline" placeholder="Headline ... " th:required="required" th:field="*{headline}"></textarea></div>
