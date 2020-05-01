@@ -7,15 +7,16 @@
 
 <div th:insert="~{fragments/mainFrag :: navbar}"></div>
 
+<!-- I placed this directly in this file so you can see what I used to achieve the result, James, Ria you will need
+     to move this to a css file and modify it to fit your liking.. Pls do not leave this here... -->
 <style>
     #matchContainer {
         height: 400px;
         position: absolute;
-        top:30%;
+        top: 20%;
         left: 30%;
         right: 30%;
         padding-top: 50px;
-        background-color: black;
     }
 
     #matchArea {
@@ -26,7 +27,8 @@
     .hidden {
         display: none;
     }
-    /* Entirely just for shits and giggles - its on a timer*/
+
+    /* Entirely just for shits and giggles - its on a timer */
     .loader {
         margin:auto;
         border: 16px solid #f3f3f3;
@@ -48,18 +50,27 @@
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
+    /* End loading spinner */
 
     button {
         width: 20%;
     }
 </style>
 
-
+<!-- Such a simple idea, yet so complicated.... -->
 <div id="matchContainer">
     <div id="matchArea" class="hidden">
-        <h4 id="userName"></h4>
-        <button id="Yes" class="btn btn-success">Yes</button>
-        <button id="No" class="btn btn-danger">No</button>
+        <div>
+            <img src="https://www.pngitem.com/pimgs/m/30-307416_profile-icon-png-image-free-download-searchpng-employee.png"
+                 alt="Profile Picture" height="256" width="256"/>
+            <h3>Name:</h3>
+            <h4 class="pad-bot" id="userName"></h4>
+            <!-- Add user info here, small "filler" text about them -->
+            <h3>About Me:</h3>
+            <h4 class="pad-bot" id="userInfo">This is temporary text that can be removed after the text is added.</h4>
+        </div>
+        <button id="Yes" class="btn btn-success">Like</button>
+        <button id="No" class="btn btn-danger">Dislike</button>
     </div>
 
 </div>

@@ -3,6 +3,7 @@ package com.SE370.Cougar.Roomie.controller.services;
 import com.SE370.Cougar.Roomie.controller.view.MatchController;
 import com.SE370.Cougar.Roomie.model.CustomUserDetails;
 import com.SE370.Cougar.Roomie.model.DTO.*;
+import com.SE370.Cougar.Roomie.model.entities.Image;
 import com.SE370.Cougar.Roomie.model.entities.User;
 import com.SE370.Cougar.Roomie.model.repositories.FileRepo;
 import com.SE370.Cougar.Roomie.model.repositories.UserRepo;
@@ -22,9 +23,6 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
-
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -142,29 +140,50 @@ public class UserService implements UserDetailsService {
     public User submitAssessment(AssessmentForm assessmentForm) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails custom = (CustomUserDetails) auth.getPrincipal();
+        logger.info(custom.getUsername() + custom.getFirstName());
 
-
+        // Calculate match score and submit assessment to db
         custom.setMatchScore(assessmentService.submitAssessment(assessmentForm, custom.getUser_id()));
 
+        // rebuild auth
         Authentication newAuth = new UsernamePasswordAuthenticationToken(custom, auth.getCredentials(), auth.getAuthorities());
+
+        // set auth
         SecurityContextHolder.getContext().setAuthentication(newAuth);
+
+        // update user in repo (returns updated user object)
         return userRepository.save(new User(custom));
     }
 
 
-
     @Transactional
     public User updateFirstTimeUser(Profile profileInfoForm, FileTypeData profileImage) throws IOException {
-        User user = new User((((CustomUserDetails) SecurityContextHolder
-                .getContext().getAuthentication().getPrincipal())));
 
-        user.registerProfileInfo(profileInfoForm);
+        // Grab auth token
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        // cast auth into Custom User Details -> fills all available fields...
+        CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+
+        // Update Custom User Details Object....
+        user.setFirstName(profileInfoForm.getFirst_name());
+        user.setLastName(profileInfoForm.getLast_name());
+        user.setGender(profileInfoForm.getGender());
+        user.setMajor(profileInfoForm.getMajor());
+        user.setHeadline(profileInfoForm.getHeadline());
+
+        // Rebuild Authentication
+        Authentication newAuth = new UsernamePasswordAuthenticationToken(user, auth.getCredentials(), auth.getAuthorities());
+
+        // Set Authentication
+        SecurityContextHolder.getContext().setAuthentication(newAuth);
+
         fileRepository.save(
-                new Image(user.getId(),
-                profileImage.getFileInfo().getOriginalFilename(),
-                profileImage.getFileInfo().getContentType(),
-                profileImage.getFileInfo().getBytes()));
+                new Image(user.getUser_id(),
+                        profileImage.getFileName(),
+                        profileImage.getFileType(),
+                        profileImage.getData()));
 
-        return userRepository.save(user);
+        return userRepository.save(new User(user));
     }
 }

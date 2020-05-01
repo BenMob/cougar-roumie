@@ -69,4 +69,6 @@ public class ChatComponent {
     public void setOtherUserName(Optional<String> otherUserName) {
         this.otherUserName = otherUserName;
     }
+    
 }
+

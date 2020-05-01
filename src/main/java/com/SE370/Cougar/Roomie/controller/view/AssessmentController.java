@@ -31,6 +31,6 @@ public class AssessmentController {
     @PostMapping("/user/assessment")
     public String submitAssessment(@ModelAttribute AssessmentForm assessmentForm) {
         userService.submitAssessment(assessmentForm);
-        return "assessment";
+        return "redirect:matches";
     }
 }
