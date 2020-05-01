@@ -140,28 +140,50 @@ public class UserService implements UserDetailsService {
     public User submitAssessment(AssessmentForm assessmentForm) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails custom = (CustomUserDetails) auth.getPrincipal();
+        logger.info(custom.getUsername() + custom.getFirstName());
 
-
+        // Calculate match score and submit assessment to db
         custom.setMatchScore(assessmentService.submitAssessment(assessmentForm, custom.getUser_id()));
 
+        // rebuild auth
         Authentication newAuth = new UsernamePasswordAuthenticationToken(custom, auth.getCredentials(), auth.getAuthorities());
+
+        // set auth
         SecurityContextHolder.getContext().setAuthentication(newAuth);
+
+        // update user in repo (returns updated user object)
         return userRepository.save(new User(custom));
     }
 
 
     @Transactional
     public User updateFirstTimeUser(Profile profileInfoForm, FileTypeData profileImage) throws IOException {
-        User user = new User((((CustomUserDetails) SecurityContextHolder
-                .getContext().getAuthentication().getPrincipal())));
 
-        user.registerProfileInfo(profileInfoForm);
+        // Grab auth token
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        // cast auth into Custom User Details -> fills all available fields...
+        CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+
+        // Update Custom User Details Object....
+        user.setFirstName(profileInfoForm.getFirst_name());
+        user.setLastName(profileInfoForm.getLast_name());
+        user.setGender(profileInfoForm.getGender());
+        user.setMajor(profileInfoForm.getMajor());
+        user.setHeadline(profileInfoForm.getHeadline());
+
+        // Rebuild Authentication
+        Authentication newAuth = new UsernamePasswordAuthenticationToken(user, auth.getCredentials(), auth.getAuthorities());
+
+        // Set Authentication
+        SecurityContextHolder.getContext().setAuthentication(newAuth);
+
         fileRepository.save(
-                new Image(user.getId(),
+                new Image(user.getUser_id(),
                         profileImage.getFileName(),
                         profileImage.getFileType(),
                         profileImage.getData()));
 
-        return userRepository.save(user);
+        return userRepository.save(new User(user));
     }
 }

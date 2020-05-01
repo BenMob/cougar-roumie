@@ -1,5 +1,4 @@
 package com.SE370.Cougar.Roomie.configuration;
-
 import com.SE370.Cougar.Roomie.controller.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
