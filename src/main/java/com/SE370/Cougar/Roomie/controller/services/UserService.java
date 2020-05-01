@@ -140,7 +140,6 @@ public class UserService implements UserDetailsService {
     public User submitAssessment(AssessmentForm assessmentForm) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails custom = (CustomUserDetails) auth.getPrincipal();
-        logger.info(custom.getUsername() + custom.getFirstName());
 
         // Calculate match score and submit assessment to db
         custom.setMatchScore(assessmentService.submitAssessment(assessmentForm, custom.getUser_id()));
