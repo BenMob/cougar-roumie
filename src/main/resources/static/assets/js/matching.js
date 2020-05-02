@@ -66,10 +66,10 @@ function onMessageReceived(payload) {
         matchContainer.appendChild(infoContainer);
 
         matchContainer.appendChild(errorMessage);
-        //window.setTimeout(
-          //  function() {
-           //     window.location.href = "http://localhost:8080/";
-          //  }, 5000);
+        window.setTimeout(
+            function() {
+                window.location.href = "http://localhost:8080/";
+            }, 5000);
     }
 }
 
