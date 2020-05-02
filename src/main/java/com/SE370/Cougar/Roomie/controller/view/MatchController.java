@@ -75,6 +75,7 @@ public class MatchController {
             MatchForm msg = new MatchForm();
             msg.setUserName(found.getUserName());
             msg.setType(MatchForm.MessageType.NEWMATCH);
+            msg.setName(found.getName());
             this.messsageOperations.convertAndSendToUser(authentication.getName(), "/queue/matchmaking", msg);
 
         } catch (RuntimeException e) {

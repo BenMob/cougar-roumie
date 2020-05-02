@@ -132,9 +132,14 @@ public class UserService implements UserDetailsService {
                     conv.setUserName(foundMatch.getUserName());
                     conv.setId(foundMatch.getId());
                     conv.setMatchScore(foundMatch.getMatchScore());
+
+                    if (foundMatch.getFirstName() != null && foundMatch.getLastName() != null) {
+                        conv.setName(foundMatch.getFirstName() + " " + foundMatch.getLastName());
+                    } else {
+                        conv.setName("Unknown");
+                    }
                     return conv;
-                })
-                .collect(Collectors.toList());
+                }).collect(Collectors.toList());
     }
     @Transactional
     public User submitAssessment(AssessmentForm assessmentForm) {

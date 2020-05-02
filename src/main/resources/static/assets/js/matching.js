@@ -2,6 +2,7 @@
 var matchArea = document.querySelector('#matchArea');
 var matchContainer = document.querySelector('#matchContainer');
 var userNameTitle = document.querySelector('#userName');
+var nameTitle = document.querySelector('#name');
 var matchUserName = null;
 var stompClient = null;
 
@@ -49,7 +50,7 @@ function onMessageReceived(payload) {
 
 
     } else if (msg.type === 'NEWMATCH') { // Received a new match, update UI
-        newMatch(msg.userName);
+        newMatch(msg.userName, msg.name);
     } else if (msg.type === 'ERROR') {
         // hide match controls
         matchArea.classList.add("hidden");
@@ -77,9 +78,10 @@ function onError(error) {
 }
 
 // Updated UI
-function newMatch(userName) {
+function newMatch(userName, name) {
     matchUserName = userName;
     userNameTitle.innerHTML = matchUserName;
+    nameTitle.innerHTML = name;
 }
 
 
