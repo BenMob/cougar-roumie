@@ -19,11 +19,11 @@ public class WebSocketEventListener {
 
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
-        logger.info("New Connection");
+        logger.info("WebSocket Connection Initialized");
     }
 
     @EventListener
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
-        logger.info("Session Disconnected");
+        logger.info("Websocket Connection Closed");
     }
 }
