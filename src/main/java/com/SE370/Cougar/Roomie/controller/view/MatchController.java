@@ -7,6 +7,7 @@ import com.SE370.Cougar.Roomie.model.DTO.MatchForm;
 import com.SE370.Cougar.Roomie.model.DTO.UserInfo;
 import com.SE370.Cougar.Roomie.model.entities.User;
 import com.SE370.Cougar.Roomie.model.repositories.UserRepo;
+import com.fasterxml.jackson.databind.deser.DataFormatReaders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,13 +73,12 @@ public class MatchController {
         // Get match or send error to client...
         try {
             UserInfo found = match.getMatch();
-            MatchForm msg = new MatchForm();
-            msg.setUserName(found.getUserName());
+            MatchForm msg = (MatchForm) found;
             msg.setType(MatchForm.MessageType.NEWMATCH);
-            msg.setName(found.getName());
             this.messsageOperations.convertAndSendToUser(authentication.getName(), "/queue/matchmaking", msg);
 
         } catch (RuntimeException e) {
+            logger.error(e.getMessage());
             MatchForm error = new MatchForm();
             error.setType(MatchForm.MessageType.ERROR);
             error.setUserName(e.getMessage());

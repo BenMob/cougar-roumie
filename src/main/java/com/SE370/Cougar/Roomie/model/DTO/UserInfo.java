@@ -6,6 +6,7 @@ public class UserInfo {
     private String name;
     private int id;
     private int matchScore;
+    private String bio;
 
     public String getUserName() {
         return userName;
@@ -33,5 +34,12 @@ public class UserInfo {
     }
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }
