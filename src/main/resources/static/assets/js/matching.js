@@ -44,7 +44,7 @@ function onMessageReceived(payload) {
         window.setTimeout(
             function() {
                 window.location.href = "http://localhost:8080/";
-            }, 1500);
+            }, 4500);
     }
 }
 
