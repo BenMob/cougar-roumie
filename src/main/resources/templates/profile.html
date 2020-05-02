@@ -45,6 +45,21 @@
                                     <div th:if="${#strings.isEmpty(profileInfoForm.last_name)}" class="form-group"><input class="form-control" type="text" name="lastName" placeholder="Last Name" th:required="required" th:field="*{last_name}"></div>
                                     <div th:if="${#strings.isEmpty(profileInfoForm.major)}" class="form-group"><input class="form-control" type="text" name="major" placeholder="Major" th:required="required" th:field="*{major}"></div>
                                     <!-- TODO:  Please add a student year select here: Freshman, Sophomore etc ... - Ben -->
+                                    <div class="form-inline">
+                                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                            <option selected>Choose your College Year...</option>
+                                            <option value="1">Freshmen</option>
+                                            <option value="2">Sophomore</option>
+                                            <option value="3">Junior</option>
+                                            <option value="4">Senior</option>
+                                        </select>
+
+                                        <div class="custom-control custom-checkbox mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
+                                            <label class="custom-control-label" for="customControlAutosizing">Remember my preference</label>
+                                        </div>
+                                    </div>
+
                                     <!-- TODO: Let me know once it is done and I will add a field for it in the DB  Thanks. -->
                                     <div class="form-group text-left checkbox" th:if="${profileInfoForm.gender == 0}">
                                         <div class="form-check">
