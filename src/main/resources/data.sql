@@ -11,12 +11,12 @@ INSERT INTO public.users VALUES (1, TRUE, 10, 'email@email.com', 'firstname', 1,
 INSERT INTO public.users VALUES (2, TRUE, 11, 'email@email.com', 'firstname', 2, 'lastname', 'password', 'user2');
 */
 
-
+/*
 INSERT INTO public.users VALUES (7, TRUE, 12, 'email@email.com', 'firstname', 1, '', 'lastname', '', '5', 'password', 0, 'test3');
 INSERT INTO public.users VALUES (8, TRUE, 13, 'email@email.com', 'firstname', 1, '', 'lastname', '', '6', 'password', 0, 'test4');
 INSERT INTO public.users VALUES (9, TRUE, 14, 'email@email.com', 'firstname', 1, '', 'lastname', '', '4', 'password', 0, 'test5');
 INSERT INTO public.users VALUES (10, TRUE, 15, 'email@email.com', 'firstname', 1, '', 'lastname', '', '5', 'password', 0, 'test6');
-
+*/
 -- Prefill public.answers table (Id corresponds to each test user)
 -- COLUMN LAYOUT: answer_id, answer1, answer2, answer3, answer4, user_id
 /*
@@ -35,10 +35,13 @@ INSERT INTO public.conversations VALUES (2, 2, 3);
 INSERT INTO public.conversations VALUES (3, 3, 4);
 INSERT INTO public.conversations VALUES (4, 1, 4);
 */
+
+/*
 -- Prefill public.message table
 -- COLUMN LAYOUT: message_id, conversation_id, message, sender_name, timestamp
 INSERT INTO public.message VALUES (10, 1, 'message between user1 and user2 sent from user1', 'user1', '2020-03-27 08:22:01');
 INSERT INTO public.message VALUES (11, 1, 'message between user1 and user2 sent from user2', 'user2', '2020-03-27 08:25:01');
+*/
 /*
 INSERT INTO public.message VALUES (12, 2, 'message between user2 and user3 sent from user2', 2, '2020-03-27 08:22:01');
 INSERT INTO public.message VALUES (13, 2, 'message between user2 and user3 sent from user3', 3, '2020-03-27 08:25:01');

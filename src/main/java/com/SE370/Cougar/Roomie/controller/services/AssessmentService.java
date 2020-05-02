@@ -36,17 +36,29 @@ public class AssessmentService {
                 findByQuestionNumber(4)
                 .getQuestionText());
 
+        assessmentForm.setQuestion5(questionRepo.
+                findByQuestionNumber(5)
+                .getQuestionText());
+
+        assessmentForm.setQuestion6(questionRepo.
+                findByQuestionNumber(6)
+                .getQuestionText());
+
+        assessmentForm.setQuestion7(questionRepo.
+                findByQuestionNumber(7)
+                .getQuestionText());
+
         return assessmentForm; // filled form
     }
 
-    public int submitAssessment (AssessmentForm assessmentForm, int user_id) {
+    public float submitAssessment (AssessmentForm assessmentForm, int user_id) {
         return calculateScore(
                 answerRepo.save(
                         createAnswer(assessmentForm, user_id)));
     }
 
-    private int calculateScore(Answer ans) {
-        return (ans.getAnswer1() + ans.getAnswer2() + ans.getAnswer3() + ans.getAnswer4()) / 4;
+    private float calculateScore(Answer ans) {
+        return ans.getScore();
     }
 
 
@@ -56,6 +68,10 @@ public class AssessmentService {
                 assessmentForm.getAnswer1(),
                 assessmentForm.getAnswer2(),
                 assessmentForm.getAnswer3(),
-                assessmentForm.getAnswer4());
+                assessmentForm.getAnswer4(),
+                assessmentForm.getAnswer5(),
+                assessmentForm.getAnswer6(),
+                assessmentForm.getAnswer7());
+
     }
 }

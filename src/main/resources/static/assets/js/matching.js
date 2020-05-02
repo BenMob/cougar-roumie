@@ -46,8 +46,6 @@ function onMessageReceived(payload) {
                 stompClient.send("/app/matchmaking.getMatch", {}, JSON.stringify({type: 'REQUEST'})); // Request first match
             }, 5000);
 
-
-
     } else if (msg.type === 'NEWMATCH') { // Received a new match, update UI
         newMatch(msg.userName);
     } else if (msg.type === 'ERROR') {
