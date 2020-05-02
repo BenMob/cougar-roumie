@@ -32,7 +32,6 @@
      <div id="header">
       <div style="margin:auto; max-width:80%">
         <div th:if="${#strings.isEmpty(profileInfoForm.first_name)} or ${#strings.isEmpty(profileInfoForm.last_name)} or ${profileInfoForm.gender == 0} or ${#strings.isEmpty(profileInfoForm.headline)} or ${#strings.isEmpty(profileImage.src)}">
-
             <div class="modal-body">
                 <p class="text-center text-white">Please fill in some information about yourself</p>
                 <div class="login-form" >
