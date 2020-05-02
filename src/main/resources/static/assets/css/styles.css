@@ -3,21 +3,6 @@ body {
   font-weight: 400;
 }
 
-
-.parallax{
-  url('1920_p3.2.jpg');
-  height: 100%;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-@media only screen and (max-device-width: 1366px) {
-  .parallax {
-    background-attachment: scroll;
-  }
-}
-
 #logo {
   width: 160px;
 }
@@ -142,12 +127,8 @@ h3 {
 
 p {
   text-align: center;
-  color: #fff;
-}
-
-
-#myParallax{
-   height:300px;background-color:lightsteelblue;font-size:25px
+  color: white;
+  font-weight: bold;
 }
 
 label {
