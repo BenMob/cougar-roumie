@@ -142,3 +142,14 @@ label {
 .pad-bot {
   padding-bottom: 6px;
 }
+
+.form-control2 {
+  color: #000;
+  justify-content: center;
+  display: flex;
+  align-items: left;
+  border-radius: 10px;
+  width: 100%;
+  padding: 4px;
+  margin: 0 auto;
+}

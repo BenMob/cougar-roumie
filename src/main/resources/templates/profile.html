@@ -30,7 +30,7 @@
 
     <!-- TODO: Hey James or Ria, also if you can make the pop up appear on page load rather than being trigger by a button, that would be great - Ben -->
      <div id="header">
-      <div style="margin:auto; max-width:40%">
+      <div style="margin:auto; max-width:80%">
         <div th:if="${#strings.isEmpty(profileInfoForm.first_name)} or ${#strings.isEmpty(profileInfoForm.last_name)} or ${profileInfoForm.gender == 0} or ${#strings.isEmpty(profileInfoForm.headline)} or ${#strings.isEmpty(profileImage.src)}">
 
             <div class="modal-body">
@@ -52,6 +52,7 @@
                         </div>
 
                         <!-- TODO: Let me know once it is done and I will add a field for it in the DB  Thanks. -->
+                      <div class="form-control2">
                         <div class="form-group text-xl-center checkbox" th:if="${profileInfoForm.gender == 0}">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" id="formCheck-1" value='1' th:field="*{gender}">
@@ -62,6 +63,7 @@
                                 <label class="form-check-label border-white-text" for="formCheck-2">Female</label>
                             </div>
                         </div>
+                      </div>
                         <div th:if="${#strings.isEmpty(profileInfoForm.headline)}" class="form-group"><textarea class="form-control" type="text" name="headline" placeholder="Headline ... " th:required="required" th:field="*{headline}"></textarea></div>
                         <div class="form-group" >
                             <!--  <label for="profile_img" class="form-check-label">Profile Image</label>-->
