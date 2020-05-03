@@ -30,12 +30,12 @@ public class ProfileController {
             e.printStackTrace();
         }
 
-        return "profile2";
+        return "profile";
     }
 
     @PostMapping("user/profile")
     public String submitProfile(@ModelAttribute Profile profileInfo, @RequestParam("file") MultipartFile file, Model model) throws IOException {
         userService.updateFirstTimeUser(profileInfo, file);
-        return "redirect:profile2";
+        return "redirect:profile";
     }
 }

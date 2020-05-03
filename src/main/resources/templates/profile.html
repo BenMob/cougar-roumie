@@ -27,7 +27,7 @@
                 <style>.form-control {width:100%;}</style>
                 <label class="text-center">Please setup your profile by completing the following dialogs.</label>
 
-                <form class="form-outline" th:action="@{/user/profile2}" th:object="${profileInfo}"  method="POST" enctype="multipart/form-data">
+                <form class="form-outline" th:action="@{/user/profile}" th:object="${profileInfo}"  method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <input class="form-control" type="text" name="firstName" placeholder="First Name" th:required="required" th:field="*{first_name}">
                     </div>
