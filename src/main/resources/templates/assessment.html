@@ -36,6 +36,27 @@
         </div>
     </div>
     <div class="center-div">
+        <label th:text="${assessmentForm.question5}">Question 5</label>
+        <div>
+            <input class="slider" type="range" min="0" max="10" oninput="updateRangeInput(this)" value="0" th:field="*{answer5}">
+            <output class="output" name="output" for="range">0</output>
+        </div>
+    </div>
+    <div class="center-div">
+        <label th:text="${assessmentForm.question6}">Question 6</label>
+        <div>
+            <input class="slider" type="range" min="0" max="10" oninput="updateRangeInput(this)" value="0" th:field="*{answer6}">
+            <output class="output" name="output" for="range">0</output>
+        </div>
+    </div>
+    <div class="center-div">
+        <label th:text="${assessmentForm.question7}">Question 7</label>
+        <div>
+            <input class="slider" type="range" min="0" max="10" oninput="updateRangeInput(this)" value="0" th:field="*{answer7}">
+            <output class="output" name="output" for="range">0</output>
+        </div>
+    </div>
+    <div class="center-div">
         <button class="btn-primary" type="submit">Submit</button>
     </div>
 </form>

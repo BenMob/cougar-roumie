@@ -22,7 +22,7 @@ public class AssessmentService {
     // Utility Functions //
     private int calculateScore(Answer ans) {
         // Calculates match score by taking average
-        return (ans.getAnswer1() + ans.getAnswer2() + ans.getAnswer3() + ans.getAnswer4()) / 4;
+        return (ans.getAnswer1() + ans.getAnswer2() + ans.getAnswer3() + ans.getAnswer4() + ans.getAnswer5() + ans.getAnswer6() + ans.getAnswer7()) / 7;
     }
 
     @Transactional
@@ -42,6 +42,18 @@ public class AssessmentService {
 
         assessmentForm.setQuestion4(questionRepo.
                 findByQuestionNumber(4)
+                .getQuestionText());
+
+        assessmentForm.setQuestion5(questionRepo.
+                findByQuestionNumber(5)
+                .getQuestionText());
+
+        assessmentForm.setQuestion6(questionRepo.
+                findByQuestionNumber(6)
+                .getQuestionText());
+
+        assessmentForm.setQuestion7(questionRepo.
+                findByQuestionNumber(7)
                 .getQuestionText());
 
         return assessmentForm; // filled form

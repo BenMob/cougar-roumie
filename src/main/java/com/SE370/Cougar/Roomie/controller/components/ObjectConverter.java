@@ -57,7 +57,10 @@ public class ObjectConverter {
                 unconverted.getAnswer1(),
                 unconverted.getAnswer2(),
                 unconverted.getAnswer3(),
-                unconverted.getAnswer4());
+                unconverted.getAnswer4(),
+                unconverted.getAnswer5(),
+                unconverted.getAnswer6(),
+                unconverted.getAnswer7());
     }
 
     public User convertToEntity(Authentication auth) {

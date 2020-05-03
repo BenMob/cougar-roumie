@@ -35,10 +35,13 @@ INSERT INTO public.conversations VALUES (2, 2, 3);
 INSERT INTO public.conversations VALUES (3, 3, 4);
 INSERT INTO public.conversations VALUES (4, 1, 4);
 */
+
+/*
 -- Prefill public.message table
 -- COLUMN LAYOUT: message_id, conversation_id, message, sender_name, timestamp
 INSERT INTO public.message VALUES (10, 1, 'message between user1 and user2 sent from user1', 'user1', '2020-03-27 08:22:01');
 INSERT INTO public.message VALUES (11, 1, 'message between user1 and user2 sent from user2', 'user2', '2020-03-27 08:25:01');
+*/
 /*
 INSERT INTO public.message VALUES (12, 2, 'message between user2 and user3 sent from user2', 2, '2020-03-27 08:22:01');
 INSERT INTO public.message VALUES (13, 2, 'message between user2 and user3 sent from user3', 3, '2020-03-27 08:25:01');
