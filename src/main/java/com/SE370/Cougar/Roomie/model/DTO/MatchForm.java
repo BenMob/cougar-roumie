@@ -1,7 +1,6 @@
 package com.SE370.Cougar.Roomie.model.DTO;
 
-public class MatchForm {
-
+public class MatchForm extends UserInfo {
     public enum MessageType {
         INIT,
         REQUEST,
@@ -10,21 +9,18 @@ public class MatchForm {
         LIKE,
         ERROR
     }
-    private String userName;
     private MessageType type;
+
+
+    public MatchForm(){};
+    public MatchForm(UserInfo old) {
+        super(old);
+    }
+
     public MessageType getType() {
         return type;
     }
-
     public void setType(MessageType type) {
         this.type = type;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 }

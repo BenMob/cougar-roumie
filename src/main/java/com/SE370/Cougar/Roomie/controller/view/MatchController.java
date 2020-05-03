@@ -63,8 +63,7 @@ public class MatchController {
         // Get match or send error to client...
         try {
             UserInfo found = match.getMatch();
-            MatchForm msg = new MatchForm();
-            msg.setUserName(found.getUserName());
+            MatchForm msg = new MatchForm(found);
             msg.setType(MatchForm.MessageType.NEWMATCH);
             this.messsageOperations.convertAndSendToUser(authentication.getName(), "/queue/matchmaking", msg);
 

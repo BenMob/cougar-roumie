@@ -56,7 +56,6 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Error Not Found: " + userName));
     }
 
-
     public Image queryImageById(int id) throws DataRetrievalFailureException {
         Optional<Image> image = fileRepository.findByUserId(id);
 
@@ -65,18 +64,6 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new DataRetrievalFailureException("Failure to retrieve Image for " + id));
     }
 
-    public Profile prepareProfile(CustomUserDetails thisUser){
-        if(profileInfoNotComplete(thisUser))
-            return new Profile(); // empty Profile DTO
-        else {
-            return new Profile(
-                    thisUser.getFirstName(),
-                    thisUser.getLastName(),
-                    thisUser.getGender(),
-                    thisUser.getMajor(),
-                    thisUser.getHeadline());  // filled Profile DTO
-        }
-    }
     // TODO Figure out how t check for image independently from other fields
     public FileTypeData getProfileImage(CustomUserDetails thisUser){
         if(profileInfoNotComplete(thisUser))
@@ -92,6 +79,27 @@ public class UserService implements UserDetailsService {
                 thisUser.getLastName() == null ||
                 thisUser.getGender() == 0);
     }
+
+
+    // Finds image and converts all in one step..
+    public Optional<FileTypeData> getImage(int id) {
+        return fileRepository.findByUserId(id)
+                .map(FileTypeData::new);
+    }
+
+    public Profile prepareProfile(CustomUserDetails thisUser){
+        if(profileInfoNotComplete(thisUser))
+            return new Profile(); // empty Profile DTO
+        else {
+            return new Profile(
+                    thisUser.getFirstName(),
+                    thisUser.getLastName(),
+                    thisUser.getGender(),
+                    thisUser.getMajor(),
+                    thisUser.getHeadline());  // filled Profile DTO
+        }
+    }
+
 
     @Transactional
     public User createNewUser(RegistrationForm registrationForm) throws RuntimeException {
@@ -123,24 +131,26 @@ public class UserService implements UserDetailsService {
                 }).collect(Collectors.toList());
     }
 
+    @Transactional
     public List<UserInfo> getMatches(String userName, int matchScore) {
         logger.info("looking for matches with score of: " + matchScore);
         return userRepository.findAllByMatchScoreBetween(matchScore-1, matchScore+1).stream()
                 .filter(match -> !match.getUserName().equals(userName))
                 .map(foundMatch -> {
-                    UserInfo conv = new UserInfo();
-                    conv.setUserName(foundMatch.getUserName());
-                    conv.setId(foundMatch.getId());
-                    conv.setMatchScore(foundMatch.getMatchScore());
+                    UserInfo conv = new UserInfo(
+                            foundMatch.getUserName(),
+                            foundMatch.getFirstName() + " " + foundMatch.getLastName(),
+                            foundMatch.getId(),
+                            foundMatch.getMatchScore(),
+                            foundMatch.getHeadline(),
+                            getImage(foundMatch.getId()));
                     return conv;
-                })
-                .collect(Collectors.toList());
+                }).collect(Collectors.toList());
     }
     @Transactional
     public User submitAssessment(AssessmentForm assessmentForm) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails custom = (CustomUserDetails) auth.getPrincipal();
-        logger.info(custom.getUsername() + custom.getFirstName());
 
         // Calculate match score and submit assessment to db
         custom.setMatchScore(assessmentService.submitAssessment(assessmentForm, custom.getUser_id()));

@@ -37,7 +37,7 @@ public class MatchmakerComponent {
             count++;
             return matchList.get(count-1);
         } else {
-            throw new RuntimeException("No matches found...");
+            throw new RuntimeException("Uh oh.... Nothing was found. Did you know matches automatically show up in chat when they like you back? Taking you back to your profile now...");
         }
     }
 
