@@ -14,32 +14,6 @@ public class User{
     @Id // Primary Key
     @GeneratedValue(strategy = GenerationType.AUTO) // Tell spring to handle generation
     private int id;
-
-    //#############################################################################
-    public List<Relationship> getRelationships() {
-        return relationships;
-    }
-    public void setRelationships(List<Relationship> relationships) {
-        this.relationships = relationships;
-    }
-    @OneToMany(
-            mappedBy = "user",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<Relationship> relationships = new ArrayList<>();
-
-    public void addRelationship(Relationship relationship) {
-        relationships.add(relationship);
-        //relationship.setPost(this);
-    }
-
-    public void removeRelationship(Relationship relationship) {
-        relationships.remove(relationship);
-        //comment.setPost(null);
-    }
-    //#############################################################################
-
     private int answer_id; // connects to answer table
     private int profile_image_id;  // Connects to image table
     private int matchScore;
