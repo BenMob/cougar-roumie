@@ -42,7 +42,7 @@ public class MatchmakerComponent {
     }
 
     // Should be the first function called, fills the necessary details since we cannot access SecurityContext directly.
-    public void init(String userName, Integer matchScore) {
+    public void init(String userName, int matchScore) {
         this.userName = Optional.ofNullable(userName);
         this.matchScore = Optional.ofNullable(matchScore);
     }

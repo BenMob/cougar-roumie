@@ -51,13 +51,13 @@ public class AssessmentService {
         return assessmentForm; // filled form
     }
 
-    public float submitAssessment (AssessmentForm assessmentForm, int user_id) {
+    public int submitAssessment (AssessmentForm assessmentForm, int user_id) {
         return calculateScore(
                 answerRepo.save(
                         createAnswer(assessmentForm, user_id)));
     }
 
-    private float calculateScore(Answer ans) {
+    private int calculateScore(Answer ans) {
         return ans.getScore();
     }
 

@@ -14,7 +14,7 @@ public class Answer {
     private int answer5;
     private int answer6;
     private int answer7;
-    private float score;
+    private int score;
 
     public Answer() {
     }
@@ -71,7 +71,7 @@ public class Answer {
         this.answer4 = answer4;
     }
 
-    public float getScore() { return score; }
+    public int getScore() { return score; }
 
     public void setScore(int score) { this.score = score; }
 }
