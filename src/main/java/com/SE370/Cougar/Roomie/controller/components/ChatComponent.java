@@ -39,6 +39,7 @@ public class ChatComponent {
         } else {
             return Collections.emptyList();
         }
+
     }
 
     public void saveMessage(Message msg) {

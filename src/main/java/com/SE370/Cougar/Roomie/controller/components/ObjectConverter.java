@@ -1,12 +1,10 @@
 package com.SE370.Cougar.Roomie.controller.components;
 
 
-import com.SE370.Cougar.Roomie.model.DTO.AssessmentForm;
-import com.SE370.Cougar.Roomie.model.DTO.CustomUserDetails;
-import com.SE370.Cougar.Roomie.model.DTO.FileTypeData;
-import com.SE370.Cougar.Roomie.model.DTO.Profile;
+import com.SE370.Cougar.Roomie.model.DTO.*;
 import com.SE370.Cougar.Roomie.model.entities.Answer;
 import com.SE370.Cougar.Roomie.model.entities.Image;
+import com.SE370.Cougar.Roomie.model.entities.Message;
 import com.SE370.Cougar.Roomie.model.entities.User;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -67,7 +65,21 @@ public class ObjectConverter {
         return new User((CustomUserDetails) auth.getPrincipal());
     }
 
+    public Message convertToEntity (com.SE370.Cougar.Roomie.model.DTO.Message msg) {
+        Message converted = new Message();
+        converted.setSenderName(msg.getSender());
+        converted.setMessage(msg.getContent());
+        return converted;
+    }
 
+    // Convert Entity Message to DTO Message
+    public com.SE370.Cougar.Roomie.model.DTO.Message convertFromEntity(Message msg) {
+        com.SE370.Cougar.Roomie.model.DTO.Message converted = new com.SE370.Cougar.Roomie.model.DTO.Message();
+        converted.setContent(msg.getMessage());
+        converted.setType(com.SE370.Cougar.Roomie.model.DTO.Message.MessageType.CHAT);
+        converted.setSender(msg.getSenderName());
+        return converted;
+    }
 
 
 }

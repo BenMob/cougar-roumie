@@ -1,5 +1,6 @@
 package com.SE370.Cougar.Roomie.controller.services;
 
+import com.SE370.Cougar.Roomie.controller.components.ObjectConverter;
 import com.SE370.Cougar.Roomie.model.entities.Conversation;
 import com.SE370.Cougar.Roomie.model.entities.User;
 import com.SE370.Cougar.Roomie.model.repositories.ConversationRepo;
@@ -22,17 +23,20 @@ public class MessageService {
     ConversationRepo conversationRepo;
     @Autowired
     UserRepo userRepo;
+    @Autowired
+    ObjectConverter converter;
+
+    // Utility //
+    private int newConversation(int userID, int otherID) {
+        Conversation newConvo = new Conversation(userID, otherID);
+        conversationRepo.saveAndFlush(newConvo);
+        return newConvo.getConversationId();
+    }
 
     public List<Message> getOldMessages (int convID) {
-         List<com.SE370.Cougar.Roomie.model.entities.Message> unconverted = messageRepo.findAllByConversationId(convID);
-         // Check if there's messages in the list, if so convert the list to DTO
-         if (!unconverted.isEmpty()) {
-             return unconverted.stream()
-                     .map(msg -> convertFromEntity(msg))
-                     .collect(Collectors.toList());
-         } else {
-             return Collections.emptyList();
-         }
+         return messageRepo.findAllByConversationId(convID).stream()
+                 .map(converter::convertFromEntity)
+                 .collect(Collectors.toList());
     }
 
     public Optional<Integer> getUserID(String userName) {
@@ -54,36 +58,10 @@ public class MessageService {
     }
 
     public void saveMessage(Message msg, int convID) {
-        com.SE370.Cougar.Roomie.model.entities.Message newMsg = convertToEntity(msg);
+        com.SE370.Cougar.Roomie.model.entities.Message newMsg = converter.convertToEntity(msg);
         newMsg.setConversationId(convID);
         messageRepo.save(newMsg);
     }
 
-    public int newConversation(int userID, int otherID) {
-        Conversation newConvo = new Conversation();
-        newConvo.setUserId(userID);
-        newConvo.setRecieverId(otherID);
-        conversationRepo.saveAndFlush(newConvo);
-        return newConvo.getConversationId();
-
-    }
-
-    // Utility functions
-    // Convert from DTO to Entity Message
-    //TODO: Clean these implementations up
-    private com.SE370.Cougar.Roomie.model.entities.Message convertToEntity(Message msg) {
-        com.SE370.Cougar.Roomie.model.entities.Message converted = new com.SE370.Cougar.Roomie.model.entities.Message();
-        converted.setSenderName(msg.getSender());
-        converted.setMessage(msg.getContent());
-        return converted;
-    }
-    // Convert Entity Message to DTO Message
-    private Message convertFromEntity(com.SE370.Cougar.Roomie.model.entities.Message msg) {
-        Message converted = new Message();
-        converted.setContent(msg.getMessage());
-        converted.setType(Message.MessageType.CHAT);
-        converted.setSender(msg.getSenderName());
-        return converted;
-    }
 
 }
