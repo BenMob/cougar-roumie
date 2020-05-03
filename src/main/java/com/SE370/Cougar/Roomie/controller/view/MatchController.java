@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MatchController {
 
-    //@Autowired
-    //UserService userService;
     @Autowired
     MatchmakerComponent match;
     @Autowired
