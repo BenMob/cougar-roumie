@@ -1,10 +1,14 @@
 package com.SE370.Cougar.Roomie.model.DTO;
 
+import java.util.List;
+
 public class AssessmentForm {
     private String question1;
     private String question2;
     private String question3;
     private String question4;
+
+    private List<String> questions;
 
     private int answer1;
     private int answer2;
@@ -73,5 +77,12 @@ public class AssessmentForm {
 
     public void setAnswer4(int answer4) {
         this.answer4 = answer4;
+    }
+
+    public List<String> getQuestions() {
+        return questions;
+    }
+    public void setQuestions(List<String> questions) {
+        this.questions = questions;
     }
 }

@@ -16,11 +16,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    UserService userDetailsService; // We overrided default
+    UserService userService; // We overrided default
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userService);
         auth.authenticationProvider(authProvider());
     }
 
@@ -32,7 +32,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/user/*").hasRole("USER")
-                .antMatchers("/chat/*").hasRole("USER")
                 .antMatchers("/*").permitAll()
                 .and().formLogin().loginPage("/login")
                 .defaultSuccessUrl("/user/profile", true)
@@ -43,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public DaoAuthenticationProvider authProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setUserDetailsService(userService);
         authProvider.setPasswordEncoder(getPasswordEncoder());
         return authProvider;
     }

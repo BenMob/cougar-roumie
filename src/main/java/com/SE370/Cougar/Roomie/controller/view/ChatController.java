@@ -2,9 +2,8 @@ package com.SE370.Cougar.Roomie.controller.view;
 
 import com.SE370.Cougar.Roomie.controller.components.ChatComponent;
 import com.SE370.Cougar.Roomie.controller.services.UserService;
-import com.SE370.Cougar.Roomie.model.CustomUserDetails;
+import com.SE370.Cougar.Roomie.model.DTO.CustomUserDetails;
 import com.SE370.Cougar.Roomie.model.DTO.Message;
-import com.SE370.Cougar.Roomie.model.DTO.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;

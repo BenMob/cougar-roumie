@@ -1,6 +1,6 @@
 package com.SE370.Cougar.Roomie.model.entities;
 
-import com.SE370.Cougar.Roomie.model.CustomUserDetails;
+import com.SE370.Cougar.Roomie.model.DTO.CustomUserDetails;
 import com.SE370.Cougar.Roomie.model.DTO.Profile;
 import com.SE370.Cougar.Roomie.model.DTO.RegistrationForm;
 

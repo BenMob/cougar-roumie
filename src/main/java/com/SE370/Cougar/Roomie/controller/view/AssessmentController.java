@@ -2,10 +2,8 @@ package com.SE370.Cougar.Roomie.controller.view;
 
 import com.SE370.Cougar.Roomie.controller.services.AssessmentService;
 import com.SE370.Cougar.Roomie.controller.services.UserService;
-import com.SE370.Cougar.Roomie.model.CustomUserDetails;
 import com.SE370.Cougar.Roomie.model.DTO.AssessmentForm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

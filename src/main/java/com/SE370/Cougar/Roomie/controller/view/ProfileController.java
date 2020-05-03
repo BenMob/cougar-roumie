@@ -1,15 +1,9 @@
 package com.SE370.Cougar.Roomie.controller.view;
-
 import com.SE370.Cougar.Roomie.controller.services.UserService;
-import com.SE370.Cougar.Roomie.model.CustomUserDetails;
+import com.SE370.Cougar.Roomie.model.DTO.CustomUserDetails;
 import com.SE370.Cougar.Roomie.model.DTO.FileTypeData;
 import com.SE370.Cougar.Roomie.model.DTO.Profile;
-import com.SE370.Cougar.Roomie.model.entities.Image;
-import com.SE370.Cougar.Roomie.model.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,28 +23,19 @@ public class ProfileController {
     UserService userService;
 
     @GetMapping("user/profile")
-    public String showProfileInfoForm(WebRequest request, Model model){
-        CustomUserDetails thisUser = (CustomUserDetails) SecurityContextHolder
-                .getContext().getAuthentication().getPrincipal();
+    public String showProfile(Model model) {
+        try {
+            model.addAttribute("profileInfo", userService.getProfile());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        Profile profileInfoForm = userService
-                .prepareProfile(thisUser);
-
-        FileTypeData profileImage = userService
-                .getProfileImage(thisUser);
-
-        model.addAttribute("profileInfoForm", profileInfoForm);
-        model.addAttribute("profileImage", profileImage);
-        return "profile";
+        return "profile2";
     }
 
     @PostMapping("user/profile")
-    public String registerProfileInfoForm(@ModelAttribute Profile profileInfoForm, @RequestParam("file") MultipartFile file, Model model) throws IOException {
-        FileTypeData profileImage = new FileTypeData(file);
-        userService.updateFirstTimeUser(profileInfoForm, profileImage);
-
-        model.addAttribute("profileInfoForm", profileInfoForm);
-        model.addAttribute("profileImage", profileImage);
-        return "profile";
+    public String submitProfile(@ModelAttribute Profile profileInfo, @RequestParam("file") MultipartFile file, Model model) throws IOException {
+        userService.updateFirstTimeUser(profileInfo, file);
+        return "redirect:profile2";
     }
 }

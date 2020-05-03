@@ -1,4 +1,4 @@
-package com.SE370.Cougar.Roomie.model;
+package com.SE370.Cougar.Roomie.model.DTO;
 
 import com.SE370.Cougar.Roomie.model.entities.User;
 import org.springframework.security.core.GrantedAuthority;

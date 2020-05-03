@@ -1,8 +1,8 @@
 package com.SE370.Cougar.Roomie.controller.services;
 
-import com.SE370.Cougar.Roomie.controller.view.MatchController;
-import com.SE370.Cougar.Roomie.model.CustomUserDetails;
+import com.SE370.Cougar.Roomie.model.DTO.CustomUserDetails;
 import com.SE370.Cougar.Roomie.model.DTO.*;
+import com.SE370.Cougar.Roomie.controller.components.ObjectConverter;
 import com.SE370.Cougar.Roomie.model.entities.Image;
 import com.SE370.Cougar.Roomie.model.entities.User;
 import com.SE370.Cougar.Roomie.model.repositories.FileRepo;
@@ -11,18 +11,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataRetrievalFailureException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -38,66 +36,34 @@ public class UserService implements UserDetailsService {
     UserRepo userRepository;
     @Autowired
     AssessmentService assessmentService;
-
     @Autowired
     FileRepo fileRepository;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    ObjectConverter converter;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         // Try to find user from db
         Optional<User> user = userRepository.findByUserName(userName);
 
-        // Below works as follows, convert user into a CustomUserDetails object, if user is null throw error
+        // Create CustomUserDetails out of user entity
         return user
                 .map(CustomUserDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("Error Not Found: " + userName));
     }
 
-    public Image queryImageById(int id) throws DataRetrievalFailureException {
-        Optional<Image> image = fileRepository.findByUserId(id);
-
-        return image
-                .map(Image::new)
-                .orElseThrow(() -> new DataRetrievalFailureException("Failure to retrieve Image for " + id));
-    }
-
-    // TODO Figure out how t check for image independently from other fields
-    public FileTypeData getProfileImage(CustomUserDetails thisUser){
-        if(profileInfoNotComplete(thisUser))
-            return new FileTypeData();
-        else {
-            Image profileImage = queryImageById(thisUser.getUser_id());
-            return new FileTypeData(profileImage);
-        }
-    }
-
-    private Boolean profileInfoNotComplete(CustomUserDetails thisUser){
-        return (thisUser.getFirstName() == null ||
-                thisUser.getLastName() == null ||
-                thisUser.getGender() == 0);
-    }
-
-
     // Finds image and converts all in one step..
+    @Transactional
     public Optional<FileTypeData> getImage(int id) {
         return fileRepository.findByUserId(id)
                 .map(FileTypeData::new);
     }
 
-    public Profile prepareProfile(CustomUserDetails thisUser){
-        if(profileInfoNotComplete(thisUser))
-            return new Profile(); // empty Profile DTO
-        else {
-            return new Profile(
-                    thisUser.getFirstName(),
-                    thisUser.getLastName(),
-                    thisUser.getGender(),
-                    thisUser.getMajor(),
-                    thisUser.getHeadline());  // filled Profile DTO
-        }
+    public Profile getProfile () {
+        CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return new Profile(user, getImage(user.getUser_id()));
     }
 
 
@@ -137,63 +103,49 @@ public class UserService implements UserDetailsService {
         return userRepository.findAllByMatchScoreBetween(matchScore-1, matchScore+1).stream()
                 .filter(match -> !match.getUserName().equals(userName))
                 .map(foundMatch -> {
-                    UserInfo conv = new UserInfo(
+                    return new UserInfo(
                             foundMatch.getUserName(),
                             foundMatch.getFirstName() + " " + foundMatch.getLastName(),
                             foundMatch.getId(),
                             foundMatch.getMatchScore(),
                             foundMatch.getHeadline(),
                             getImage(foundMatch.getId()));
-                    return conv;
                 }).collect(Collectors.toList());
     }
     @Transactional
     public User submitAssessment(AssessmentForm assessmentForm) {
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetails custom = (CustomUserDetails) auth.getPrincipal();
 
-        // Calculate match score and submit assessment to db
-        custom.setMatchScore(assessmentService.submitAssessment(assessmentForm, custom.getUser_id()));
+        // Rebuild auth also submits assessment
+        auth = converter.updateAuth(auth, assessmentService.submitAndCalculateScore(
+             assessmentForm, ((CustomUserDetails) auth.getPrincipal()).getUser_id())
+        );
 
-        // rebuild auth
-        Authentication newAuth = new UsernamePasswordAuthenticationToken(custom, auth.getCredentials(), auth.getAuthorities());
-
-        // set auth
-        SecurityContextHolder.getContext().setAuthentication(newAuth);
+        // Set Authentication
+        SecurityContextHolder.getContext().setAuthentication(auth);
 
         // update user in repo (returns updated user object)
-        return userRepository.save(new User(custom));
+        return userRepository.save(converter.convertToEntity(auth));
     }
 
 
     @Transactional
-    public User updateFirstTimeUser(Profile profileInfoForm, FileTypeData profileImage) throws IOException {
+    public User updateFirstTimeUser(Profile profileInfoForm, MultipartFile file) throws IOException {
 
-        // Grab auth token
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        // Rebuild Auth
+        Authentication updated = converter.updateAuth(
+                SecurityContextHolder.getContext().getAuthentication(), profileInfoForm);
 
-        // cast auth into Custom User Details -> fills all available fields...
-        CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+        // Set Authentication then convert to Entity
+        SecurityContextHolder.getContext().setAuthentication(updated);
+        User converted = converter.convertToEntity(updated);
 
-        // Update Custom User Details Object....
-        user.setFirstName(profileInfoForm.getFirst_name());
-        user.setLastName(profileInfoForm.getLast_name());
-        user.setGender(profileInfoForm.getGender());
-        user.setMajor(profileInfoForm.getMajor());
-        user.setHeadline(profileInfoForm.getHeadline());
+        // Save Profile Pic
+        fileRepository.save(converter.convertToEntity(file, converted.getId()));
 
-        // Rebuild Authentication
-        Authentication newAuth = new UsernamePasswordAuthenticationToken(user, auth.getCredentials(), auth.getAuthorities());
-
-        // Set Authentication
-        SecurityContextHolder.getContext().setAuthentication(newAuth);
-
-        fileRepository.save(
-                new Image(user.getUser_id(),
-                        profileImage.getFileName(),
-                        profileImage.getFileType(),
-                        profileImage.getData()));
-
-        return userRepository.save(new User(user));
+        // Save updated user to db
+        return userRepository.save(converted);
     }
+
 }

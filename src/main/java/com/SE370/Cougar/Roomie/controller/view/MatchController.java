@@ -1,13 +1,8 @@
 package com.SE370.Cougar.Roomie.controller.view;
-
 import com.SE370.Cougar.Roomie.controller.components.MatchmakerComponent;
-import com.SE370.Cougar.Roomie.controller.services.UserService;
-import com.SE370.Cougar.Roomie.model.CustomUserDetails;
+import com.SE370.Cougar.Roomie.model.DTO.CustomUserDetails;
 import com.SE370.Cougar.Roomie.model.DTO.MatchForm;
 import com.SE370.Cougar.Roomie.model.DTO.UserInfo;
-import com.SE370.Cougar.Roomie.model.entities.User;
-import com.SE370.Cougar.Roomie.model.repositories.UserRepo;
-import com.fasterxml.jackson.databind.deser.DataFormatReaders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +10,9 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.WebRequest;
 
 @Controller
 public class MatchController {

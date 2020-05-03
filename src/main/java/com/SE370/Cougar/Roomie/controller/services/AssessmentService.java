@@ -1,12 +1,13 @@
 package com.SE370.Cougar.Roomie.controller.services;
 
+import com.SE370.Cougar.Roomie.controller.components.ObjectConverter;
 import com.SE370.Cougar.Roomie.model.entities.Answer;
 import com.SE370.Cougar.Roomie.model.repositories.AnswerRepo;
 import com.SE370.Cougar.Roomie.model.repositories.QuestionRepo;
 import com.SE370.Cougar.Roomie.model.DTO.AssessmentForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AssessmentService {
@@ -14,10 +15,17 @@ public class AssessmentService {
     AnswerRepo answerRepo;
     @Autowired
     QuestionRepo questionRepo;
+    @Autowired
+    ObjectConverter converter;
 
 
+    // Utility Functions //
+    private int calculateScore(Answer ans) {
+        // Calculates match score by taking average
+        return (ans.getAnswer1() + ans.getAnswer2() + ans.getAnswer3() + ans.getAnswer4()) / 4;
+    }
 
-    // TODO: Change this to handle a list...
+    @Transactional
     public AssessmentForm prepareAssessment(AssessmentForm assessmentForm) {
         // Fill form with questions in the database
         assessmentForm.setQuestion1(questionRepo.
@@ -39,23 +47,10 @@ public class AssessmentService {
         return assessmentForm; // filled form
     }
 
-    public int submitAssessment (AssessmentForm assessmentForm, int user_id) {
+    @Transactional
+    public int submitAndCalculateScore (AssessmentForm assessmentForm, int user_id) {
+        // saves to db and returns score
         return calculateScore(
-                answerRepo.save(
-                        createAnswer(assessmentForm, user_id)));
-    }
-
-    private int calculateScore(Answer ans) {
-        return (ans.getAnswer1() + ans.getAnswer2() + ans.getAnswer3() + ans.getAnswer4()) / 4;
-    }
-
-
-    // TODO: Change this to handle a list...
-    private Answer createAnswer(AssessmentForm assessmentForm, int user_id) {
-        return new Answer(user_id,
-                assessmentForm.getAnswer1(),
-                assessmentForm.getAnswer2(),
-                assessmentForm.getAnswer3(),
-                assessmentForm.getAnswer4());
+                answerRepo.save(converter.convertToEntity(assessmentForm, user_id)));
     }
 }
