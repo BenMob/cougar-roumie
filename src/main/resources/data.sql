@@ -11,12 +11,12 @@ INSERT INTO public.users VALUES (1, TRUE, 10, 'email@email.com', 'firstname', 1,
 INSERT INTO public.users VALUES (2, TRUE, 11, 'email@email.com', 'firstname', 2, 'lastname', 'password', 'user2');
 */
 
-/*
+
 INSERT INTO public.users VALUES (7, TRUE, 12, 'email@email.com', 'firstname', 1, 'Blah Blah Blah', 'lastname', 'Blah Blah BLah', '5', 'password', 0, 'test3');
 INSERT INTO public.users VALUES (8, TRUE, 13, 'email@email.com', 'firstname', 1, '', 'lastname', '', '6', 'password', 0, 'test4');
 INSERT INTO public.users VALUES (9, TRUE, 14, 'email@email.com', 'firstname', 1, '', 'lastname', '', '4', 'password', 0, 'test5');
 INSERT INTO public.users VALUES (10, TRUE, 15, 'email@email.com', 'firstname', 1, '', 'lastname', '', '5', 'password', 0, 'test6');
-*/
+
 -- Prefill public.answers table (Id corresponds to each test user)
 -- COLUMN LAYOUT: answer_id, answer1, answer2, answer3, answer4, user_id
 /*

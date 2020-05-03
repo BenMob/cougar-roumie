@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity(name = "Relationship")
 @Table(name = "relationships")
 public class Relationship {
-    //#############################################################################
     @Id
     @GeneratedValue
     private Long relationship_id;
@@ -21,36 +20,19 @@ public class Relationship {
     public void setUser(User user) {
         this.user = user;
     }
-//#########################################################
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "relationship_id")
-    /*@JoinColumns({
-            @JoinColumn(name = "use_one_id"),
-            @JoinColumn(name = "user_two_id"),
-            @JoinColumn(name = "action_user_id")})*/
     private User user;
 
     public Relationship(){};
-    public Relationship(int user1_id, int user2_id, int action_user_id, int status ){
+    public Relationship(int user1_id, int user2_id, int action_user_id, int status, User user){
         this.setUser_one_id(user1_id);
         this.setUser_two_id(user2_id);
         this.setStatus(status);
         this.setAction_user_id(action_user_id);
+        this.setUser(user);
     };
 
-/*
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Relationship)) return false;
-        return (this.relationship_id != null && relationship_id.equals(((Relationship) o).getRelationship_id()));
-    }
-
-    @Override
-    public int hashCode() {
-        return 31;
-    }
-*/
     public int getUser_one_id() {
         return this.user_one_id;
     }
