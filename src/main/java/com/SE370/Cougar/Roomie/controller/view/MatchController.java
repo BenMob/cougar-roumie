@@ -30,7 +30,7 @@ public class MatchController {
 
 
     @GetMapping("user/matches")
-    public String showMatches(Model model) {
+    public String showMatches() {
         return "matchmaking";
     }
 
@@ -39,7 +39,7 @@ public class MatchController {
     @MessageMapping("/matchmaking.initialize")
     public void initialConnect(Authentication auth, @Payload MatchForm submitResult) {
         logger.info("trying to init matchmaking");
-        CustomUserDetails user = (CustomUserDetails) ((Authentication) auth).getPrincipal();
+        CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
         match.init(user.getUsername(), user.getMatchScore());
 
         submitResult.setType(MatchForm.MessageType.INIT);
@@ -47,8 +47,8 @@ public class MatchController {
     }
 
     @MessageMapping("/matchmaking.getMatch")
-    public void getMatch(Authentication authentication, @Payload MatchForm submitResult) {
-        CustomUserDetails user = (CustomUserDetails) ((Authentication) authentication).getPrincipal();
+    public void getMatch(Authentication auth, @Payload MatchForm submitResult) {
+        CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
         // TODO: Right now all we are doing is logging what the front end does, logic needs to be developed for like/dislike
         switch(submitResult.getType()) {
             case DISLIKE:
@@ -68,13 +68,13 @@ public class MatchController {
             UserInfo found = match.getMatch();
             MatchForm msg = new MatchForm(found);
             msg.setType(MatchForm.MessageType.NEWMATCH);
-            this.messageOperations.convertAndSendToUser(authentication.getName(), "/queue/matchmaking", msg);
+            this.messageOperations.convertAndSendToUser(auth.getName(), "/queue/matchmaking", msg);
 
         } catch (RuntimeException e) {
             MatchForm error = new MatchForm();
             error.setType(MatchForm.MessageType.ERROR);
             error.setUserName(e.getMessage());
-            this.messageOperations.convertAndSendToUser(authentication.getName(),"/queue/matchmaking", error);
+            this.messageOperations.convertAndSendToUser(auth.getName(),"/queue/matchmaking", error);
         }
 
     }
