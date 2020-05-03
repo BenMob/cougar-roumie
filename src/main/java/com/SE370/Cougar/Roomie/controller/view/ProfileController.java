@@ -24,12 +24,7 @@ public class ProfileController {
 
     @GetMapping("user/profile")
     public String showProfile(Model model) {
-        try {
             model.addAttribute("profileInfo", userService.getProfile());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         return "profile";
     }
 
