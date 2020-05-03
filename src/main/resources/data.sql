@@ -59,5 +59,5 @@ INSERT INTO public.questions VALUES (12, 10, 1, 3, 'How likely are you to have g
 INSERT INTO public.questions VALUES (14, 10, 1, 4, 'How likely are you to have guests sleeping over?');
 INSERT INTO public.questions VALUES (15, 10, 1, 5, 'How would you rate your level of neatness ?');
 INSERT INTO public.questions VALUES (16, 10, 1, 6, 'How often do you drink alcohol ?');
-INSERT INTO public.questions VALUES (17, 10, 1, 7, 'With 1 representing "/"an introvert/" and 10 representing an /"extrovert/", where do you position yourself ?');
+INSERT INTO public.questions VALUES (17, 10, 1, 7, 'With 1 representing an introvert and 10 representing an extrovert, where do you position yourself ?');
 

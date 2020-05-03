@@ -56,7 +56,9 @@ public class MatchController {
                 break;
             case LIKE:
                 logger.info("Liked: " + submitResult.getUserName());
-                relationshipService.createRelationship(user, match.getMatch());
+                // TODO: use the methods in relationship service here to decide what happens
+                // For now I am calling the startRelationship so you can see how the relationship table gets populated in pgAdmin
+                relationshipService.startRelationship(user, submitResult.getUserName(), 1);
                 break;
             case REQUEST:
                 logger.info("Request Match");
