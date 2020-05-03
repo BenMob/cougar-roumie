@@ -27,7 +27,6 @@ public class User{
     private String email; // empty by default
     private boolean active; // account flag
 
-
     public User() {}
 
     // Task: Creates a User Entity

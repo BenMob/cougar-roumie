@@ -29,7 +29,7 @@ public class RelationshipService {
     RelationshipRepo relationshipRepo;
 
     /**********************************************************************************************************
-     * This is the first method to be called one someone clicks LIKE. It checks if they already have a relations column
+     * This is the first method to be called once someone clicks LIKE. It checks if they already have a relationship column
      * opened with the person they just liked.
      *
      * If (yes)
@@ -51,7 +51,7 @@ public class RelationshipService {
     /***********************************************************************************
      * This gets called when initializing a relationship for the first time
      *
-     * When a logged in user1 LIKES a user2 and user2 has not LIKED user1 in the past (i.e no exiting relationship between the two),
+     * When a logged in user1 LIKES a user2 and user2 has not LIKED user1 in the past (i.e no existing relationship between the two),
      * this should initialize a row in the relationship table with user1 status=1 and user2 status = 0.
      *
      * @param thisUser
@@ -59,16 +59,13 @@ public class RelationshipService {
      * @param status
      */
     public void startRelationship(CustomUserDetails thisUser, String friend_username, int status){
-
-
-
         relationshipRepo.save( new Relationship(thisUser.getUser_id() ,thisUser.getUsername(), status, friend_username, 0));
     }
 
     /***********************************************************************************
      * This gets called from the top-most method if a relationship already exists
      *
-     * If the logged in user1 has been liked by the user2 already, the this method should not create another relationship
+     * If the logged in user1 has been liked by the user2 already, then this method should not create another relationship
      *      instead, it should update an existing relationship by having both status be 1 and therefore a match.
      *
      * @param thisUser
@@ -84,8 +81,8 @@ public class RelationshipService {
 
 
     /***********************************************************************************
-     * Given two user_names this should query their relationship, if they have one
-     * Could be use full in the isMatch() method below
+     * Given two user_names this should query their relationship row, if they have one
+     * Could be useful in the isMatch() method below
      * @param username_one
      * @param username_two
      * @return
@@ -100,7 +97,7 @@ public class RelationshipService {
     /***********************************************************************************
      * Given two user_names this method should
      * call getRelationshipBetweenTwoUsers(String username_one, String username_two);
-     * The return true or false depending on whether they match or not
+     * Then return true or false depending on whether they match or not
      *
      * @param  username_one
      * @param username_two
