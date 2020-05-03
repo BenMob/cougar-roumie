@@ -56,7 +56,6 @@ public class MatchController {
                 break;
             case LIKE:
                 logger.info("Liked: " + submitResult.getUserName());
-
                 relationshipService.createRelationship(user, match.getMatch());
                 break;
             case REQUEST:
