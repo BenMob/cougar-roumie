@@ -1,23 +1,68 @@
 package com.SE370.Cougar.Roomie.model.entities;
 
-import javax.persistence.*;
+import com.SE370.Cougar.Roomie.model.DTO.CustomUserDetails;
+import com.SE370.Cougar.Roomie.model.DTO.Profile;
+import com.SE370.Cougar.Roomie.model.DTO.RegistrationForm;
 
-@Entity
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity(name = "user")
 @Table(name = "users") // just to keep things looking uniform in the database
-public class User {
+public class User{
     @Id // Primary Key
     @GeneratedValue(strategy = GenerationType.AUTO) // Tell spring to handle generation
     private int id;
     private int answer_id; // connects to answer table
+    private int profile_image_id;  // Connects to image table
+    private int matchScore;
     private String firstName;
     private String lastName;
     private String userName;
     private String password;
+    private String major;
+    private String headline;
     private int gender; // 0 is default (unknown), 1 for Male, 2 for Female
     private String email; // empty by default
     private boolean active; // account flag
 
     public User() {}
+
+    // Task: Creates a User Entity
+    // Parameter: CustomUserDetails Object
+    public User(CustomUserDetails customUser){
+            setId(customUser.getUser_id());
+            setAnswer_id(customUser.getAnswerId());
+            setFirstName(customUser.getFirstName());
+            setMatchScore(customUser.getMatchScore());
+            setLastName(customUser.getLastName());
+            setGender(customUser.getGender());
+            setUserName(customUser.getUsername());
+            setPassword(customUser.getPassword());
+            setHeadline(customUser.getHeadline());
+            setMajor(customUser.getMajor());
+            setEmail(customUser.getEmail());
+            setActive(customUser.isEnabled());
+    }
+
+    // Task: Copy constructor that registers user for the first time
+    // Parameter: RegistrationForm object
+    public User(RegistrationForm form){
+            setUserName(form.getUser_name());
+            setEmail(form.getEmail());
+            setPassword(form.getPassword());
+            setActive(true);
+    }
+
+    // Task: registers profile information
+    public void registerProfileInfo(Profile form){
+            setFirstName(form.getFirst_name());
+            setLastName(form.getLast_name());
+            setGender(form.getGender());
+            setMajor(form.getMajor());
+            setHeadline(form.getHeadline());
+    }
 
     public int getId() {
         return id;
@@ -33,6 +78,14 @@ public class User {
 
     public void setAnswer_id(int answerID) {
         this.answer_id = answerID;
+    }
+
+    public int getMatchScore() {
+        return matchScore;
+    }
+
+    public void setMatchScore(int matchScore) {
+        this.matchScore = matchScore;
     }
 
     public String getFirstName() {
@@ -90,4 +143,29 @@ public class User {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    public String getHeadline() {
+        return headline;
+    }
+
+    public void setHeadline(String headline) {
+        this.headline = headline;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    public int getProfile_image_id() {
+        return profile_image_id;
+    }
+
+    public void setProfile_image_id(int profile_image_id) {
+        this.profile_image_id = profile_image_id;
+    }
+
 }

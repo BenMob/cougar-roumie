@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Chat</title>
+
+    <div th:insert="~{fragments/mainFrag :: header}"></div>
+    <link rel="stylesheet" th:href="@{/assets/css/chat.css}"/>
+</head>
+<body class="gradient overlay">
+<div th:insert="~{fragments/mainFrag :: navbar}"></div>
+<noscript>
+    <h2>Sorry! Your browser doesn't support Javascript</h2>
+</noscript>
+
+<div id="username-page">
+    <!-- James I added some inline css... fix whenever you want-->
+    <div class="username-page-container" style="height: 500px; overflow-y: auto;">
+
+        <!-- feel free to change this or style it how you please-->
+        <h3 th:text="'Hey, ' + ${#authentication.name}" style="color:black; font-size: 2em; padding-bottom: 20px"></h3>
+        <table class="user-table">
+            <thead class="user-table-head">
+                <tr>
+                    <th colspan="2">Available Users</th>
+                </tr>
+            </thead>
+            <tbody class="user-table-body">
+                <tr th:if="${foundList.empty}">
+                    <td colspan="2">No Users Found In Database</td>
+                </tr>
+                <tr th:each="user : ${foundList}">
+                    <td>
+                        <span th:text="${user}"></span>
+                    </td>
+                    <td>
+                        <button th:onclick="connect([[${user}]])" class="accent">Message!</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="chat-page" class="hidden">
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2 id="chatHeaderH2" style="color:black;"></h2>
+        </div>
+        <div class="connecting">
+            Connecting...
+        </div>
+        <ul id="messageArea">
+
+        </ul>
+        <form id="messageForm" name="messageForm">
+            <div class="form-group">
+                <div class="input-group clearfix">
+                    <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
+                    <button type="submit" class="primary">Send</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div th:insert="~{fragments/mainFrag :: footer}"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script th:src="@{/assets/js/chat.js}"></script>
+</body>
+</html>

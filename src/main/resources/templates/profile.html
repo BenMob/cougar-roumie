@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+
+    <div th:insert="~{fragments/mainFrag :: header}"></div>
+
+    <body class="gradient overlay">
+
+    <div th:insert="~{fragments/mainFrag :: navbar}"></div>
+    <!-- Move this button. -->
+    <a class="btn btn-primary register" role="button" th:href="@{/user/assessment}">Assessment</a>
+
+    <div class="inline-block-profile" sec:authorize="isAuthenticated()">
+        <div class="container">
+            <div th:if="${profileInfo.image.isPresent()}">
+                <img th:src="@{'data:' + ${profileInfo.image.get().fileType} + ';base64,' + ${profileInfo.image.get().src}}" class="rounded-circle" alt="Profile Image" height="100" width="100">
+            </div>
+        </div>
+        <div class="container" th:unless="${profileInfo.first_name == null || profileInfo.last_name == null || profileInfo.major == null || profileInfo.headline == null}">
+            <h2 th:text="${profileInfo.first_name + ' ' + profileInfo.last_name}"></h2>
+            <h3 th:text="${profileInfo.major}"></h3>
+            <h6 th:text="${profileInfo.headline}"></h6>
+        </div>
+    </div>
+
+    <div id="header">
+        <div th:unless="${profileInfo.first_name != null || profileInfo.last_name != null || profileInfo.major != null || profileInfo.headline != null}" style="margin:auto; max-width:40%">
+                <style>.form-control {width:100%;}</style>
+                <label class="text-center">Please setup your profile by completing the following dialogs.</label>
+
+                <form class="form-outline" th:action="@{/user/profile}" th:object="${profileInfo}"  method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="firstName" placeholder="First Name" th:required="required" th:field="*{first_name}">
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="lastName" placeholder="Last Name" th:required="required" th:field="*{last_name}">
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="major" placeholder="Major" th:required="required" th:field="*{major}">
+                    </div>
+
+                    <div class="form-group">
+                        <select class="form-control" id="inlineFormCustomSelect">
+                            <option selected disabled>Choose your College Year...</option>
+                            <option value="1">Freshman</option>
+                            <option value="2">Sophomore</option>
+                            <option value="3">Junior</option>
+                            <option value="4">Senior</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="formCheck-1" value='1' th:required="required" th:field="*{gender}">
+                            <label class="form-check-label" for="formCheck-1">Male</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="formCheck-2" value='2' th:required="required" th:field="*{gender}">
+                            <label class="form-check-label" for="formCheck-2">Female</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <textarea class="form-control" type="text" name="headline" placeholder="Headline ... " th:required="required" th:field="*{headline}"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-center" for="profile_img">Profile Image</label>
+                        <input th:required="required" type="file" name="file" class="form-control" id="profile_img" >
+                    </div>
+                    <button class="btn-primary align-right" type="submit">submit</button>
+                </form>
+        </div>
+    </div>
+
+    <div th:insert="~{fragments/mainFrag :: footer}"></div>
+    </body>
+
+    </html>

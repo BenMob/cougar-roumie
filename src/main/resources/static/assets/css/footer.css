@@ -1,0 +1,69 @@
+.footer {
+  color: #ffffff;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  padding-bottom: 10px;
+}
+
+.footer ul {
+  padding: 0;
+  list-style: none;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+.footer li {
+  padding: 0 10px;
+}
+
+.footer ul a {
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.8;
+}
+
+.footer ul a:hover {
+  opacity: 1;
+}
+
+.footer .copyright {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 13px;
+  color: #ffffff;
+  margin-bottom: 0;
+}
+
+.modal-form {
+  color: #000;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.form-control {
+  color: #000;
+  justify-content: center;
+  display: flex;
+  align-items: left;
+  border-radius: 10px;
+  width: 50%;
+  padding: 4px;
+  margin: 0 auto;
+}
+
+.modal-title {
+  color: #000;
+}
+
+button, input {
+  border-radius: 10px;
+}
+
