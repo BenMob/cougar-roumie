@@ -73,6 +73,7 @@ public class MatchController {
 
         } catch (RuntimeException e) {
             // Send error back to client
+            logger.error(e.getMessage());
             MatchForm error = new MatchForm();
             error.setType(MatchForm.MessageType.ERROR);
             error.setUserName(e.getMessage());
