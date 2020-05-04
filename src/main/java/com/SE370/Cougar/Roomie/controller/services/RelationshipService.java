@@ -6,6 +6,8 @@ import com.SE370.Cougar.Roomie.model.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class RelationshipService {
@@ -54,6 +56,10 @@ public class RelationshipService {
             incoming.setUser_two_status(2);
         }
         relationshipRepo.save(incoming);
+    }
+    // Returns a list of matched relationships (Both status must be 1)
+    public List<Relationship> getMatchedRelationships(String username){
+        return relationshipRepo.findByUsername1AndUseronestatusAndUsertwostatus ("Ben", 1, 1);
     }
 
 

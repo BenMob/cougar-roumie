@@ -26,15 +26,15 @@
                 </tr>
             </thead>
             <tbody class="user-table-body">
-                <tr th:if="${users.empty}">
+                <tr th:if="${relationships.empty}">
                     <td colspan="2">No Users Found In Database</td>
                 </tr>
-                <tr th:each="user : ${users}">
+                <tr th:each="relationship : ${relationships}">
                     <td>
-                        <span th:text="${user.userName}"></span>
+                        <span th:text="${relationship.userName2}"></span>
                     </td>
                     <td>
-                        <button th:onclick="connect([[${user.userName}]])" class="accent">Message!</button>
+                        <button th:onclick="connect([[${relationship.username2}]])" class="accent">Message!</button>
                     </td>
                 </tr>
             </tbody>

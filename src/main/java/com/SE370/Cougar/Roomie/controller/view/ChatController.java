@@ -1,6 +1,7 @@
 package com.SE370.Cougar.Roomie.controller.view;
 
 import com.SE370.Cougar.Roomie.controller.components.ChatComponent;
+import com.SE370.Cougar.Roomie.controller.services.RelationshipService;
 import com.SE370.Cougar.Roomie.controller.services.UserService;
 import com.SE370.Cougar.Roomie.model.DTO.CustomUserDetails;
 import com.SE370.Cougar.Roomie.model.DTO.Message;
@@ -22,13 +23,16 @@ public class ChatController {
     @Autowired
     private ChatComponent chatComponent;
     @Autowired
-    SimpMessageSendingOperations messsageOperations;
+    SimpMessageSendingOperations messageOperations;
     @Autowired
     UserService userService;
+    @Autowired
+    RelationshipService relationshipService;
 
     @GetMapping("/user/chat")
     public String chat(Model model, Authentication auth) {
-        model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("relationships",
+                relationshipService.getMatchedRelationships(auth.getName()));
         return "chat";
     }
 
@@ -44,7 +48,7 @@ public class ChatController {
                 .ifPresent(userName -> {
                     chatComponent.getOldMessages().stream()
                             .forEach(msg -> {
-                                messsageOperations.convertAndSendToUser(userName, "/queue/updates", msg);
+                                messageOperations.convertAndSendToUser(userName, "/queue/updates", msg);
                             });
                 });
     }
@@ -59,9 +63,9 @@ public class ChatController {
                 chatComponent.saveMessage(chatMessage);
 
                 // Send to other user
-                this.messsageOperations.convertAndSendToUser(otherUser, "/queue/updates", chatMessage);
+                this.messageOperations.convertAndSendToUser(otherUser, "/queue/updates", chatMessage);
                 // Send the message to logged in user
-                this.messsageOperations.convertAndSendToUser(userName, "/queue/updates", chatMessage);
+                this.messageOperations.convertAndSendToUser(userName, "/queue/updates", chatMessage);
             });
         });
     }
