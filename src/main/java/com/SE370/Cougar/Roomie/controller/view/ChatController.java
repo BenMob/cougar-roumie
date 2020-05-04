@@ -31,7 +31,7 @@ public class ChatController {
 
     @GetMapping("/user/chat")
     public String chat(Model model, Authentication auth) {
-        model.addAttribute("relationships",
+        model.addAttribute("foundList",
                 relationshipService.getMatchedRelationships(auth.getName()));
         return "chat";
     }

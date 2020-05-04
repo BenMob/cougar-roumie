@@ -1,5 +1,6 @@
 package com.SE370.Cougar.Roomie.controller.services;
 
+import com.SE370.Cougar.Roomie.model.entities.Message;
 import com.SE370.Cougar.Roomie.model.entities.Relationship;
 import com.SE370.Cougar.Roomie.model.repositories.RelationshipRepo;
 import com.SE370.Cougar.Roomie.model.repositories.UserRepo;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -57,8 +59,16 @@ public class RelationshipService {
         relationshipRepo.save(incoming);
     }
     // Returns a list of matched relationships (Both status must be 1)
-    public List<Relationship> getMatchedRelationships(String username){
-        return relationshipRepo.findByUsername1AndUseronestatusAndUsertwostatus ("Ben", 1, 1);
+    public List<String> getMatchedRelationships(String username){
+
+        return relationshipRepo.findMatchedRelationships(username)
+                .stream().map(found -> {
+                    if (found.getUsername1().equals(username)) {
+                        return found.getUsername2();
+                    } else {
+                        return found.getUsername1();
+                    }
+                }).collect(Collectors.toList());
     }
 
     public boolean isMatch(Relationship incoming){

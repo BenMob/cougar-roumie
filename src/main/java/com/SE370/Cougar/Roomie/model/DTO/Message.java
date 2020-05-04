@@ -12,6 +12,12 @@ public class Message {
     private String sender;
     private String reciever;
 
+    public Message() {};
+    public Message(String sender, String reciever) {
+        this.sender = sender;
+        this.reciever = reciever;
+    }
+
     public String getReciever() {
         return reciever;
     }
