@@ -1,8 +1,10 @@
 package com.SE370.Cougar.Roomie.controller.components;
 
 
+import com.SE370.Cougar.Roomie.controller.services.RelationshipService;
 import com.SE370.Cougar.Roomie.controller.services.UserService;
 import com.SE370.Cougar.Roomie.model.DTO.UserInfo;
+import com.SE370.Cougar.Roomie.model.entities.Relationship;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -19,8 +21,13 @@ public class MatchmakerComponent {
 
     @Autowired
     UserService userService;
+    @Autowired
+    RelationshipService relationshipService;
 
+    // These will be in order with each other
     private List<UserInfo> matchList;
+    private List<Relationship> relationshipList;
+
     private Optional<String> userName;
     private Optional<Integer> matchScore;
     private int count = -1;
