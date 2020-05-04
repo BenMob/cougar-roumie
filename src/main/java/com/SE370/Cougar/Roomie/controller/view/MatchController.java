@@ -53,12 +53,10 @@ public class MatchController {
         try {
             switch(submitResult.getType()) {
                 case DISLIKE:
-                    logger.info("Disliked: " + submitResult.getUserName());
-                    match.submitDislike(submitResult.getUserName());
+                    match.submitDislike();
                     break;
                 case LIKE:
-                    logger.info("Liked: " + submitResult.getUserName());
-                    match.submitLike(submitResult.getUserName());
+                    match.submitLike();
                     break;
                 case REQUEST:
                     logger.info("Request Match");

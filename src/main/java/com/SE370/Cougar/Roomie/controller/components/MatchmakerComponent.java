@@ -36,27 +36,42 @@ public class MatchmakerComponent {
     private Optional<Integer> matchScore;
     private int count = -1;
 
+    private boolean candidateMatch() throws RuntimeException {
+
+        if (count < matchList.size()) {
+            int usr1 = relationshipList.get(count).getUser_one_status();
+            int usr2 = relationshipList.get(count).getUser_two_status();
+
+            if ((usr1 == 1 && usr2 == 1) || (usr1 == 2 || usr2 == 2)) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            throw new RuntimeException("Nothing Found...");
+        }
+    }
+
     public UserInfo getMatch() throws RuntimeException {
-        // If this is the first time calling, fill our local list with matches
         if (count == -1) {
             throw new RuntimeException("Not Initialized..");
-        } else if (count < matchList.size()) {
-            count++;
-            return matchList.get(count - 1);
         } else {
-            throw new RuntimeException("Uh oh.... Nothing was found. Did you know matches automatically show up in chat when they like you back?");
+            while (!candidateMatch()) {
+                count++;
+            }
+            count++;
+            return matchList.get(count-1);
         }
     }
 
 
     // These functions work because we have an ongoing
     // count therefore we know which relationship is tied to which user....
-
-    public void submitLike(String otherName) {
+    public void submitLike() {
         relationshipService.submitLike(relationshipList.get(count-1), this.userName.get());
     }
 
-    public void submitDislike(String otherName) {
+    public void submitDislike() {
         relationshipService.submitDislike(relationshipList.get(count-1), this.userName.get());
     }
 
@@ -64,7 +79,6 @@ public class MatchmakerComponent {
     // Should be the first function called, fills the necessary details since we cannot access SecurityContext directly.
     public void init(String userName, int matchScore) throws RuntimeException {
         if (count == -1) {
-
             // Initialize our component
             this.userName = Optional.ofNullable(userName);
             this.matchScore = Optional.ofNullable(matchScore);
