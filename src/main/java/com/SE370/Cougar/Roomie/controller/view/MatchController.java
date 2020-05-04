@@ -50,34 +50,35 @@ public class MatchController {
     public void getMatch(Authentication auth, @Payload MatchForm submitResult) {
         CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
         // TODO: Right now all we are doing is logging what the front end does, logic needs to be developed for like/dislike
-        switch(submitResult.getType()) {
-            case DISLIKE:
-                logger.info("Disliked: " + submitResult.getUserName());
-                break;
-            case LIKE:
-                logger.info("Liked: " + submitResult.getUserName());
-                // TODO: use the methods in relationship service here to decide what happens
-                // For now I am calling the startRelationship so you can see how the relationship table gets populated in pgAdmin
-                relationshipService.startRelationship(user, submitResult.getUserName(), 1);
-                break;
-            case REQUEST:
-                logger.info("Request Match");
-                break;
-        }
-
-        // Get match or send error to client...
         try {
+            switch(submitResult.getType()) {
+                case DISLIKE:
+                    logger.info("Disliked: " + submitResult.getUserName());
+                    match.submitDislike(submitResult.getUserName());
+                    break;
+                case LIKE:
+                    logger.info("Liked: " + submitResult.getUserName());
+                    match.submitLike(submitResult.getUserName());
+                    break;
+                case REQUEST:
+                    logger.info("Request Match");
+                    break;
+                default:
+                    throw new RuntimeException("Unknown message type: " + submitResult.getType());
+            }
+
+            // Get next match now....
             UserInfo found = match.getMatch();
             MatchForm msg = new MatchForm(found);
             msg.setType(MatchForm.MessageType.NEWMATCH);
             this.messageOperations.convertAndSendToUser(auth.getName(), "/queue/matchmaking", msg);
 
         } catch (RuntimeException e) {
+            // Send error back to client
             MatchForm error = new MatchForm();
             error.setType(MatchForm.MessageType.ERROR);
             error.setUserName(e.getMessage());
             this.messageOperations.convertAndSendToUser(auth.getName(),"/queue/matchmaking", error);
         }
-
     }
 }

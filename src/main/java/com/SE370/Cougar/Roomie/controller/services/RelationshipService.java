@@ -1,19 +1,10 @@
 package com.SE370.Cougar.Roomie.controller.services;
 
-import com.SE370.Cougar.Roomie.model.DTO.CustomUserDetails;
 import com.SE370.Cougar.Roomie.model.entities.Relationship;
 import com.SE370.Cougar.Roomie.model.repositories.RelationshipRepo;
 import com.SE370.Cougar.Roomie.model.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-/**
- * This Class contains the methods I think will help us implement this bitch ass LIKE button
- *
- * I broke down the tasks into multiple methods so that the process is easy to follow but after
- * we have a proof of concept, I am sure you will find ways to chain them them in your favorite one or two lines of code.
- *
- */
 
 
 @Service
@@ -28,6 +19,47 @@ public class RelationshipService {
     @Autowired
     RelationshipRepo relationshipRepo;
 
+
+    /***********************************************************************************
+     * Given two user_names this should query their relationship row, if they have one
+     * Could be useful in the isMatch() method below
+     * @param user1
+     * @param user2
+     * @return Found or Created Relationship object
+     */
+    public Relationship getRelationshipBetweenTwoUsers(String user1, String user2){
+        // Grab relation from db if none exist create it pass back to component
+
+        // This only accounts for one direction... Still need to account for the other eg user2, user1
+        return relationshipRepo.findByUsername1AndUsername2(user1, user2)
+                .orElseGet(() -> new Relationship(user1,user2)); // Create new relationship
+    }
+
+
+    // Updates entry in repo with like value
+    public void submitLike(Relationship incoming, String actionUser) {
+        if (incoming.getUsername1().equals(actionUser)) {
+            incoming.setUser_one_status(1);
+        } else {
+            incoming.setUser_two_status(1);
+        }
+        relationshipRepo.save(incoming);
+    }
+
+    // Updates entry in repo with dislike value
+    public void submitDislike(Relationship incoming, String actionUser) {
+        if (incoming.getUsername1().equals(actionUser)) {
+            incoming.setUser_one_status(2);
+        } else {
+            incoming.setUser_two_status(2);
+        }
+        relationshipRepo.save(incoming);
+    }
+
+
+    // IDK what to do with these yet... Didn't want to delete your work...
+
+
     /**********************************************************************************************************
      * This is the first method to be called once someone clicks LIKE. It checks if they already have a relationship column
      * opened with the person they just liked.
@@ -40,6 +72,7 @@ public class RelationshipService {
      * @param thisUser
      * @param friend_username
      */
+    /*
     void checkForRelationship(CustomUserDetails thisUser, String friend_username){
 
         // This is where everything begins
@@ -57,9 +90,12 @@ public class RelationshipService {
      * @param friend_username
      * @param status
      */
+    /*
     public void startRelationship(CustomUserDetails thisUser, String friend_username, int status){
         relationshipRepo.save( new Relationship(thisUser.getUser_id() ,thisUser.getUsername(), status, friend_username, 0));
-    }
+    }*/
+
+
 
     /***********************************************************************************
      * This gets called from the top-most method if a relationship already exists
@@ -70,28 +106,14 @@ public class RelationshipService {
      * @param thisUser
      * @param friend_username
      */
+    /*
     public void updateRelationship(CustomUserDetails thisUser, String friend_username){
 
+    }*/
 
 
 
-    }
 
-
-
-    /***********************************************************************************
-     * Given two user_names this should query their relationship row, if they have one
-     * Could be useful in the isMatch() method below
-     * @param username_one
-     * @param username_two
-     * @return
-     */
-    public  Relationship getRelationshipBetweenTwoUsers(String username_one, String username_two){
-        // QUESTION: How do I query the relationship table given these two user_names?
-        // Can JPA do this for us?
-
-        return new Relationship();
-    }
 
     /***********************************************************************************
      * Given two user_names this method should
@@ -102,10 +124,12 @@ public class RelationshipService {
      * @param username_two
      * @return
      */
+    /*
     public boolean isMatch(String username_one, String username_two){
 
-
         return true;
-    }
+    }*/
+
+
 
 }
