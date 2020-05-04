@@ -35,8 +35,12 @@ public class RelationshipService {
         // Grab relation from db if none exist create it pass back to component
 
         // This only accounts for one direction... Still need to account for the other eg user2, user1
-        return relationshipRepo.findByUsername1AndUsername2(user1, user2)
-                .orElseGet(() -> new Relationship(user1,user2)); // Create new relationship
+        List <Relationship> found = relationshipRepo.findByUsername1AndUsername2(user1, user2);
+        if (found.isEmpty()) {
+            return new Relationship(user1, user2);
+        } else {
+            return found.get(0);
+        }
     }
 
     // Updates entry in repo with like value

@@ -43,7 +43,7 @@ function onMessageReceived(payload) {
         loaderContainer.classList.remove("hidden");
         window.setTimeout(
             function() {
-                window.location.href = "http://localhost:8080/user/profile";
+                window.location.href = "http://cougarroomie.tech/user/profile";
             }, 4500);
     }
 }
