@@ -38,7 +38,6 @@ public class MatchController {
     // This SHOULD be the first message from the client, if its not MatchMakerComponent will throw an error
     @MessageMapping("/matchmaking.initialize")
     public void initialConnect(Authentication auth, @Payload MatchForm submitResult) {
-        logger.info("trying to init matchmaking");
         CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
         match.init(user.getUsername(), user.getMatchScore());
 

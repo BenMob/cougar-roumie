@@ -17,7 +17,6 @@ public class CustomUserDetails implements UserDetails {
     private int matchScore;
     private int gender;
     private int user_id;
-    private int profile_image_id;
     private String userName;
     private String password;
     private String email;
@@ -33,7 +32,6 @@ public class CustomUserDetails implements UserDetails {
         this.matchScore = user.getMatchScore();
         this.gender = user.getGender();
         this.user_id = user.getId();
-        this.profile_image_id = user.getProfile_image_id();
         this.answerId = user.getAnswer_id();
         this.userName = user.getUserName();
         this.major = user.getMajor();
@@ -43,12 +41,6 @@ public class CustomUserDetails implements UserDetails {
         this.active = user.isActive();
         this.authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")); // Hard Coded for now
 
-        // This will grab roles from the database however we are statically setting one role for now
-        /*this.authorities = Arrays.stream(user.getRoles().split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
-
-         */
     }
 
 
@@ -91,13 +83,6 @@ public class CustomUserDetails implements UserDetails {
 
     public String getHeadline() { return headline; }
     public void setHeadline(String headline) { this.headline = headline; }
-
-    public int getProfile_Image_Id() {
-        return profile_image_id;
-    }
-    public void setProfile_Image_Id(int profile_Image_Id) {
-        this.profile_image_id = profile_image_id;
-    }
 
     public String getEmail() { return email; }
     public void setEmail(String email) {

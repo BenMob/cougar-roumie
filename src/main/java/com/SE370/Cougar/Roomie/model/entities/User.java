@@ -15,7 +15,6 @@ public class User{
     @GeneratedValue(strategy = GenerationType.AUTO) // Tell spring to handle generation
     private int id;
     private int answer_id; // connects to answer table
-    private int profile_image_id;  // Connects to image table
     private int matchScore;
     private String firstName;
     private String lastName;
@@ -158,14 +157,6 @@ public class User{
 
     public void setMajor(String major) {
         this.major = major;
-    }
-
-    public int getProfile_image_id() {
-        return profile_image_id;
-    }
-
-    public void setProfile_image_id(int profile_image_id) {
-        this.profile_image_id = profile_image_id;
     }
 
 }
