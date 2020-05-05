@@ -59,6 +59,7 @@ public class MatchmakerComponent {
         } else {
             while (!candidateMatch()) {
                 count++;
+                logger.info("counter: " + count);
             }
             count++;
             return matchList.get(count-1);

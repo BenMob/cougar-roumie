@@ -1,9 +1,10 @@
 package com.SE370.Cougar.Roomie.controller.services;
 
-import com.SE370.Cougar.Roomie.model.entities.Message;
 import com.SE370.Cougar.Roomie.model.entities.Relationship;
 import com.SE370.Cougar.Roomie.model.repositories.RelationshipRepo;
 import com.SE370.Cougar.Roomie.model.repositories.UserRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class RelationshipService {
-
+    private static final Logger logger = LoggerFactory.getLogger(RelationshipService.class);
     @Autowired
     UserService userservice;
 
@@ -36,9 +37,12 @@ public class RelationshipService {
 
         // This only accounts for one direction... Still need to account for the other eg user2, user1
         List <Relationship> found = relationshipRepo.findByUsername1AndUsername2(user1, user2);
+        logger.info(" found relationship -> SIZE -> " + found.size());
         if (found.isEmpty()) {
+            logger.info("Generating new relationship for:" + user1 + " and " + user2);
             return new Relationship(user1, user2);
         } else {
+
             return found.get(0);
         }
     }
