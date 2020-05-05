@@ -69,6 +69,7 @@ public class MatchController {
             UserInfo found = match.getMatch();
             MatchForm msg = new MatchForm(found);
             msg.setType(MatchForm.MessageType.NEWMATCH);
+            logger.info("Sending match: " +  msg.getUserName() + " to " + auth.getName());
             this.messageOperations.convertAndSendToUser(auth.getName(), "/queue/matchmaking", msg);
 
         } catch (RuntimeException e) {
