@@ -50,8 +50,6 @@ public class MatchController {
 
     @MessageMapping("/matchmaking.getMatch")
     public void getMatch(Authentication auth, @Payload MatchForm submitResult) {
-        CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
-        // TODO: Right now all we are doing is logging what the front end does, logic needs to be developed for like/dislike
         try {
             switch(submitResult.getType()) {
                 case DISLIKE:

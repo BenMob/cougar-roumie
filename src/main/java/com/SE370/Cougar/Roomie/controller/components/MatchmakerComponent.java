@@ -5,14 +5,14 @@ import com.SE370.Cougar.Roomie.controller.services.RelationshipService;
 import com.SE370.Cougar.Roomie.controller.services.UserService;
 import com.SE370.Cougar.Roomie.model.DTO.UserInfo;
 import com.SE370.Cougar.Roomie.model.entities.Relationship;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +31,7 @@ public class MatchmakerComponent {
     private List<UserInfo> matchList;
     private List<Relationship> relationshipList;
 
+    private static final Logger logger = LoggerFactory.getLogger(MatchmakerComponent.class);
 
     private Optional<String> userName;
     private Optional<Integer> matchScore;
@@ -82,10 +83,12 @@ public class MatchmakerComponent {
             // Initialize our component
             this.userName = Optional.ofNullable(userName);
             this.matchScore = Optional.ofNullable(matchScore);
+            logger.info("Requesting matches for " + userName + " with " + matchScore);
             matchList = userService.getMatches(this.userName.orElseThrow(RuntimeException::new), this.matchScore.orElseThrow(RuntimeException::new));
             // Fill relationship list
             relationshipList = new ArrayList<Relationship>();
             for (UserInfo match : matchList){
+                logger.info("Getting Relationship");
                 relationshipList.add(relationshipService.getRelationshipBetweenTwoUsers(match.getUserName(), this.userName.get()));
             }
             count++;
