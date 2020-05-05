@@ -20,10 +20,12 @@ public class WebSocketEventListener {
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
         logger.info("WebSocket Connection Initialized");
+        logger.info(event.getMessage() + " " + event.getUser());
     }
 
     @EventListener
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         logger.info("Websocket Connection Closed");
+        logger.info(event.getMessage() + " " + event.getUser());
     }
 }

@@ -39,10 +39,13 @@ public class MatchController {
     @MessageMapping("/matchmaking.initialize")
     public void initialConnect(Authentication auth, @Payload MatchForm submitResult) {
         CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
-        match.init(user.getUsername(), user.getMatchScore());
-
-        submitResult.setType(MatchForm.MessageType.INIT);
-        this.messageOperations.convertAndSendToUser(user.getUsername(), "/queue/matchmaking", submitResult);
+        if (match.init(user.getUsername(), user.getMatchScore())) {
+            submitResult.setType(MatchForm.MessageType.INIT);
+            this.messageOperations.convertAndSendToUser(user.getUsername(), "/queue/matchmaking", submitResult);
+        } else {
+            submitResult.setType(MatchForm.MessageType.ERROR);
+            this.messageOperations.convertAndSendToUser(user.getUsername(), "/queue/matchmaking", submitResult);
+        }
     }
 
     @MessageMapping("/matchmaking.getMatch")

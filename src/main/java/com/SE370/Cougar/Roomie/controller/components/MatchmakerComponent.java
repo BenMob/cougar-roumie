@@ -77,7 +77,7 @@ public class MatchmakerComponent {
 
 
     // Should be the first function called, fills the necessary details since we cannot access SecurityContext directly.
-    public void init(String userName, int matchScore) throws RuntimeException {
+    public boolean init(String userName, int matchScore) throws RuntimeException {
         if (count == -1) {
             // Initialize our component
             this.userName = Optional.ofNullable(userName);
@@ -89,7 +89,9 @@ public class MatchmakerComponent {
                 relationshipList.add(relationshipService.getRelationshipBetweenTwoUsers(match.getUserName(), this.userName.get()));
             }
             count++;
+            return true;
         }
+        return false;
     }
 
 

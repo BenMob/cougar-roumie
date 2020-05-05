@@ -45,7 +45,7 @@ function onMessageReceived(payload) {
             function() {
                 window.location.href = "http://cougarroomie.tech/user/profile";
             }, 4500);
-        
+
     }
 }
 
